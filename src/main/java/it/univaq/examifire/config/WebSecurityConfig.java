@@ -25,7 +25,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private static final String ROLE_ADMIN = "admin";
+	private static final String ROLE_ADMIN = "ADMIN";
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
