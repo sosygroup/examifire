@@ -61,11 +61,11 @@
 		</dependency>
 
 		<!-- Highly customizable authentication and access-control framework for 
-			Spring applications. 
+			Spring applications. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
+		</dependency>
 
 		<!-- for testing -->
 		<dependency>
