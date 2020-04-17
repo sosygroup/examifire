@@ -6,10 +6,9 @@ eXamiFire
 To install this example application, run the following commands:
 
 ```bash
-git clone https://github.com/oktadeveloper/okta-spring-boot-react-crud-example.git spring-react
-cd spring-react
+git clone https://github.com/alexander-perucci/examifire.git examifire
+cd examifire
 ```
-
 This will get a copy of the eXamiFire web application locally. To create the database, execute the SQL script [examifire-schema.sql](examifire-schema.sql).
 
 Then, run the eXamiFire web application:
