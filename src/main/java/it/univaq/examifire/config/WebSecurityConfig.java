@@ -30,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	/*
+	 * needed by the token repository to create, search, update and delete the
+	 * persistent token from the database
+	 */
 	@Autowired
 	private DataSource dataSource;
 
