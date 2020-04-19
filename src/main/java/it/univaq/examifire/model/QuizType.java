@@ -12,21 +12,20 @@ import javax.validation.constraints.Size;
 import it.univaq.examifire.model.audit.EntityAudit;
 
 @Entity
-@Table(name = "role")
-public class Role extends EntityAudit<Long>{
+@Table(name = "quiz_type")
+public class QuizType extends EntityAudit<Long>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_id")
+	@Column(name = "quiz_type_id")
 	private Long id;
 
-	@NotBlank(message = "Please enter the role name")
+	@NotBlank(message = "Please enter the type")
 	@Size(max = 45, message = "Maximum 45 characters")
-	@Column(nullable = false, unique = true, length = 45)
-	private String name;
+	@Column(name = "type", nullable = false, length = 45)
+	private String type;
 
-	@NotBlank(message = "Please enter the role description")
 	@Size(max = 200, message = "Maximum 200 characters")
-	@Column(nullable = true, length = 200)
+	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
 	public Long getId() {
@@ -37,12 +36,12 @@ public class Role extends EntityAudit<Long>{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getType() {
+		return type;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDescription() {
@@ -59,7 +58,7 @@ public class Role extends EntityAudit<Long>{
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -71,7 +70,7 @@ public class Role extends EntityAudit<Long>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Role other = (Role) obj;
+		QuizType other = (QuizType) obj;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -82,19 +81,19 @@ public class Role extends EntityAudit<Long>{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (type == null) {
+			if (other.type != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!type.equals(other.type))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return "QuizType [id=" + id + ", type=" + type + ", description=" + description + "]";
 	}
-
+	
 	
 	
 }

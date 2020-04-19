@@ -1,7 +1,9 @@
 package it.univaq.examifire.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -27,28 +30,28 @@ public class User extends EntityAudit<Long> {
 	private Long id;
 
 	@NotBlank(message = "Please enter the firstname")
-	@Size(max = 45, message = "Comment should be maximum 45 characters")
+	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "first_name", nullable = false, length = 45)
 	private String firstname;
 
 	@NotBlank(message = "Please enter the lastname")
-	@Size(max = 45, message = "Comment should be maximum 45 characters")
+	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastname;
 
 	@NotBlank(message = "Please enter the username")
-	@Size(max = 32, message = "Comment should be maximum 32 characters")
+	@Size(max = 32, message = "Maximum 32 characters")
 	@Column(name = "username", nullable = false, unique = true, length = 32)
 	private String username;
 
 	@NotBlank(message = "Please enter the password")
-	@Size(max = 255, message = "Comment should be maximum 255 characters")
+	@Size(max = 255, message = "Maximum 255 characters")
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
 
 	// TODO check the message errors.invalid_email
 	@NotBlank(message = "Please enter the email")
-	@Size(max = 50, message = "Comment should be maximum 50 characters")
+	@Size(max = 50, message = "Maximum 50 characters")
 	@Email(message = "{errors.invalid_email}")
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
@@ -60,12 +63,15 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "password_expired", nullable = false)
 	private boolean passwordExpired = false;
 
-	// TODO roles with = new HashSet<Role>() or not ?
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
-	private Set<Role> roles;
-
+	private Set<Role> roles = new HashSet<>();;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Set<UserQuiz> userQuiz = new HashSet<>();
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -138,6 +144,14 @@ public class User extends EntityAudit<Long> {
 		this.roles = roles;
 	}
 
+	public Set<UserQuiz> getUserQuiz() {
+		return userQuiz;
+	}
+
+	public void setUserQuiz(Set<UserQuiz> userQuiz) {
+		this.userQuiz = userQuiz;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,6 +164,7 @@ public class User extends EntityAudit<Long> {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (passwordExpired ? 1231 : 1237);
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + ((userQuiz == null) ? 0 : userQuiz.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -197,6 +212,11 @@ public class User extends EntityAudit<Long> {
 				return false;
 		} else if (!roles.equals(other.roles))
 			return false;
+		if (userQuiz == null) {
+			if (other.userQuiz != null)
+				return false;
+		} else if (!userQuiz.equals(other.userQuiz))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -209,7 +229,9 @@ public class User extends EntityAudit<Long> {
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
 				+ ", password=" + password + ", email=" + email + ", active=" + active + ", passwordExpired="
-				+ passwordExpired + ", roles=" + roles + "]";
+				+ passwordExpired + ", roles=" + roles + ", userQuiz=" + userQuiz + "]";
 	}
+
+	
 
 }
