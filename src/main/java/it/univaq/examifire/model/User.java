@@ -16,9 +16,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import it.univaq.examifire.model.audit.EntityAudit;
+
 @Entity
 @Table(name = "user")
-public class User extends EntityAudit<String> {
+public class User extends EntityAudit<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -51,9 +53,10 @@ public class User extends EntityAudit<String> {
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
 
+	// this means that the user is both active and enabled
 	@Column(name = "active", nullable = false)
 	private boolean active = true;
-
+	
 	@Column(name = "password_expired", nullable = false)
 	private boolean passwordExpired = false;
 

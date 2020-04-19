@@ -1,4 +1,4 @@
-package it.univaq.examifire.model;
+package it.univaq.examifire.model.audit;
 
 import java.time.Instant;
 
@@ -33,18 +33,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public abstract class EntityAudit<U>  {
-    @CreatedBy
-    protected U createdBy;
-	
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "createdBy", "lastModifiedBy" }, allowGetters = true)
+public abstract class EntityAudit<U> {
+	@CreatedBy
+	@Column(nullable = false, updatable = false)
+	protected U createdBy;
+
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
 	private Instant createdAt;
 
 	@LastModifiedBy
-    protected U lastModifiedBy;
-	
+	@Column(nullable = false, updatable = true)
+	protected U lastModifiedBy;
+
 	@LastModifiedDate
 	@Column(nullable = false, updatable = true)
 	private Instant updatedAt;

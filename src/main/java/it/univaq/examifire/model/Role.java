@@ -9,9 +9,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import it.univaq.examifire.model.audit.EntityAudit;
+
 @Entity
 @Table(name = "role")
-public class Role extends EntityAudit<String>{
+public class Role extends EntityAudit<Long>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")

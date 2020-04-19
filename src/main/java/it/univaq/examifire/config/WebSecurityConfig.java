@@ -9,12 +9,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import it.univaq.examifire.security.UserDetailsServiceImpl;
 
 /*
  * TODO check if use the annotation @EnableGlobalMethodSecurity(securedEnabled =
@@ -28,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String ROLE_ADMIN = "ADMIN";
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl customUserDetailsServiceImpl;
 
 	/*
 	 * needed by the token repository to create, search, update and delete the
@@ -48,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(customUserDetailsServiceImpl).passwordEncoder(passwordEncoder());
 	}
 	
 	 @Override
