@@ -9,11 +9,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import it.univaq.examifire.model.audit.DateAudit;
-
 @Entity
 @Table(name = "role")
-public class Role extends DateAudit{
+public class Role extends EntityAudit<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
@@ -24,7 +22,7 @@ public class Role extends DateAudit{
 	@Column(nullable = false, unique = true, length = 45)
 	private String name;
 
-	@NotBlank(message = "Please enter the role name")
+	@NotBlank(message = "Please enter the role description")
 	@Size(max = 200, message = "Comment should be maximum 200 characters")
 	@Column(nullable = true, length = 200)
 	private String description;

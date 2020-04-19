@@ -16,11 +16,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import it.univaq.examifire.model.audit.DateAudit;
-
 @Entity
 @Table(name = "user")
-public class User extends DateAudit {
+public class User extends EntityAudit<String> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
