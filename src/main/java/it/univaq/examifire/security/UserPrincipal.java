@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import it.univaq.examifire.model.User;
+import it.univaq.examifire.model.user.User;
 
 public class UserPrincipal implements UserDetails {
 	private static final long serialVersionUID = 5277716760103100221L;

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import it.univaq.examifire.model.User;
+import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.repository.UserRepository;
 import it.univaq.examifire.service.UserService;
 

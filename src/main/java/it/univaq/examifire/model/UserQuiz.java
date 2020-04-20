@@ -1,6 +1,7 @@
 package it.univaq.examifire.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -15,47 +16,67 @@ import javax.validation.constraints.Digits;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.univaq.examifire.model.audit.EntityAudit;
+import it.univaq.examifire.model.user.User;
 
 @Entity
 @Table(name = "user_quiz")
-public class UserQuiz extends EntityAudit<Long> implements Serializable{
-	/* TODO check if these attribute are necessary
-	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional relationship
-	@MapsId("job_id")
-	@ManyToOne (fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "job_id", nullable = false, updatable = false)
-	 */
-	
+public class UserQuiz extends EntityAudit<Long> implements Serializable {
 	private static final long serialVersionUID = -3071167866541687155L;
+	/*
+	 * @ManyToOne operates on the so called logical model, i.e. the object-oriented
+	 * side of the object-relational mapping. The semantics of optional=false here
+	 * are:
+	 * 
+	 * Whether the association is optional. If set to false then a non-null
+	 * relationship must always exist.
+	 * 
+	 * So the JPA engine expects that the underlying storage will always provide a
+	 * value that can be translated to a User object.
+	 * 
+	 * @JoinColumn operates on the physical model, i.e. how things are actually laid
+	 * down in the datastore (database). Specifying nullable = false will make the
+	 * DB column non-nullable.
+	 * 
+	 * If @JoinColumn(nullable = false) was omitted, the column would be nullable.
+	 * One could insert a null value there and the DB would happily accept it.
+	 * However if someone tried to read that value through JPA, the JPA engine would
+	 * protest because it expects a value that can be translated to a User object to
+	 * always be there, as specified by @ManyToOne(optional = false).
+	 */
+	@Id
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "user_id", nullable = false, updatable = false)
+	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
+				// relationship
+	private User user;
 
 	@Id
-	@ManyToOne (fetch = FetchType.EAGER, optional = false)
-	@JoinColumn
-	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional relationship
-	private User user;
-	
-	@Id
-	@ManyToOne (fetch = FetchType.EAGER, optional = false)
-	@JoinColumn
-	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional relationship
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "quiz_id", nullable = false, updatable = false)
+	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
+				// relationship
 	private Quiz quiz;
-	
+
 	// timestamp that specify when the user book the quiz
 	@Column(name = "quiz_booking_time", nullable = true)
 	private LocalDateTime quizBookingTime;
-	
+
 	@Column(name = "quiz_start_time", nullable = true)
 	private LocalDateTime quizStartTime;
-	
+
 	@Column(name = "quiz_end_time", nullable = true)
 	private LocalDateTime quizEndTime;
-	
+
 	@Column(name = "grade_registration_time", nullable = true)
 	private LocalDateTime gradeRegistrationTime;
-
-	@Digits(integer = 2 /*precision*/, fraction = 1 /*scale*/)
-	@Column(name = "grade", nullable = true)
-	private Double grade;
+	/*
+	 * in the database the resulting column will be DECIMAL (3,1), i.e., a total of
+	 * 3 digits, 1 of which after the decimal point (and 14 before the decimal
+	 * point).
+	 */
+	@Digits(integer = 2 /* precision */, fraction = 1 /* scale */)
+	@Column(name = "grade", nullable = true, precision = 2, scale = 1)
+	private BigDecimal grade;
 
 	public User getUser() {
 		return user;
@@ -105,11 +126,11 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable{
 		this.gradeRegistrationTime = gradeRegistrationTime;
 	}
 
-	public Double getGrade() {
+	public BigDecimal getGrade() {
 		return grade;
 	}
 
-	public void setGrade(Double grade) {
+	public void setGrade(BigDecimal grade) {
 		this.grade = grade;
 	}
 
@@ -180,6 +201,5 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable{
 				+ quizStartTime + ", quizEndTime=" + quizEndTime + ", gradeRegistrationTime=" + gradeRegistrationTime
 				+ ", grade=" + grade + "]";
 	}
-	
-	
+
 }

@@ -21,7 +21,7 @@ public class QuizType extends EntityAudit<Long>{
 
 	@NotBlank(message = "Please enter the type")
 	@Size(max = 45, message = "Maximum 45 characters")
-	@Column(name = "type", nullable = false, length = 45)
+	@Column(name = "type", nullable = false, unique = true, length = 45)
 	private String type;
 
 	@Size(max = 200, message = "Maximum 200 characters")

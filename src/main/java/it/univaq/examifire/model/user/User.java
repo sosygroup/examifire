@@ -1,4 +1,4 @@
-package it.univaq.examifire.model;
+package it.univaq.examifire.model.user;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -19,10 +21,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import it.univaq.examifire.model.Role;
+import it.univaq.examifire.model.UserQuiz;
 import it.univaq.examifire.model.audit.EntityAudit;
 
 @Entity
 @Table(name = "user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends EntityAudit<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,17 +62,18 @@ public class User extends EntityAudit<Long> {
 	private String email;
 
 	// this means that the user is both active and enabled
-	@Column(name = "active", nullable = false)
+	@Column(name = "active", columnDefinition = "boolean default true", nullable = false)
 	private boolean active = true;
 	
-	@Column(name = "password_expired", nullable = false)
+	@Column(name = "password_expired", columnDefinition = "boolean default false", nullable = false)
 	private boolean passwordExpired = false;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
-	private Set<Role> roles = new HashSet<>();;
+	private Set<Role> roles = new HashSet<>();
 	
+	// @OneToMany(mappedBy = "variableName") variableName is the name of the variable annotated with @ManyToOne
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<UserQuiz> userQuiz = new HashSet<>();
 	

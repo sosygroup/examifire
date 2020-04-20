@@ -21,12 +21,12 @@ public class Role extends EntityAudit<Long>{
 
 	@NotBlank(message = "Please enter the role name")
 	@Size(max = 45, message = "Maximum 45 characters")
-	@Column(nullable = false, unique = true, length = 45)
+	@Column(name = "name", nullable = false, unique = true, length = 45)
 	private String name;
 
 	@NotBlank(message = "Please enter the role description")
 	@Size(max = 200, message = "Maximum 200 characters")
-	@Column(nullable = true, length = 200)
+	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
 	public Long getId() {

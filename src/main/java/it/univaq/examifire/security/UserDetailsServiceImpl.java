@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.univaq.examifire.model.User;
+import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.UserService;
 
 @Service

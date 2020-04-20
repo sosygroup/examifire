@@ -10,13 +10,13 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "question_id")
 public class TrueFalseAnswerQuestion extends Question{
 	@Column(name = "answer")
-	private Boolean answer;
+	private boolean answer;
 
-	public Boolean getAnswer() {
+	public boolean getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(Boolean answer) {
+	public void setAnswer(boolean answer) {
 		this.answer = answer;
 	}
 	

@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "multiple_answer_question")
 @PrimaryKeyJoinColumn(name = "question_id")

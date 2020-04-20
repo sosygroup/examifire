@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import it.univaq.examifire.model.User;
+import it.univaq.examifire.model.user.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
