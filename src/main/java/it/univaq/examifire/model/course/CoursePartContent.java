@@ -36,7 +36,7 @@ public class CoursePartContent extends EntityAudit<Long>{
 	@Column(name = "name", nullable = false, length = 45)
 	private String name;
 	
-	@NotBlank(message = "Please enter the description")
+	//@NotBlank(message = "Please enter the description")
 	@Lob // the database column type is LONGTEXT
 	@Column(name = "description", nullable = true)
 	private String description;

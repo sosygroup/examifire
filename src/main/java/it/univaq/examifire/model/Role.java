@@ -24,7 +24,7 @@ public class Role extends EntityAudit<Long>{
 	@Column(name = "name", nullable = false, unique = true, length = 45)
 	private String name;
 
-	@NotBlank(message = "Please enter the role description")
+	//@NotBlank(message = "Please enter the role description")
 	@Size(max = 200, message = "Maximum 200 characters")
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
