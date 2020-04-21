@@ -7,3 +7,12 @@ INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_mod
 INSERT INTO `examifire`.`user_role` (`user_id`, `role_id`) VALUES ('1', '1');
 INSERT INTO `examifire`.`user_role` (`user_id`, `role_id`) VALUES ('1', '2');
 INSERT INTO `examifire`.`user_role` (`user_id`, `role_id`) VALUES ('2', '2');
+
+
+INSERT INTO `examifire`.`quiz_type` (`quiz_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('1', NOW(), '1', '1', NOW(), 'FIRST_MID_TERM');
+INSERT INTO `examifire`.`quiz_type` (`quiz_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('2', NOW(), '1', '1', NOW(), 'SECOND_MID_TERM');
+INSERT INTO `examifire`.`quiz_type` (`quiz_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('3', NOW(), '1', '1', NOW(), 'FINAL');
+
+INSERT INTO `examifire`.`answer_type` (`answer_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('1', NOW(), '1', '1', NOW(), 'MULTIPLE_ANSWER_QUESTION');
+INSERT INTO `examifire`.`answer_type` (`answer_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('2', NOW(), '1', '1', NOW(), 'OPEN_ANSWER_QUESTION');
+INSERT INTO `examifire`.`answer_type` (`answer_type_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `type`) VALUES ('3', NOW(), '1', '1', NOW(), 'TRUE_FALSE_ANSWER_QUESTION');

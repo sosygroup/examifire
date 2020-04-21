@@ -1,5 +1,9 @@
 package it.univaq.examifire.model.course;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,30 +21,36 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.univaq.examifire.model.audit.EntityAudit;
+import it.univaq.examifire.model.question.Question;
 
 @Entity
-@Table(name = "course_part_content")
-public class CoursePartContent extends EntityAudit<Long>{
+@Table(name = "content")
+public class Content extends EntityAudit<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "course_part_content_id")
+	@Column(name = "content_id")
 	private Long id;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "course_part_id", nullable = false, updatable = false)
+	@JoinColumn(name = "part_id", nullable = false, updatable = false)
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
-	private CoursePart coursePart;
-	
+	private Part part;
+
 	@NotBlank(message = "Please enter the name")
 	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "name", nullable = false, length = 45)
 	private String name;
-	
-	//@NotBlank(message = "Please enter the description")
+
+	// @NotBlank(message = "Please enter the description")
 	@Lob // the database column type is LONGTEXT
 	@Column(name = "description", nullable = true)
 	private String description;
+
+	// @OneToMany(mappedBy = "variableName") variableName is the name of the
+	// variable annotated with @ManyToOne
+	@OneToMany(mappedBy = "courseContent", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Set<Question> questions = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -49,12 +60,12 @@ public class CoursePartContent extends EntityAudit<Long>{
 		this.id = id;
 	}
 
-	public CoursePart getCoursePart() {
-		return coursePart;
+	public Part getPart() {
+		return part;
 	}
 
-	public void setCoursePart(CoursePart coursePart) {
-		this.coursePart = coursePart;
+	public void setPart(Part part) {
+		this.part = part;
 	}
 
 	public String getName() {
@@ -73,14 +84,23 @@ public class CoursePartContent extends EntityAudit<Long>{
 		this.description = description;
 	}
 
+	public Set<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Set<Question> questions) {
+		this.questions = questions;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((coursePart == null) ? 0 : coursePart.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((part == null) ? 0 : part.hashCode());
+		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
 		return result;
 	}
 
@@ -92,12 +112,7 @@ public class CoursePartContent extends EntityAudit<Long>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CoursePartContent other = (CoursePartContent) obj;
-		if (coursePart == null) {
-			if (other.coursePart != null)
-				return false;
-		} else if (!coursePart.equals(other.coursePart))
-			return false;
+		Content other = (Content) obj;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -113,13 +128,23 @@ public class CoursePartContent extends EntityAudit<Long>{
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (part == null) {
+			if (other.part != null)
+				return false;
+		} else if (!part.equals(other.part))
+			return false;
+		if (questions == null) {
+			if (other.questions != null)
+				return false;
+		} else if (!questions.equals(other.questions))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CoursePartContent [id=" + id + ", coursePart=" + coursePart + ", name=" + name + ", description="
-				+ description + "]";
+		return "Content [id=" + id + ", part=" + part + ", name=" + name + ", description=" + description
+				+ ", questions=" + questions + "]";
 	}
-	
+
 }

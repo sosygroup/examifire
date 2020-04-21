@@ -1,4 +1,4 @@
-package it.univaq.examifire.model;
+package it.univaq.examifire.model.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

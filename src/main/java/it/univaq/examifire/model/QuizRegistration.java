@@ -16,12 +16,14 @@ import javax.validation.constraints.Digits;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.univaq.examifire.model.audit.EntityAudit;
-import it.univaq.examifire.model.user.User;
+import it.univaq.examifire.model.user.Student;
 
+// represent the subscription and the 
 @Entity
-@Table(name = "user_quiz")
-public class UserQuiz extends EntityAudit<Long> implements Serializable {
-	private static final long serialVersionUID = -3071167866541687155L;
+@Table(name = "quiz_registration")
+public class QuizRegistration extends EntityAudit<Long> implements Serializable {
+	private static final long serialVersionUID = 239667744691558120L;
+
 	/*
 	 * @ManyToOne operates on the so called logical model, i.e. the object-oriented
 	 * side of the object-relational mapping. The semantics of optional=false here
@@ -48,7 +50,7 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable {
 	@JoinColumn(name = "user_id", nullable = false, updatable = false)
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
-	private User user;
+	private Student student;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -78,12 +80,12 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable {
 	@Column(name = "grade", nullable = true, precision = 2, scale = 1)
 	private BigDecimal grade;
 
-	public User getUser() {
-		return user;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	public Quiz getQuiz() {
@@ -144,7 +146,7 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable {
 		result = prime * result + ((quizBookingTime == null) ? 0 : quizBookingTime.hashCode());
 		result = prime * result + ((quizEndTime == null) ? 0 : quizEndTime.hashCode());
 		result = prime * result + ((quizStartTime == null) ? 0 : quizStartTime.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		return result;
 	}
 
@@ -156,7 +158,7 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserQuiz other = (UserQuiz) obj;
+		QuizRegistration other = (QuizRegistration) obj;
 		if (grade == null) {
 			if (other.grade != null)
 				return false;
@@ -187,19 +189,19 @@ public class UserQuiz extends EntityAudit<Long> implements Serializable {
 				return false;
 		} else if (!quizStartTime.equals(other.quizStartTime))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (student == null) {
+			if (other.student != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!student.equals(other.student))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "UserQuiz [user=" + user + ", quiz=" + quiz + ", quizBookingTime=" + quizBookingTime + ", quizStartTime="
-				+ quizStartTime + ", quizEndTime=" + quizEndTime + ", gradeRegistrationTime=" + gradeRegistrationTime
-				+ ", grade=" + grade + "]";
+		return "QuizRegistration [student=" + student + ", quiz=" + quiz + ", quizBookingTime=" + quizBookingTime
+				+ ", quizStartTime=" + quizStartTime + ", quizEndTime=" + quizEndTime + ", gradeRegistrationTime="
+				+ gradeRegistrationTime + ", grade=" + grade + "]";
 	}
 
 }

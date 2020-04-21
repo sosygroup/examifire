@@ -3,7 +3,6 @@ package it.univaq.examifire.model.user;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,14 +14,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import it.univaq.examifire.model.Role;
-import it.univaq.examifire.model.UserQuiz;
 import it.univaq.examifire.model.audit.EntityAudit;
 
 @Entity
@@ -64,7 +60,7 @@ public class User extends EntityAudit<Long> {
 	// this means that the user is both active and enabled
 	@Column(name = "active", columnDefinition = "boolean default true", nullable = false)
 	private boolean active = true;
-	
+
 	@Column(name = "password_expired", columnDefinition = "boolean default false", nullable = false)
 	private boolean passwordExpired = false;
 
@@ -72,12 +68,7 @@ public class User extends EntityAudit<Long> {
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<>();
-	
-	// @OneToMany(mappedBy = "variableName") variableName is the name of the variable annotated with @ManyToOne
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private Set<UserQuiz> userQuiz = new HashSet<>();
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -150,14 +141,6 @@ public class User extends EntityAudit<Long> {
 		this.roles = roles;
 	}
 
-	public Set<UserQuiz> getUserQuiz() {
-		return userQuiz;
-	}
-
-	public void setUserQuiz(Set<UserQuiz> userQuiz) {
-		this.userQuiz = userQuiz;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -170,7 +153,6 @@ public class User extends EntityAudit<Long> {
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (passwordExpired ? 1231 : 1237);
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + ((userQuiz == null) ? 0 : userQuiz.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -218,11 +200,6 @@ public class User extends EntityAudit<Long> {
 				return false;
 		} else if (!roles.equals(other.roles))
 			return false;
-		if (userQuiz == null) {
-			if (other.userQuiz != null)
-				return false;
-		} else if (!userQuiz.equals(other.userQuiz))
-			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -235,9 +212,7 @@ public class User extends EntityAudit<Long> {
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
 				+ ", password=" + password + ", email=" + email + ", active=" + active + ", passwordExpired="
-				+ passwordExpired + ", roles=" + roles + ", userQuiz=" + userQuiz + "]";
+				+ passwordExpired + ", roles=" + roles + "]";
 	}
-
-	
 
 }

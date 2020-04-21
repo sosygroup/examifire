@@ -21,7 +21,7 @@ import it.univaq.examifire.model.audit.EntityAudit;
 
 @Entity
 @Table(name = "question_version")
-public class QuestionVersion extends EntityAudit<Long> implements Serializable{
+public class QuestionVersion extends EntityAudit<Long> implements Serializable {
 	private static final long serialVersionUID = 5836461020806281888L;
 
 	@Id
@@ -30,12 +30,12 @@ public class QuestionVersion extends EntityAudit<Long> implements Serializable{
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
 	private Question question;
-	
+
 	@Id
 	@CreatedDate
-	@Column(name = "version_data", nullable = false, updatable = false)
-	private LocalDateTime versionData;
-	
+	@Column(name = "version_date", nullable = false, updatable = false)
+	private LocalDateTime versionDate;
+
 	@NotBlank(message = "Please enter the description")
 	@Lob // the database column type is LONGTEXT
 	@Column(name = "comment", nullable = true)
@@ -49,12 +49,12 @@ public class QuestionVersion extends EntityAudit<Long> implements Serializable{
 		this.question = question;
 	}
 
-	public LocalDateTime getVersionData() {
-		return versionData;
+	public LocalDateTime getVersionDate() {
+		return versionDate;
 	}
 
-	public void setVersionData(LocalDateTime versionData) {
-		this.versionData = versionData;
+	public void setVersionDate(LocalDateTime versionDate) {
+		this.versionDate = versionDate;
 	}
 
 	public String getComment() {
@@ -71,7 +71,7 @@ public class QuestionVersion extends EntityAudit<Long> implements Serializable{
 		int result = 1;
 		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
-		result = prime * result + ((versionData == null) ? 0 : versionData.hashCode());
+		result = prime * result + ((versionDate == null) ? 0 : versionDate.hashCode());
 		return result;
 	}
 
@@ -94,19 +94,17 @@ public class QuestionVersion extends EntityAudit<Long> implements Serializable{
 				return false;
 		} else if (!question.equals(other.question))
 			return false;
-		if (versionData == null) {
-			if (other.versionData != null)
+		if (versionDate == null) {
+			if (other.versionDate != null)
 				return false;
-		} else if (!versionData.equals(other.versionData))
+		} else if (!versionDate.equals(other.versionDate))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "QuestionVersion [question=" + question + ", versionData=" + versionData + ", comment=" + comment + "]";
+		return "QuestionVersion [question=" + question + ", versionDate=" + versionDate + ", comment=" + comment + "]";
 	}
-	
-	
 
 }

@@ -12,11 +12,11 @@ import javax.validation.constraints.Size;
 import it.univaq.examifire.model.audit.EntityAudit;
 
 @Entity
-@Table(name = "quiz_type")
-public class QuizType extends EntityAudit<Long> {
+@Table(name = "answer_type")
+public class AnswerType extends EntityAudit<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "quiz_type_id")
+	@Column(name = "answer_type_id")
 	private Long id;
 
 	@NotBlank(message = "Please enter the type")
@@ -70,7 +70,7 @@ public class QuizType extends EntityAudit<Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		QuizType other = (QuizType) obj;
+		AnswerType other = (AnswerType) obj;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -91,7 +91,7 @@ public class QuizType extends EntityAudit<Long> {
 
 	@Override
 	public String toString() {
-		return "QuizType [id=" + id + ", type=" + type + ", description=" + description + "]";
+		return "AnswerType [id=" + id + ", type=" + type + ", description=" + description + "]";
 	}
 
 }

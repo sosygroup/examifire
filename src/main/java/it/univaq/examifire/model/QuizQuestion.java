@@ -1,6 +1,7 @@
-package it.univaq.examifire.model.course;
+package it.univaq.examifire.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,16 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.univaq.examifire.model.audit.EntityAudit;
-import it.univaq.examifire.model.user.TeacherUser;
+import it.univaq.examifire.model.question.Question;
 
 @Entity
-@Table(name = "course_teacher_user")
-public class CourseTeacherUser extends EntityAudit<Long> implements Serializable {
-	private static final long serialVersionUID = 8719823681870895521L;
+@Table(name = "quiz_question")
+public class QuizQuestion extends EntityAudit<Long> implements Serializable {
+	private static final long serialVersionUID = -852059341405165211L;
 
 	/*
 	 * @ManyToOne operates on the so called logical model, i.e. the object-oriented
@@ -38,57 +40,63 @@ public class CourseTeacherUser extends EntityAudit<Long> implements Serializable
 	 * If @JoinColumn(nullable = false) was omitted, the column would be nullable.
 	 * One could insert a null value there and the DB would happily accept it.
 	 * However if someone tried to read that value through JPA, the JPA engine would
-	 * protest because it expects a value that can be translated to a User object
-	 * to always be there, as specified by @ManyToOne(optional = false).
+	 * protest because it expects a value that can be translated to a User object to
+	 * always be there, as specified by @ManyToOne(optional = false).
 	 */
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "user_id", nullable = false, updatable = false)
+	@JoinColumn(name = "quiz_id", nullable = false, updatable = false)
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
-	private TeacherUser teacherUser;
+	private Quiz quiz;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "course_id", nullable = false, updatable = false)
+	@JoinColumn(name = "question_id", nullable = false, updatable = false)
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
-	private Course course;
-	
-	@Column(name = "leader", nullable = false)
-	private boolean leader;
+	private Question question;
 
-	public TeacherUser getTeacherUser() {
-		return teacherUser;
+	/*
+	 * in the database the resulting column will be DECIMAL (3,1), i.e., a total of
+	 * 3 digits, 1 of which after the decimal point (and 14 before the decimal
+	 * point).
+	 */
+	@Digits(integer = 2 /* precision */, fraction = 1 /* scale */)
+	@Column(name = "grade", nullable = true, precision = 2, scale = 1)
+	private BigDecimal grade;
+
+	public Quiz getQuiz() {
+		return quiz;
 	}
 
-	public void setTeacherUser(TeacherUser teacherUser) {
-		this.teacherUser = teacherUser;
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
 	}
 
-	public Course getCourse() {
-		return course;
+	public Question getQuestion() {
+		return question;
 	}
 
-	public void setCourse(Course course) {
-		this.course = course;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 
-	public boolean isLeader() {
-		return leader;
+	public BigDecimal getGrade() {
+		return grade;
 	}
 
-	public void setLeader(boolean leader) {
-		this.leader = leader;
+	public void setGrade(BigDecimal grade) {
+		this.grade = grade;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((course == null) ? 0 : course.hashCode());
-		result = prime * result + (leader ? 1231 : 1237);
-		result = prime * result + ((teacherUser == null) ? 0 : teacherUser.hashCode());
+		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+		result = prime * result + ((question == null) ? 0 : question.hashCode());
+		result = prime * result + ((quiz == null) ? 0 : quiz.hashCode());
 		return result;
 	}
 
@@ -100,25 +108,28 @@ public class CourseTeacherUser extends EntityAudit<Long> implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CourseTeacherUser other = (CourseTeacherUser) obj;
-		if (course == null) {
-			if (other.course != null)
+		QuizQuestion other = (QuizQuestion) obj;
+		if (grade == null) {
+			if (other.grade != null)
 				return false;
-		} else if (!course.equals(other.course))
+		} else if (!grade.equals(other.grade))
 			return false;
-		if (leader != other.leader)
-			return false;
-		if (teacherUser == null) {
-			if (other.teacherUser != null)
+		if (question == null) {
+			if (other.question != null)
 				return false;
-		} else if (!teacherUser.equals(other.teacherUser))
+		} else if (!question.equals(other.question))
+			return false;
+		if (quiz == null) {
+			if (other.quiz != null)
+				return false;
+		} else if (!quiz.equals(other.quiz))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CourseTeacherUser [teacherUser=" + teacherUser + ", course=" + course + ", leader=" + leader + "]";
+		return "QuizQuestion [quiz=" + quiz + ", question=" + question + ", grade=" + grade + "]";
 	}
-	
+
 }

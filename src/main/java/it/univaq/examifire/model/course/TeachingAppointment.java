@@ -9,19 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.univaq.examifire.model.audit.EntityAudit;
-import it.univaq.examifire.model.user.StudentUser;
+import it.univaq.examifire.model.user.Teacher;
 
 @Entity
-@Table(name = "course_student_user")
-public class CourseStudentUser extends EntityAudit<Long> implements Serializable {
-	private static final long serialVersionUID = 4600377268790610300L;
+@Table(name = "teaching_appointment")
+public class TeachingAppointment extends EntityAudit<Long> implements Serializable {
+	private static final long serialVersionUID = 3368643330583206422L;
 
 	/*
 	 * @ManyToOne operates on the so called logical model, i.e. the object-oriented
@@ -41,15 +38,15 @@ public class CourseStudentUser extends EntityAudit<Long> implements Serializable
 	 * If @JoinColumn(nullable = false) was omitted, the column would be nullable.
 	 * One could insert a null value there and the DB would happily accept it.
 	 * However if someone tried to read that value through JPA, the JPA engine would
-	 * protest because it expects a value that can be translated to a User object
-	 * to always be there, as specified by @ManyToOne(optional = false).
+	 * protest because it expects a value that can be translated to a User object to
+	 * always be there, as specified by @ManyToOne(optional = false).
 	 */
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "user_id", nullable = false, updatable = false)
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
-	private StudentUser studentUser;
+	private Teacher teacher;
 
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -57,19 +54,16 @@ public class CourseStudentUser extends EntityAudit<Long> implements Serializable
 	@JsonIgnore // @JsonIgnore is used to solve infinite recursion issue caused by bidirectional
 				// relationship
 	private Course course;
-	
-	@NotBlank(message = "Please enter the cfu/ects")
-	@Digits(integer = 2 /* precision */, fraction = 0 /* scale */)
-	@PositiveOrZero(message = "Please enter a positive number or zero")
-	@Column(name = "cfu_ects", nullable = false, precision = 2)
-	private int cfu_ects;
 
-	public StudentUser getStudentUser() {
-		return studentUser;
+	@Column(name = "leader", nullable = false)
+	private boolean leader;
+
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setStudentUser(StudentUser studentUser) {
-		this.studentUser = studentUser;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	public Course getCourse() {
@@ -80,21 +74,21 @@ public class CourseStudentUser extends EntityAudit<Long> implements Serializable
 		this.course = course;
 	}
 
-	public int getCfu_ects() {
-		return cfu_ects;
+	public boolean isLeader() {
+		return leader;
 	}
 
-	public void setCfu_ects(int cfu_ects) {
-		this.cfu_ects = cfu_ects;
+	public void setLeader(boolean leader) {
+		this.leader = leader;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + cfu_ects;
 		result = prime * result + ((course == null) ? 0 : course.hashCode());
-		result = prime * result + ((studentUser == null) ? 0 : studentUser.hashCode());
+		result = prime * result + (leader ? 1231 : 1237);
+		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
 
@@ -106,24 +100,25 @@ public class CourseStudentUser extends EntityAudit<Long> implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CourseStudentUser other = (CourseStudentUser) obj;
-		if (cfu_ects != other.cfu_ects)
-			return false;
+		TeachingAppointment other = (TeachingAppointment) obj;
 		if (course == null) {
 			if (other.course != null)
 				return false;
 		} else if (!course.equals(other.course))
 			return false;
-		if (studentUser == null) {
-			if (other.studentUser != null)
+		if (leader != other.leader)
+			return false;
+		if (teacher == null) {
+			if (other.teacher != null)
 				return false;
-		} else if (!studentUser.equals(other.studentUser))
+		} else if (!teacher.equals(other.teacher))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CourseStudentUser [studentUser=" + studentUser + ", course=" + course + ", cfu_ects=" + cfu_ects + "]";
+		return "TeachingAppointment [teacher=" + teacher + ", course=" + course + ", leader=" + leader + "]";
 	}
+
 }
