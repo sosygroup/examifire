@@ -20,7 +20,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
 import it.univaq.examifire.model.audit.EntityAudit;
 import it.univaq.examifire.validation.DuplicatedEmail;
 import it.univaq.examifire.validation.DuplicatedUsername;
@@ -34,6 +33,10 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "user_id")
 	private Long id;
 
+	// @NotBlank(message = "{user.firstname.invalid}") externalize validation
+	// messages in the ValidationMessages.properties e.g.,
+	// user.firstname.invalid='${validatedValue}' is an invalid username. It must be
+	// minimum {min} chars and maximum {max} chars.
 	@NotBlank(message = "Please enter the firstname")
 	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "first_name", nullable = false, length = 45)
@@ -56,10 +59,9 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
 
-	// TODO check the message errors.invalid_email
 	@NotBlank(message = "Please enter the email")
 	@Size(max = 50, message = "Maximum 50 characters")
-	@Email(message = "{errors.invalid_email}")
+	@Email(message = "Invalid email")
 	@DuplicatedEmail
 	@Column(name = "email", unique = true, length = 50)
 	private String email;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{layout.html}" th:with="currentPage='index'">
+<!-- th:with="currentPage='login'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
+<head>
+<title>Index</title>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="panel-heading"><h4>Users</h4></div>
+		<table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th class="text-left">Username</th>
+					<th class="text-left">Firstname</th>
+					<th class="text-left">Lastname</th>
+					<th class="text-left">Email</th> 
+					<!--  --><th class="text-left">Roles</th> 
+					<th class="text-left"></th>
+					<th class="text-left"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.username}">Username</td>
+					<td th:text="${user.firstname}">Firstname</td>
+					<td th:text="${user.lastname}">Lastname</td>
+					<td th:text="${user.email}">Email</td>
+					<td> <span th:each="role, iterStat:${user.roles}"
+              th:with="roleName=${role.name} + ${iterStat.count != iterStat.size ? ', ' : ''}"
+              th:text="${roleName}">Roles</span></td>
+				
+					<td><a href="#" class="btn btn-info" role="button"
+						th:href="@{/user/update/{id}(id=${user.id})}">Update</a></td>
+					<td><a href="#" class="btn btn-info" role="button"
+						th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>
+				</tr>
+
+
+				
+			</tbody>
+		</table>
+		
+		
+	</div>
+</body>
+</html>

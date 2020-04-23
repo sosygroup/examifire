@@ -22,26 +22,46 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav ">
 					<li class="nav-item"><a
 						th:classappend="${currentPage == 'index'} ? 'active'"
 						class="nav-link" href="/">Home</a></li>
 					<li class="nav-item"><a
 						th:classappend="${currentPage == 'login'} ? 'active'"
-						class="nav-link" href="/watchlist">Watchlist</a></li>
-					<li class="nav-item "><a class="nav-link"
-						href="/showWatchlistItemInsertForm">Submit an item</a></li>
+						class="nav-link" href="#">Menu item one</a></li>
+					<li class="nav-item "><a class="nav-link" href="#">Menu
+							item two</a></li>
 				</ul>
 			</div>
-			<ul class="nav navbar-nav navbar-right">
-				<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a>
-					| <a th:href="@{/register}">Register</a></li>
-				<li sec:authorize="isAuthenticated()"><span>Welcome <span
-						sec:authentication="principal.username">User</span></span> <a
-					th:href="@{/logout}">Logout</a></li>
-			</ul>
 
+			<div sec:authorize="!isAuthenticated()" class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/register}">Register</a></li>
+				</ul>
+
+			</div>
+
+			<div sec:authorize="isAuthenticated()" class="navbar-right">
+				<ul class="nav pull-right navbar-nav">
+					<li class="dropdown"><a href="#"
+						class="dropdown-toggle nav-link" data-toggle="dropdown">Welcome,
+							<span sec:authentication="principal.username">User</span> <b
+							class="caret"></b>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/#}"><i
+									class="icon-cog"></i> Preferences</a></li>
+							<li><a class="dropdown-item" th:href="@{/#}"><i
+									class="icon-envelope"></i> Contact Support</a></li>
+							<li class="dropdown-divider"></li>
+							<li><a class="dropdown-item" th:href="@{/logout}"><i
+									class="icon-off"></i> Logout</a></li>
+						</ul></li>
+				</ul>
+			</div>
 		</nav>
 	</div>
 </body>

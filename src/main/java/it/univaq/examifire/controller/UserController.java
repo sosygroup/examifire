@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.UserService;
+
 @Controller
 public class UserController {
 	@Autowired
@@ -25,6 +26,12 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@GetMapping("/users")
+	public String findAll(Model model) {
+		model.addAttribute("users", userService.findAll());
+		return "user/list";
+	}
+	
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
@@ -41,7 +48,6 @@ public class UserController {
 		Role role = new Role();
 		role.setId(Role.STUDENT_ROLE_ID);
 		user.getRoles().add(role);
-		user.setActive(true);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.create(user);
 
@@ -91,6 +97,6 @@ public class UserController {
 		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userService.delete(user);
 		model.addAttribute("users", userService.findAll());
-		return "index";
+		return "redirect:/users";
 	}
 }
