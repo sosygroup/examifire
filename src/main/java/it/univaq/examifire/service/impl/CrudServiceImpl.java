@@ -1,15 +1,16 @@
 package it.univaq.examifire.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.univaq.examifire.repository.CrudRepository;
 import it.univaq.examifire.service.CrudService;
 
-public class CrudServiceImpl<MODEL, PK> implements CrudService<MODEL, PK> {
+public class CrudServiceImpl<MODEL, ID> implements CrudService<MODEL, ID> {
 	@Autowired
-	protected CrudRepository<MODEL, PK> repository;
+	protected CrudRepository<MODEL, ID> repository;
 
 	@Override
 	public List<MODEL> findAll() {
@@ -17,8 +18,8 @@ public class CrudServiceImpl<MODEL, PK> implements CrudService<MODEL, PK> {
 	}
 
 	@Override
-	public MODEL findByPK(PK pk) {
-		return repository.findById(pk).orElse(null);
+	public Optional<MODEL> findById(ID id) {
+		return repository.findById(id);
 	}
 
 	@Override
@@ -32,8 +33,12 @@ public class CrudServiceImpl<MODEL, PK> implements CrudService<MODEL, PK> {
 	}
 
 	@Override
-	public void delete(PK pk) {
-		repository.deleteById(pk);
+	public void deleteById(ID id) {
+		repository.deleteById(id);
+	}
+	@Override
+	public void delete(MODEL model) {
+		repository.delete(model);
 	}
 
 }

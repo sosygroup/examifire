@@ -14,6 +14,10 @@ import it.univaq.examifire.model.audit.EntityAudit;
 @Entity
 @Table(name = "role")
 public class Role extends EntityAudit<Long>{
+	public static final Long ADMINISTRATOR_ROLE_ID = 1L;
+	public static final Long TEACHER_ROLE_ID = 2L;
+	public static final Long STUDENT_ROLE_ID = 3L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")

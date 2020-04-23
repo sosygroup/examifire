@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{layout.html}" th:with="currentPage='registration'">
+
+<head>
+<title>Registration</title>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="panel col-md-6">
+			<div class="panel panel-primary">
+
+				<form action="#" method="post" th:action="@{/register}"
+					th:object="${user}">
+					<!-- The following hidden input maps a hidden input field to the id of the 
+					entity. Note that this is specifically required for *update* and *delete* purposes... -->
+					<!-- <input type="hidden" th:field="*{id}" /> -->
+					<hr />
+
+					<!-- Form-level (or Global-level) error messages here -->
+					<div class="form-group row ">
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{global}"> </span>
+						</div>
+					</div>
+
+					<div class="form-group row ">
+						<label for="firstname" class="col-sm-4 col-form-label">Firstname</label>
+						<div class="col-sm-5">
+							<input th:field="*{firstname}" type="text" class="form-control"
+								placeholder="Mandatory">
+						</div>
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{firstname}"> </span>
+						</div>
+					</div>
+
+					<div class="form-group row ">
+						<label for="lastname" class="col-sm-4 col-form-label">Lastname</label>
+						<div class="col-sm-5">
+							<input th:field="*{lastname}" type="text" class="form-control"
+								placeholder="Mandatory">
+						</div>
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{lastname}"> </span>
+						</div>
+					</div>
+
+					<div class="form-group row ">
+						<label for="username" class="col-sm-4 col-form-label">Username</label>
+						<div class="col-sm-5">
+							<input th:field="*{username}" type="text" class="form-control"
+								placeholder="Mandatory">
+						</div>
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{username}"> </span>
+						</div>
+					</div>
+
+					<div class="form-group row ">
+						<label for="password" class="col-sm-4 col-form-label">Password</label>
+						<div class="col-sm-5">
+							<input th:field="*{password}" type="text" class="form-control"
+								placeholder="Mandatory">
+						</div>
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{password}"> </span>
+						</div>
+					</div>
+
+					<div class="form-group row ">
+						<label for="email" class="col-sm-4 col-form-label">Email</label>
+						<div class="col-sm-5">
+							<input th:field="*{email}" type="text" class="form-control"
+								placeholder="Mandatory">
+						</div>
+						<div class="col-sm-12">
+							<span class="text-danger" th:errors="*{email}"> </span>
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

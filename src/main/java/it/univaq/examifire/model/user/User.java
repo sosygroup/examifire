@@ -17,9 +17,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
 import it.univaq.examifire.model.audit.EntityAudit;
+import it.univaq.examifire.validation.DuplicatedEmail;
+import it.univaq.examifire.validation.DuplicatedUsername;
 
 @Entity
 @Table(name = "user")
@@ -40,9 +44,11 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastname;
 
+	@DuplicatedUsername
 	@NotBlank(message = "Please enter the username")
-	@Size(max = 32, message = "Maximum 32 characters")
+	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters")
 	@Column(name = "username", nullable = false, unique = true, length = 32)
+	@Pattern(regexp = "^[A-Za-z0-9]+$", message = "Please use only alpha numeric characters")
 	private String username;
 
 	@NotBlank(message = "Please enter the password")
@@ -54,6 +60,7 @@ public class User extends EntityAudit<Long> {
 	@NotBlank(message = "Please enter the email")
 	@Size(max = 50, message = "Maximum 50 characters")
 	@Email(message = "{errors.invalid_email}")
+	@DuplicatedEmail
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
 

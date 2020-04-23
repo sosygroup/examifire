@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt", "createdBy", "lastModifiedBy" }, allowGetters = true)
 public abstract class EntityAudit<U> {
 	@CreatedBy
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = true, updatable = true)
 	protected U createdBy;
 
 	@CreatedDate
@@ -44,7 +44,7 @@ public abstract class EntityAudit<U> {
 	private Instant createdAt;
 
 	@LastModifiedBy
-	@Column(nullable = false, updatable = true)
+	@Column(nullable = true, updatable = true)
 	protected U lastModifiedBy;
 
 	@LastModifiedDate

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Server Error</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class='container'>
+			<div class='content page-error'>
+				<h1>500</h1>
+				<h2>Internal server error</h2>
+				<p>
+					Go to the <a href='/'>homepage</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.FutureOrPresent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -60,15 +61,18 @@ public class QuizRegistration extends EntityAudit<Long> implements Serializable 
 	private Quiz quiz;
 
 	// timestamp that specify when the user book the quiz
+	@FutureOrPresent(message = "The data must be in the present or in the future")
 	@Column(name = "quiz_booking_time", nullable = true)
 	private LocalDateTime quizBookingTime;
 
+	@FutureOrPresent(message = "The data must be in the present or in the future")
 	@Column(name = "quiz_start_time", nullable = true)
 	private LocalDateTime quizStartTime;
 
+	@FutureOrPresent(message = "The data must be in the present or in the future")
 	@Column(name = "quiz_end_time", nullable = true)
 	private LocalDateTime quizEndTime;
-
+	
 	@Column(name = "grade_registration_time", nullable = true)
 	private LocalDateTime gradeRegistrationTime;
 	/*

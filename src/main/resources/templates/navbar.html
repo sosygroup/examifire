@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>navbar fragment</title>
+</head>
+<body>
+	<div th:fragment="navbar">
+		<nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
+
+			<!-- See the class MvcConfig for URLs mappings -->
+
+			<a class="navbar-brand" href="/">Examifire</a>
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a
+						th:classappend="${currentPage == 'index'} ? 'active'"
+						class="nav-link" href="/">Home</a></li>
+					<li class="nav-item"><a
+						th:classappend="${currentPage == 'login'} ? 'active'"
+						class="nav-link" href="/watchlist">Watchlist</a></li>
+					<li class="nav-item "><a class="nav-link"
+						href="/showWatchlistItemInsertForm">Submit an item</a></li>
+				</ul>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a>
+					| <a th:href="@{/register}">Register</a></li>
+				<li sec:authorize="isAuthenticated()"><span>Welcome <span
+						sec:authentication="principal.username">User</span></span> <a
+					th:href="@{/logout}">Logout</a></li>
+			</ul>
+
+		</nav>
+	</div>
+</body>
+</html>
