@@ -42,6 +42,7 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "first_name", nullable = false, length = 45)
 	private String firstname;
 
+	// TODO Username can only contain letters, numbers and underscores (and no spaces!)
 	@NotBlank(message = "Please enter the lastname")
 	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "last_name", nullable = false, length = 45)

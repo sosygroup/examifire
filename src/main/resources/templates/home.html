@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}" th:with="currentPage='index'">
+<!-- th:with="currentPage='index'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
+<head>
+<title>Home</title>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<h2 class="mt-4">Welcome to the Examifire application!</h2>
+		<br>
+	</div>
+
+
+</body>
+</html>

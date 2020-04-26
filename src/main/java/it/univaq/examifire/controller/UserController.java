@@ -3,18 +3,13 @@ package it.univaq.examifire.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.UserService;
 
@@ -23,44 +18,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
+	
 	@GetMapping("/users")
 	public String findAll(Model model) {
 		model.addAttribute("users", userService.findAll());
 		return "user/list";
 	}
 	
-	@GetMapping("/register")
-	public String showRegistrationForm(Model model) {
-		model.addAttribute("user", new User());
-		return "registration";
-	}
-	
-	@Transactional
-	@PostMapping("/register")
-	public String registerUserAccount(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "registration";
-		}
-
-		Role role = new Role();
-		role.setId(Role.STUDENT_ROLE_ID);
-		user.getRoles().add(role);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		userService.create(user);
-
-		User createdUser = userService.findByUsername(user.getUsername()).orElseThrow(
-				() -> new UsernameNotFoundException("User Not Found with username: " + user.getUsername()));
-
-		createdUser.setCreatedBy(createdUser.getId());
-		createdUser.setLastModifiedBy(createdUser.getId());
-		userService.update(createdUser);
-		
-		return "redirect:/login";
-	}
-
 	@PostMapping("/adduser")
 	public String addUser(@Valid User user, BindingResult result, Model model) {
 		if (result.hasErrors()) {

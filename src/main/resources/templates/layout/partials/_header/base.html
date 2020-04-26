@@ -1,0 +1,12 @@
+
+<!-- begin:: Header -->
+<div th:fragment="base" id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
+
+	<!--[html-partial:include:{"file":"partials/_header/_menu.html"}]/-->
+	<div th:replace="layout/partials/_header/_menu :: menu"></div>
+
+	<!--[html-partial:include:{"file":"partials/_header/topbar/_base.html"}]/-->
+	<div th:replace="layout/partials/_header/topbar/_base :: base"></div>
+</div>
+
+<!-- end:: Header -->
