@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
 
 <!-- begin:: Mycart -->
 <div th:fragment="my-cart" class="kt-mycart">
@@ -29,7 +36,7 @@
 					</div>
 				</div>
 				<a href="#" class="kt-mycart__pic">
-					<img src="assets/media/products/product9.jpg" title="">
+					<img th:src="@{/assets/media/products/product9.jpg}" title="">
 				</a>
 			</div>
 		</div>
@@ -51,7 +58,7 @@
 					</div>
 				</div>
 				<a href="#" class="kt-mycart__pic">
-					<img src="assets/media/products/product13.jpg" title="">
+					<img th:src="@{/assets/media/products/product13.jpg}" title="">
 				</a>
 			</div>
 		</div>
@@ -73,7 +80,7 @@
 					</div>
 				</div>
 				<a href="#" class="kt-mycart__pic">
-					<img src="assets/media/products/product16.jpg" title="">
+					<img th:src="@{/assets/media/products/product16.jpg}" title="">
 				</a>
 			</div>
 		</div>
@@ -95,7 +102,7 @@
 					</div>
 				</div>
 				<a href="#" class="kt-mycart__pic">
-					<img src="assets/media/products/product15.jpg" title="" alt="">
+					<img th:src="@{/assets/media/products/product15.jpg}" title="" alt="">
 				</a>
 			</div>
 		</div>
@@ -120,3 +127,6 @@
 </div>
 
 <!-- end:: Mycart -->
+
+</body>
+</html>

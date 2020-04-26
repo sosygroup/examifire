@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.security.UserDetailsServiceImpl;
 
 /*
@@ -26,7 +27,6 @@ import it.univaq.examifire.security.UserDetailsServiceImpl;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private static final String ROLE_ADMIN = "ADMIN";
 	
 	@Autowired
     private UserDetailsServiceImpl customUserDetailsServiceImpl;
@@ -73,8 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                .antMatchers("/index").permitAll()
 	                .antMatchers("/signup").permitAll()
 	                .antMatchers("/forgotpassword").permitAll()
-	                .antMatchers("/admin/**").hasRole(ROLE_ADMIN)
-	                .antMatchers("/users/**").hasRole(ROLE_ADMIN)
+	                .antMatchers("/home/admin/**").hasRole(Role.ADMIN_ROLE_NAME)
+	                .antMatchers("/home/home2/admin/**").hasRole(Role.ADMIN_ROLE_NAME)
+	                .antMatchers("/home/**").authenticated()
 	                .anyRequest().authenticated()
 	                .and()
 	            .formLogin()

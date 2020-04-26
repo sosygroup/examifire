@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
 
 <!--begin: User Bar -->
 <div th:fragment="user" class="kt-header__topbar-item kt-header__topbar-item--user">
@@ -5,7 +12,7 @@
 		<div class="kt-header__topbar-user">
 			<span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
 			<span sec:authentication="principal.username" class="kt-header__topbar-username kt-hidden-mobile">Username</span>
-			<img class="kt-hidden" alt="Pic" src="assets/media/users/300_25.jpg" />
+			<img class="kt-hidden" alt="Pic" th:src="@{/assets/media/users/300_25.jpg}" />
 
 			<!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
 			<span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>
@@ -19,3 +26,6 @@
 </div>
 
 <!--end: User Bar -->
+
+</body>
+</html>

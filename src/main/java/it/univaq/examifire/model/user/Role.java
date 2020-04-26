@@ -14,18 +14,21 @@ import it.univaq.examifire.model.audit.EntityAudit;
 @Entity
 @Table(name = "role")
 public class Role extends EntityAudit<Long>{
-	public static final Long ADMINISTRATOR_ROLE_ID = 1L;
+	public static final Long ADMIN_ROLE_ID = 1L;
+	public static final String ADMIN_ROLE_NAME = "ADMIN";
 	public static final Long TEACHER_ROLE_ID = 2L;
+	public static final String TEACHER_ROLE_NAME = "TEACHER";
 	public static final Long STUDENT_ROLE_ID = 3L;
+	public static final String STUDENT_ROLE_NAME = "STUDENT";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_id")
+	@Column(name = "role_id", updatable = false)
 	private Long id;
 
 	@NotBlank(message = "Please enter the role name")
 	@Size(max = 45, message = "Maximum 45 characters")
-	@Column(name = "name", nullable = false, unique = true, length = 45)
+	@Column(name = "name", nullable = false, unique = true, updatable = false, length = 45)
 	private String name;
 
 	//@NotBlank(message = "Please enter the role description")

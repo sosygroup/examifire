@@ -1,9 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
 
 <!-- begin:: Header Mobile -->
 <div th:fragment="base-mobile" id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
 	<div class="kt-header-mobile__logo">
 		<a href="index.html">
-			<img alt="Logo" src="assets/media/logos/logo-dark.png" />
+			<img alt="Logo" th:src="@{/assets/media/logos/logo-dark.png}" />
 		</a>
 	</div>
 	<div class="kt-header-mobile__toolbar">
@@ -14,3 +21,6 @@
 </div>
 
 <!-- end:: Header Mobile -->
+
+</body>
+</html>

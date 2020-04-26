@@ -1,3 +1,7 @@
+--
+-- Insert predefined roles. DO NOT CHANGE THESE DEFAULT VALUES.
+--
+
 INSERT INTO `examifire`.`role` (`role_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `description`, `name`) VALUES ('1', NOW(), '1', '1', NOW(), 'System administrator', 'ADMIN');
 INSERT INTO `examifire`.`role` (`role_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `description`, `name`) VALUES ('2', NOW(), '1', '1', NOW(), 'Teacher user', 'TEACHER');
 INSERT INTO `examifire`.`role` (`role_id`, `created_at`, `created_by`, `last_modified_by`, `updated_at`, `description`, `name`) VALUES ('3', NOW(), '1', '1', NOW(), 'Student user', 'STUDENT');

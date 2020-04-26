@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
 
 <!--Begin:: Chat-->
 <div th:fragment="chat" class="modal fade- modal-sticky-bottom-right" id="kt_chat_modal" role="dialog" data-backdrop="false">
@@ -84,7 +91,7 @@
 								<div class="kt-chat__message kt-chat__message--success">
 									<div class="kt-chat__user">
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/100_12.jpg" alt="image">
+											<img th:src="@{/assets/media/users/100_12.jpg}" alt="image">
 										</span>
 										<a href="#" class="kt-chat__username">Jason Muller</span></a>
 										<span class="kt-chat__datetime">2 Hours</span>
@@ -98,17 +105,17 @@
 										<span class="kt-chat__datetime">30 Seconds</span>
 										<a href="#" class="kt-chat__username">You</span></a>
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/300_21.jpg" alt="image">
+											<img th:src="@{/assets/media/users/300_21.jpg}" alt="image">
 										</span>
 									</div>
 									<div class="kt-chat__text">
-										Hey there, we’re just writing to let you know that you’ve<br> been subscribed to a repository on GitHub.
+										Hey there, we are just writing to let you know that you have<br> been subscribed to a repository on GitHub.
 									</div>
 								</div>
 								<div class="kt-chat__message kt-chat__message--success">
 									<div class="kt-chat__user">
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/100_12.jpg" alt="image">
+											<img th:src="@{/assets/media/users/100_12.jpg}" alt="image">
 										</span>
 										<a href="#" class="kt-chat__username">Jason Muller</span></a>
 										<span class="kt-chat__datetime">30 Seconds</span>
@@ -122,23 +129,23 @@
 										<span class="kt-chat__datetime">Just Now</span>
 										<a href="#" class="kt-chat__username">You</span></a>
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/300_21.jpg" alt="image">
+											<img th:src="@{/assets/media/users/300_21.jpg}" alt="image">
 										</span>
 									</div>
 									<div class="kt-chat__text">
-										You’ll receive notifications for all issues, pull requests!
+										You will receive notifications for all issues, pull requests!
 									</div>
 								</div>
 								<div class="kt-chat__message kt-chat__message--success">
 									<div class="kt-chat__user">
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/100_12.jpg" alt="image">
+											<img th:src="@{/assets/media/users/100_12.jpg}" alt="image">
 										</span>
 										<a href="#" class="kt-chat__username">Jason Muller</span></a>
 										<span class="kt-chat__datetime">2 Hours</span>
 									</div>
 									<div class="kt-chat__text">
-										You were automatically <b class="kt-font-brand">subscribed</b> <br>because you’ve been given access to the repository
+										You were automatically <b class="kt-font-brand">subscribed</b> <br>because you have been given access to the repository
 									</div>
 								</div>
 								<div class="kt-chat__message kt-chat__message--right kt-chat__message--brand">
@@ -146,7 +153,7 @@
 										<span class="kt-chat__datetime">30 Seconds</span>
 										<a href="#" class="kt-chat__username">You</span></a>
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/300_21.jpg" alt="image">
+											<img th:src="@{/assets/media/users/300_21.jpg}" alt="image">
 										</span>
 									</div>
 									<div class="kt-chat__text">
@@ -156,7 +163,7 @@
 								<div class="kt-chat__message kt-chat__message--success">
 									<div class="kt-chat__user">
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/100_12.jpg" alt="image">
+											<img th:src="@{/assets/media/users/100_12.jpg}" alt="image">
 										</span>
 										<a href="#" class="kt-chat__username">Jason Muller</span></a>
 										<span class="kt-chat__datetime">30 Seconds</span>
@@ -170,7 +177,7 @@
 										<span class="kt-chat__datetime">Just Now</span>
 										<a href="#" class="kt-chat__username">You</span></a>
 										<span class="kt-media kt-media--circle kt-media--sm">
-											<img src="assets/media/users/300_21.jpg" alt="image">
+											<img th:src="@{/assets/media/users/300_21.jpg}" alt="image">
 										</span>
 									</div>
 									<div class="kt-chat__text">
@@ -204,3 +211,6 @@
 </div>
 
 <!--ENd:: Chat-->
+
+</body>
+</html>

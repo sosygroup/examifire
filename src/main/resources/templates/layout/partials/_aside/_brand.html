@@ -1,9 +1,15 @@
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
 <!-- begin:: Aside -->
 <div th:fragment="brand" class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
 	<div class="kt-aside__brand-logo">
 		<a th:href="@{/home}">
-			<img alt="Logo" src="assets/media/logos/logo-dark.png" />
+			<img alt="Logo" th:src="@{/assets/media/logos/logo-dark.png}" />
 		</a>
 	</div>
 	<div class="kt-aside__brand-tools">
@@ -31,3 +37,6 @@
 </div>
 
 <!-- end:: Aside -->
+
+</body>
+</html>

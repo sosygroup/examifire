@@ -9,15 +9,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.UserService;
 
-@Controller
+@Controller()
+@RequestMapping("/home/admin")
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
 	
 	@GetMapping("/users")
 	public String findAll(Model model) {
