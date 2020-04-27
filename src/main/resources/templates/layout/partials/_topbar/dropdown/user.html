@@ -8,7 +8,7 @@
 
 <div th:fragment="user">
 <!--begin: Head -->
-<div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" style="background-image: url(assets/media/misc/bg-1.jpg)">
+<div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" th:style="'background-image: url(' + @{/assets/media/misc/bg-1.jpg} + ');'">
 	<div class="kt-user-card__avatar">
 		<img class="kt-hidden" alt="Pic" th:src="@{/assets/media/users/300_25.jpg}" />
 

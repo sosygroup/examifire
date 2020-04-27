@@ -14,14 +14,16 @@ import javax.validation.Payload;
  * @author Marco Autili
  *
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DuplicatedEmailValidator.class)
 public @interface DuplicatedEmail {
 	/*
 	 * 
-	 * The annotation Target({ ElementType.FIELD }) Specify that this custom
-	 * annotation is a field-level annotation, hence it is applicable to fields.
+	  * The annotation Target({ ElementType.TYPE }) Specify that this custom
+	 * annotation is a *class-level annotation*, hence it is applicable to any
+	 * class, which is WatchlistItem in our case. Having access to the whole class,
+	 * class-level annotations permit to realize *cross-field* validation rules
 	 * 
 	 * The annotation Retention(RetentionPolicy.RUNTIME) Specify that this custom
 	 * annotation is effective at runtime, as opposed to compile-time annotation.

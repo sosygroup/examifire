@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}"
+	th:with="currentPage='user-edit'">
+<!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
+<head>
+<title>User Edit</title>
+<!--
+	You don't need to put the layout:fragment attribute
+	into the <head> - the decoration process will automatically copy the 
+	<head> section of this content templates into the layout page.
+ 
+	<th:block layout:fragment="styles">
+		<link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+	</th:block>
+-->
+	<!--begin::Page Styles (used by this page) -->
+
+	<!--end::Page Styles -->
+</head>
+
+<body>
+ 	<!-- begin:: Content Head -->
+	<div layout:fragment="contentheader">
+	</div>
+	<!-- end:: Content Head -->
+
+	<!-- begin:: Content -->
+    <div layout:fragment="content">
+    </div>
+   
+   		
+	<!--begin::Page Scripts(used by this page) -->
+	<th:block layout:fragment="scripts">
+	</th:block>
+	<!--end::Page Scripts -->
+</body>
+</html>

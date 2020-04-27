@@ -24,6 +24,8 @@ import it.univaq.examifire.model.audit.EntityAudit;
 import it.univaq.examifire.validation.DuplicatedEmail;
 import it.univaq.examifire.validation.DuplicatedUsername;
 
+@DuplicatedUsername
+@DuplicatedEmail
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -48,7 +50,6 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastname;
 
-	@DuplicatedUsername
 	@NotBlank(message = "Please enter the username")
 	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters")
 	@Column(name = "username", nullable = false, unique = true, length = 32)
@@ -63,7 +64,6 @@ public class User extends EntityAudit<Long> {
 	@NotBlank(message = "Please enter the email")
 	@Size(max = 50, message = "Maximum 50 characters")
 	@Email(message = "Invalid email")
-	@DuplicatedEmail
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
 

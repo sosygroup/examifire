@@ -8,7 +8,7 @@
 
 <!-- begin:: Mycart -->
 <div th:fragment="my-cart" class="kt-mycart">
-	<div class="kt-mycart__head kt-head" style="background-image: url(assets/media/misc/bg-1.jpg);">
+	<div class="kt-mycart__head kt-head" th:style="'background-image: url(' + @{/assets/media/misc/bg-1.jpg} + ');'">
 		<div class="kt-mycart__info">
 			<span class="kt-mycart__icon"><i class="flaticon2-shopping-cart-1 kt-font-success"></i></span>
 			<h3 class="kt-mycart__title">My Cart</h3>

@@ -54,7 +54,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		<!-- begin:: Page -->
 		<div class="kt-grid kt-grid--ver kt-grid--root">
-			<div class="kt-grid__item kt-grid__item--fluid kt-grid  kt-error-v3" style="background-image: url(assets/media/error/bg3.jpg);">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid  kt-error-v3" th:style="'background-image: url(' + @{/assets/media/error/bg3.jpg} + ');'">
 				<div class="kt-error_container">
 					<span class="kt-error_number">
 						<h1>404</h1>
