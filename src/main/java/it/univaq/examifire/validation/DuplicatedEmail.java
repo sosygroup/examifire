@@ -9,18 +9,19 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * The annotated element is an email cannot be duplicated in the User table
- *  
+ * An email cannot be duplicated in the User table
+ * 
  * @author Marco Autili
  *
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DuplicatedEmailValidator.class)
+// IF YOU CHANGE THE NAME OF THIS INTERFACE, YOU MUST CHANGE THE SAME INTO THE HTML FILES THAT USES IT FOR SHOWING GLOBAL ERRORS (e.g., edit.html and signup.html) 
 public @interface DuplicatedEmail {
 	/*
 	 * 
-	  * The annotation Target({ ElementType.TYPE }) Specify that this custom
+	 * The annotation Target({ ElementType.TYPE }) Specify that this custom
 	 * annotation is a *class-level annotation*, hence it is applicable to any
 	 * class, which is WatchlistItem in our case. Having access to the whole class,
 	 * class-level annotations permit to realize *cross-field* validation rules

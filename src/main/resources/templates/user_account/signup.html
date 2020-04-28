@@ -84,14 +84,16 @@ License: You must have a valid license purchased only from themeforest(the above
 									</div>
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Username" name="username" th:field="*{username}">
-										<div th:if="${#fields.hasErrors('username')}" class="error invalid-feedback" style="display: block;">
+										<div th:if="${#fields.hasErrors('email')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
 											<span class="text-danger" th:errors="*{username}">Error message</span>
+											<span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span>
 										</div>
 									</div>
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Email" name="email" th:field="*{email}">
-										<div th:if="${#fields.hasErrors('email')}" class="error invalid-feedback" style="display: block;">
+										<div th:if="${#fields.hasErrors('email')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
 											<span class="text-danger" th:errors="*{email}">Error message</span>
+											<span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span>
 										</div>
 									</div>
 									<div class="input-group">

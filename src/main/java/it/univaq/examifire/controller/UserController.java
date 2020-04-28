@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.RoleService;
@@ -56,16 +57,16 @@ public class UserController {
 	
 	@Transactional
 	@PostMapping("/edit/{id}")
-	public String editAndExit(@PathVariable("id") Long id, @RequestParam boolean saveAndContinue, User user, BindingResult result, Model model) throws Exception {
-		User persistentUser = userService.findById(id)
-				.orElseThrow(() -> new Exception("User Not Found with id: " + id));
+	public String edit(@PathVariable("id") Long id, @RequestParam boolean saveAndContinue, User user, BindingResult result, Model model, RedirectAttributes atts) throws Exception {
+		User persistentUser = userService.findById(id).orElseThrow(() -> new Exception("User Not Found with id: " + id));
 		
 		user.setPassword(persistentUser.getPassword());
 		validator.validate(user, result);
-		
+
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach((error) -> {System.out.println(error.getDefaultMessage());});
-			user.setId(id);
+			model.addAttribute("roles", roleService.findAll());
+			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "user/edit";
 		}
 		
@@ -73,19 +74,22 @@ public class UserController {
 		if (saveAndContinue) {
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("user", userService.findById(id).get());
-			return "user/edit";	
+			atts.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			return "redirect:/home/admin/users/edit/"+id;
 		} else {
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("users", userService.findAll());
-			return "user/list";
+			atts.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			return "redirect:/home/admin/users";
 		}		
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteUser(@PathVariable("id") Long id, Model model) {
+	public String deleteUser(@PathVariable("id") Long id, Model model, RedirectAttributes atts) {
 		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userService.delete(user);
 		model.addAttribute("users", userService.findAll());
-		return "redirect:/users";
+		atts.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
+		return "redirect:/home/admin/users";
 	}
 }

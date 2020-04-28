@@ -1,7 +1,5 @@
 package it.univaq.examifire.validation;
 
-import java.util.Optional;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -17,16 +15,19 @@ public class DuplicatedUsernameValidator implements ConstraintValidator<Duplicat
 
 	@Override
 	public boolean isValid(User value, ConstraintValidatorContext context) {
-		Optional<User> user = userService.findById(value.getId());
+		// NOTE: this validation is called by during both user creation and modification.
+		// see comment in the it.univaq.examifire.validation.DuplicatedEmailValidator class 
 
-		if (user.isPresent() && user.get().getUsername().equals(value.getUsername())) {
+		User persistentUser = userService.findByUsername(value.getUsername()).orElse(null);
+		
+		if (persistentUser == null) {
+			return true;
+		}
+		if (value.getId() != null && value.getId().equals(persistentUser.getId())) {
 			return true;
 		}
 
-		if (userService.findByUsername(value.getUsername()).isPresent()) {
-			return false;
-		}
+		return false;
 
-		return true;
 	}
 }

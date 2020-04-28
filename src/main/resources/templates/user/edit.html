@@ -38,30 +38,20 @@
 				</div>
 			</div>
 			<div class="kt-subheader__toolbar">
-				<a th:href="@{/home/admin/users}" class="btn btn-default btn-bold"> Back </a>
-				<div class="btn-group">
-					<button id="button-save-changes-user-edit-form-continue" type="button" class="btn btn-brand btn-bold">Save Changes</button>
-					<button type="button"
-						class="btn btn-brand btn-bold dropdown-toggle dropdown-toggle-split"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					</button>
-					<div class="dropdown-menu dropdown-menu-right">
-						<ul class="kt-nav">
-							<li class="kt-nav__item"><a id="link-save-changes-user-edit-form-continue" href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-writing"></i> <span
-									class="kt-nav__link-text">Save &amp; continue</span>
-							</a></li>
-							<li class="kt-nav__item"><a th:href="@{/home/admin/users/edit/{id}(id=${user.id})}" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-medical-records"></i> <span
-									class="kt-nav__link-text">Discard changes</span>
-							</a></li>
-							<li class="kt-nav__item"><a id="link-save-changes-user-edit-form-exit" href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-hourglass-1"></i> <span
-									class="kt-nav__link-text">Save &amp; exit</span>
-							</a></li>
-						</ul>
-					</div>
-				</div>
+				<div class="kt-subheader__wrapper">
+						<a th:href="@{/home/admin/users}" class="btn btn-default btn-bold"> Back </a>
+						<div class="dropdown dropdown-inline">
+                            <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="flaticon-more-1"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a id="link-save-and-continue" class="dropdown-item" href="javascript:void(0);"><i class="la la-save"></i> Save</a>
+                                <a class="dropdown-item" th:href="@{/home/admin/users/edit/{id}(id=${user.id})}"><i class="la la-reply"></i> Discard Changes</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="link-save-and-exit" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i> Save &amp; Exit</a>
+                            </div>
+                        </div>
+				  </div>
 			</div>
 		</div>
 	</div>
@@ -159,6 +149,7 @@
 				<form id="user-edit-form" th:action="@{/home/admin/users/edit/{id}(id=${user.id})}"
 			th:object="${user}" method="post">
 					<input type="hidden" id="saveAndContinue" name="saveAndContinue" value="0">
+					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<div class="tab-content">
 						<div class="tab-pane active" id="kt_user_edit_tab_1"
 							role="tabpanel">
@@ -167,12 +158,6 @@
 									<div class="kt-section kt-section--first">
 										<div class="kt-section__body">
 											<div class="row">
-			<!-- Form-level (or Global-level) error messages here -->
-			<div class="form-group row ">
-				<div class="col-sm-8">
-					<span class="text-danger" th:errors="*{global}"> </span>
-				</div>
-			</div>
 												<label class="col-xl-3"></label>
 												<div class="col-lg-9 col-xl-6">
 													<h3 class="kt-section__title kt-section__title-sm">Profile
@@ -198,26 +183,38 @@
 													</div>
 												</div>
 											</div>
-											
+											<div class="form-group row">
+												<label class="col-form-label col-lg-3 col-sm-12">Roles</label>
+												<div class="col-lg-4 col-md-9 col-sm-12">
+													<select class="form-control kt-selectpicker" th:field="*{roles}" multiple="multiple">
+													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded &quot;>' + ${role.name} + '</span>'"
+													    		th:each="role : ${roles}"
+													            th:field="*{roles}"
+													            th:value="${role.id}"
+													            th:text="${role.name}">Roles</option>
+													</select>
+												</div>
+											</div>
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Username</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{username}">
-													<span class="text-danger" th:errors="*{username}"> </span>
+													<span class="text-danger" th:errors="*{username}">Username field errors</span>
+													<span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span>
 												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{firstname}">
-													<span class="text-danger" th:errors="*{firstname}"> </span>
+													<span class="text-danger" th:errors="*{firstname}">Firstname field errors</span>
 												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{lastname}">
-													<span class="text-danger" th:errors="*{lastname}"> </span>
+													<span class="text-danger" th:errors="*{lastname}">Lastname field errors</span>
 												</div>
 											</div>
 											<div class="form-group row">
@@ -231,20 +228,9 @@
 															th:field="*{email}" placeholder="Email"
 															aria-describedby="basic-addon1">
 													</div>
-													<span class="text-danger" th:errors="*{email}"> </span>
+													<span class="text-danger" th:errors="*{email}">Email field errors</span>
+													<span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span>
 													<span class="form-text text-muted">We'll never share your email with anyone else.</span>
-												</div>
-											</div>
-											<div class="form-group row">
-												<label class="col-form-label col-lg-3 col-sm-12">Custom Content</label>
-												<div class="col-lg-4 col-md-9 col-sm-12">
-													<select class="form-control kt-selectpicker" th:field="*{roles}" multiple="multiple">
-													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--danger kt-badge--inline kt-badge--rounded &quot;>' + ${role.name} + '</span>'"
-													    		th:each="role : ${roles}"
-													            th:field="*{roles}"
-													            th:value="${role.id}"
-													            th:text="${role.name}">Roles</option>
-													</select>
 												</div>
 											</div>
 										</div>

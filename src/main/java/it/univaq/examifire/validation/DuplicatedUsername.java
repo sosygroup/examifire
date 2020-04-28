@@ -9,7 +9,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * The annotated element is a username cannot be duplicated in the User table
+ * A username cannot be duplicated in the User table
  * 
  * @author Marco Autili
  *
@@ -18,6 +18,7 @@ import javax.validation.Payload;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DuplicatedUsernameValidator.class)
+// IF YOU CHANGE THE NAME OF THIS INTERFACE, YOU MUST CHANGE THE SAME INTO THE HTML FILES THAT USES IT FOR SHOWING GLOBAL ERRORS (e.g., edit.html and signup.html)
 public @interface DuplicatedUsername {
 	/*
 	 * 
