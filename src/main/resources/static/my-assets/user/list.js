@@ -107,7 +107,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					},
 				},
 			],
-	        initComplete: function( settings, json ) {
+			fnDrawCallback: function( settings, json ) {
 	        	ConfirmDeleteEvent.init();
 	        },
 		});
