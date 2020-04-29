@@ -1,8 +1,13 @@
 package it.univaq.examifire.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.User;
@@ -34,6 +40,17 @@ public class UserController {
 	public String findAll(Model model) {
 		model.addAttribute("users", userService.findAll());
 		return "user/list";
+	}
+	
+	@RequestMapping("/datatable.jquery")
+	public @ResponseBody Map<String, Object> findAllPaginated(Model model, Pageable pageable, @RequestParam("draw") Integer draw , @RequestParam(value = "search", defaultValue = "") String search){
+		Map<String, Object> data = new HashMap<String, Object>();
+        Page<User> page = userService.findAll(pageable);
+        data.put("data",page.getContent());
+        data.put("draw",draw);
+        data.put("recordsTotal",page.getTotalElements());
+        data.put("recordsFiltered",page.getTotalElements());
+        return data;
 	}
 	
 	@PostMapping("/add")
@@ -85,7 +102,7 @@ public class UserController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteUser(@PathVariable("id") Long id, Model model, RedirectAttributes atts) {
+	public String delete(@PathVariable("id") Long id, Model model, RedirectAttributes atts) throws Exception {
 		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userService.delete(user);
 		model.addAttribute("users", userService.findAll());

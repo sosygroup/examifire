@@ -1,4 +1,5 @@
 "use strict";
+
 var KTDatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {

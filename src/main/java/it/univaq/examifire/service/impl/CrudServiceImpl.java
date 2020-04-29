@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import it.univaq.examifire.repository.CrudRepository;
 import it.univaq.examifire.service.CrudService;
@@ -15,6 +17,11 @@ public class CrudServiceImpl<MODEL, ID> implements CrudService<MODEL, ID> {
 	@Override
 	public List<MODEL> findAll() {
 		return repository.findAll();
+	}
+	
+	@Override
+	public Page<MODEL> findAll(Pageable pageable){
+		return repository.findAll(pageable);
 	}
 
 	@Override

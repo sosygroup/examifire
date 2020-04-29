@@ -34,10 +34,10 @@ var UserEdit = function() {
 jQuery(document).ready(function() {
 	UserEdit.init();
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		myShowMessage("success",false,"fas fa-check","The user is updated!")
+		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
 	}	
 	if($("#confirm_crud_operation").val() == 'update_failed') {
-		myShowMessage("danger",false,"fas fa-exclamation-triangle","Please check the errors!")
+		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Deletion failed, please check the errors!")
 	}
 	
 	
