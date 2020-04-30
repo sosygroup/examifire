@@ -3,11 +3,10 @@ package it.univaq.examifire.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,21 +23,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.RoleService;
 import it.univaq.examifire.service.UserService;
+import it.univaq.examifire.util.PasswordGeneratorUtils;
 
 @Controller()
 @RequestMapping("/home/admin/users")
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
 	private RoleService roleService;
 	
 	@Autowired
 	private Validator validator;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@GetMapping()
 	public String findAll(Model model) {
-		model.addAttribute("users", userService.findAll());
 		return "user/list";
 	}
 	
@@ -53,15 +56,32 @@ public class UserController {
         return data;
 	}
 	
+	@GetMapping("/add")
+	public String showAdd(Model model) {
+		model.addAttribute("roles", roleService.findAll());
+		model.addAttribute("user", new User());
+		return "user/add";
+	}
+	
 	@PostMapping("/add")
-	public String add(@Valid User user, BindingResult result, Model model) {
+	public String add(@RequestParam(name = "save_and_add_new") boolean saveAndAddNew, User user, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+		user.setPassword(PasswordGeneratorUtils.generateCommonLangPassword());
+		validator.validate(user, result);
 		if (result.hasErrors()) {
-			return "add-user";
+			model.addAttribute("roles", roleService.findAll());
+			model.addAttribute("confirm_crud_operation", "add_failed");
+			return "user/add";
 		}
 
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.create(user);
-		model.addAttribute("users", userService.findAll());
-		return "index";
+		if (saveAndAddNew) {
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "add_succeeded");
+			return "redirect:/home/admin/users/add";
+		} else {
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "add_succeeded");
+			return "redirect:/home/admin/users";
+		}
 	}
 
 	@GetMapping("/edit/{id}")
@@ -74,7 +94,7 @@ public class UserController {
 	
 	@Transactional
 	@PostMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, @RequestParam boolean saveAndContinue, User user, BindingResult result, Model model, RedirectAttributes atts) throws Exception {
+	public String edit(@PathVariable("id") Long id, @RequestParam boolean saveAndContinue, User user, BindingResult result, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		User persistentUser = userService.findById(id).orElseThrow(() -> new Exception("User Not Found with id: " + id));
 		
 		user.setPassword(persistentUser.getPassword());
@@ -82,6 +102,7 @@ public class UserController {
 
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach((error) -> {System.out.println(error.getDefaultMessage());});
+			//restore the roles otherwise they are not retained in the model
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "user/edit";
@@ -91,12 +112,10 @@ public class UserController {
 		if (saveAndContinue) {
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("user", userService.findById(id).get());
-			atts.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 			return "redirect:/home/admin/users/edit/"+id;
 		} else {
-			model.addAttribute("roles", roleService.findAll());
-			model.addAttribute("users", userService.findAll());
-			atts.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 			return "redirect:/home/admin/users";
 		}		
 	}

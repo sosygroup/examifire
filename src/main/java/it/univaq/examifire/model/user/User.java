@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -57,7 +58,7 @@ public class User extends EntityAudit<Long> {
 	private String username;
 
 	@NotBlank(message = "Please enter the password")
-	@Size(max = 255, message = "Maximum 255 characters")
+	@Size(max = 255, min = 10, message = "Minimum 10 characters and maximum 255 characters")
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
 
@@ -74,6 +75,7 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "password_expired", columnDefinition = "boolean default false", nullable = false)
 	private boolean passwordExpired = false;
 
+	@NotEmpty(message = "Please select at least one role")
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })

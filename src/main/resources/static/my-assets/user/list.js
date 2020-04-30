@@ -85,7 +85,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				{
 					targets: -2,
 					render: function(data, type, full, meta) {
-						var status = {
+						var roles = {
 							1: {'ROLE_NAME':'ADMIN', 'class': 'kt-badge--danger'},
 							2: {'ROLE_NAME':'TEACHER' , 'class': 'kt-badge--primary'},
 							3: {'ROLE_NAME':'STUDENT' , 'class': 'kt-badge--success'},
@@ -97,8 +97,8 @@ var KTDatatablesAdvancedColumnRendering = function() {
 						var return_string="";
 						data.forEach(function(role) {
 							var color_span = "kt-badge--warning";
-							if (typeof status[role.id] != 'undefined') {
-								color_span = status[role.id].class;
+							if (typeof roles[role.id] != 'undefined') {
+								color_span = roles[role.id].class;
 							}
 							return_string=return_string+'<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + role.name + '</span>';
 						});
@@ -123,6 +123,10 @@ var KTDatatablesAdvancedColumnRendering = function() {
 
 jQuery(document).ready(function() {
 	KTDatatablesAdvancedColumnRendering.init();
+	
+	if($("#confirm_crud_operation").val() == 'add_succeeded') {
+		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been added!")
+	}
 	
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")

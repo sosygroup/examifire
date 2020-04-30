@@ -74,6 +74,12 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
+		<!-- others -->
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-lang3</artifactId>
+		</dependency>
+		
 		<!-- for testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
