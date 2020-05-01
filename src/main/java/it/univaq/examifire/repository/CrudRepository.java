@@ -1,10 +1,12 @@
 package it.univaq.examifire.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.io.Serializable;
+
+import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface CrudRepository<MODEL, PK> extends JpaRepository<MODEL, PK> {
+public interface CrudRepository<MODEL, ID extends Serializable> extends DataTablesRepository<MODEL, ID> {
 	/**
 	 * JPA specific extension of
 	 * {@link org.springframework.data.repository.Repository}.

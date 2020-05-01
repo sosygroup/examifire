@@ -252,15 +252,30 @@
 												</div>
 											</div>
 											<div class="form-group row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Deactivate the account</label>
+												<label class="col-xl-3 col-lg-3 col-form-label">The account is <code th:text="*{active} ? 'active' : 'deactivated'" >active | deactivated</code></label>
 												<div class="col-lg-9 col-xl-6">
-													 <button type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate</button>
+													<span class="kt-switch kt-switch--lg kt-switch--icon">
+														<label>
+															<input type="checkbox" th:field="*{active}">
+															<span></span>
+														</label>
+													</span>
+													<span class="form-text text-muted">This change will be effective only after saving.</span>
+													<!-- <button id="deactivate_the_account" th:attr="data-href=|@{/home/admin/users/deactivate/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate</button> --> 
 												</div>
 											</div>
 											<div class="form-group form-group-last row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Expire the password</label>
+												<label class="col-xl-3 col-lg-3 col-form-label">The password is <code th:text="*{passwordExpired} ? 'expired' : 'valid'" >valid | expired</code></label>
 												<div class="col-lg-9 col-xl-6">
-													<button type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Expire</button>
+													<span class="kt-switch kt-switch--lg kt-switch--icon">
+														<span class="kt-switch kt-switch--lg kt-switch--icon">
+														<label>
+															<input type="checkbox" th:field="*{passwordExpired}">
+															<span></span>
+														</label>
+													</span>
+													<span class="form-text text-muted">This change will be effective only after saving.</span>
+													<!-- <button id="expire_the_password" th:attr="data-href=|@{/home/admin/users/expire/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Expire</button> -->
 												</div>
 											</div>
 										</div>

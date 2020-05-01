@@ -1,37 +1,16 @@
 "use strict";
 
+
 var ConfirmDeleteEvent = function (){
-	var confirmDelete =function(){
+	// this function is called only after the datatable is fully loaded, 
+	// see the function 'fnDrawCallback' in the datatable 
+	var confirmDelete = function(){
 		$('a.confirm-delete').click(function (e) {
 			e.preventDefault();
-            var tthis = $(this);
-			
-            swal.fire({
-		        title: 'Are you sure?',
-		        html: "You are going to delete <b>"+tthis.data("user-firstname-lastname")+"</b><br><br>You won't be able to revert this!",
-		        type: 'warning',
-		        showCancelButton: true,
-		        confirmButtonText: 'Delete',
-		        reverseButtons: true
-		    }).then(function(result) {
-		        if (result.value) {
-		        	swal.fire({
-		                title: 'Auto close alert',
-		                text: 'Deletion in process...',
-		                //timer: 2000,
-		                onOpen: function() {
-		                    swal.showLoading();
-		                    document.location.href = tthis.attr('href');
-		                }
-		            }).then(function(result) {
-	                    if (result.dismiss === 'timer') {
-	                        // the timer is finished
-	                    }
-	                })
-		        }
-		        
-		    });
-               
+
+			ExamifireMessageUtil.showConfirmationMessage('warning', 'Are you sure?', 
+            		"You are going to delete <b>"+$(this).data("user-firstname-lastname")+"</b><br><br>You won't be able to revert this!", 
+            		'Delete', 'Auto close dialog', 'Deletion in progress...', $(this).attr('href'));               
         });
 	}
 	
@@ -55,7 +34,10 @@ var KTDatatablesAdvancedColumnRendering = function() {
 			processing: true,
 			serverSide: true,
 			pagingType: 'full_numbers',
-			ajax: '/home/admin/users/datatable.jquery',
+			ajax:{
+			    url: '/home/admin/users/datatable.jquery',
+			    type: 'GET'
+		    }, 
 			columns: [
 				{data: 'id'},
 				{data: 'username'},
@@ -69,6 +51,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				{	data: null,
 					targets: -1,
 					orderable: false,
+				    searchable: false,
 					render: function(data, type, full, meta) {
 						return '\
 	                  <span class="dropdown">\
@@ -84,6 +67,8 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				},
 				{
 					targets: -2,
+					orderable: false,
+				    searchable: false,
 					render: function(data, type, full, meta) {
 						var roles = {
 							1: {'ROLE_NAME':'ADMIN', 'class': 'kt-badge--danger'},
@@ -140,55 +125,4 @@ jQuery(document).ready(function() {
 		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Deletion failed!")
 	}
 	
-	/*
-    
-	$('#userTable').dataTable( {
-        "ajax": {
-            "url":"/home/admin/users/datatable.jquery",
-            "data":function(d) {
-                var table = $('#userTable').DataTable()
-                d.page = (table != undefined)?table.page.info().page:0
-                d.size = (table != undefined)?table.page.info().length:5
-                d.sort = d.columns[d.order[0].column].data + ',' + d.order[0].dir
-            }
-        },
-        "searching":true,
-        "processing": true,
-        "serverSide": true,
-        //"lengthMenu": [[5, 10, 15,30,50,75,100], [5, 10, 15,30,50,75,100]],
-        "columns": [
-            { "data": "id" },
-            { "data": "username" },
-            { "data": "firstname" },
-            { "data": "lastname" },
-            { "data": "email" },
-            { "data": "roles" },
-            { "": "" }
-        ],
-        "columnDefs": [
-            { "data": null, 
-              "targets": -1,
-              render: function(data, type, full, meta) {
-					return '\
-                  <span class="dropdown">\
-                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                        <i class="la la-ellipsis-h"></i>\
-                      </a>\
-                      <div class="dropdown-menu dropdown-menu-right">\
-                          <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                          <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                          <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-                      </div>\
-                  </span>\
-                  <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View">\
-                    <i class="la la-edit"></i>\
-                  </a>';
-              }
-             // "defaultContent":"<h4><a class='dt-view'></a><a class='dt-edit'></a><a class='dt-delete'></a></h4>" 
-            }
-        ],
-        "pagingType": "full_numbers"
-
-    } );
-    */	
 });

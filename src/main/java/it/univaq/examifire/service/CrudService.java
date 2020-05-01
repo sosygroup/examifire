@@ -1,15 +1,31 @@
 package it.univaq.examifire.service;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 public interface CrudService<MODEL, ID> {
-	List<MODEL> findAll();
-	
-	Page<MODEL> findAll(Pageable pageable);
+	Iterable<MODEL> findAll();
+
+	DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput);
+
+	/*
+	 ***************************************************************************
+	 * Additional Data Tables methods are provided by the DataTablesRepository *
+	 ***************************************************************************
+	 * DataTablesOutput<R> findAll(DataTablesInput input, Function<T, R> converter);
+	 * 
+	 * DataTablesOutput<T> findAll(DataTablesInput input, Specification<T>
+	 * additionalSpecification); DataTablesOutput<T> findAll(DataTablesInput input,
+	 * 
+	 * Specification<T> additionalSpecification, Specification<T>
+	 * preFilteringSpecification);
+	 * 
+	 * DataTablesOutput<R> findAll(DataTablesInput input, Specification<T>
+	 * additionalSpecification, Specification<T> preFilteringSpecification,
+	 * Function<T, R> converter);
+	 */
 
 	Optional<MODEL> findById(ID id);
 
@@ -18,6 +34,7 @@ public interface CrudService<MODEL, ID> {
 	void update(MODEL model);
 
 	void deleteById(ID id);
-	
+
 	void delete(MODEL model);
+
 }

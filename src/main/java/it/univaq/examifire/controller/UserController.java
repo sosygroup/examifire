@@ -1,11 +1,10 @@
 package it.univaq.examifire.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,15 +45,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("/datatable.jquery")
-	public @ResponseBody Map<String, Object> findAllPaginated(Model model, Pageable pageable, @RequestParam("draw") Integer draw , @RequestParam(value = "search", defaultValue = "") String search){
-		Map<String, Object> data = new HashMap<String, Object>();
-        Page<User> page = userService.findAll(pageable);
-        data.put("data",page.getContent());
-        data.put("draw",draw);
-        data.put("recordsTotal",page.getTotalElements());
-        data.put("recordsFiltered",page.getTotalElements());
-        return data;
-	}
+    public @ResponseBody DataTablesOutput<User> listPOST(Model model, @Valid DataTablesInput input) {
+    	return userService.findAll(input);
+    }
 	
 	@GetMapping("/add")
 	public String showAdd(Model model) {
@@ -121,11 +114,33 @@ public class UserController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable("id") Long id, Model model, RedirectAttributes atts) throws Exception {
+	public String delete(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) throws Exception {
 		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		userService.delete(user);
 		model.addAttribute("users", userService.findAll());
-		atts.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
 		return "redirect:/home/admin/users";
+	}
+	
+	@GetMapping("/deactivate/{id}")
+	public String deactivate(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		user.setActive(false);
+		userService.update(user);
+		model.addAttribute("user", user);
+		model.addAttribute("roles", roleService.findAll());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "deactivate_succeeded");
+		return "redirect:/home/admin/users/edit/"+id;
+	}
+	
+	@GetMapping("/expire/{id}")
+	public String expire(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+		User user = userService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		user.setPasswordExpired(true);
+		userService.update(user);
+		model.addAttribute("user", user);
+		model.addAttribute("roles", roleService.findAll());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "expire_succeeded");
+		return "redirect:/home/admin/users/edit/"+id;
 	}
 }

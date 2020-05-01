@@ -74,10 +74,15 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
-		<!-- others -->
+		<!-- Extras -->
 		<dependency>
 		  <groupId>org.apache.commons</groupId>
 		  <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.darrachequesne</groupId>
+			<artifactId>spring-data-jpa-datatables</artifactId>
+			<version>5.0.0</version>
 		</dependency>
 		
 		<!-- for testing -->
