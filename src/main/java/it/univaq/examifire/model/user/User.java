@@ -54,7 +54,7 @@ public class User extends EntityAudit<Long> {
 	@NotBlank(message = "Please enter the username")
 	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters")
 	@Column(name = "username", nullable = false, unique = true, length = 32)
-	@Pattern(regexp = "^[A-Za-z0-9]+$", message = "Please use only alpha numeric characters")
+	@Pattern(regexp = "^[a-zA-Z0-9]+[_\\.\\-]?[a-zA-Z0-9]+$", message = "Please use only alpha numeric characters, possibly with either '_', '-' or '.' in between")
 	private String username;
 
 	@NotBlank(message = "Please enter the password")

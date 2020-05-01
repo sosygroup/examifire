@@ -76,7 +76,7 @@ jQuery(document).ready(function() {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
 	}	
 	if($("#confirm_crud_operation").val() == 'update_failed') {
-		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Deletion failed, please check the errors!")
+		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Update failed, please check the errors!")
 	}
 	if($("#confirm_crud_operation").val() == 'activate_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user account has been activated!")

@@ -44,29 +44,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				{data: 'firstname'},
 				{data: 'lastname'},
 				{data: 'email'},
-				{data: 'roles'},
-				{'': '', responsivePriority: -1}
-			],
-			columnDefs: [
-				{	data: null,
-					targets: -1,
-					orderable: false,
-				    searchable: false,
-					render: function(data, type, full, meta) {
-						return '\
-	                  <span class="dropdown">\
-	                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-	                        <i class="la la-ellipsis-h"></i>\
-	                      </a>\
-	                      <div class="dropdown-menu dropdown-menu-right">\
-	                          <a class="dropdown-item" href="/home/admin/users/edit/'+full['id']+'"><i class="la la-edit"></i> Edit Details</a>\
-	                          <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
-	                      </div>\
-	                  </span>';
-	              }
-				},
-				{
-					targets: -2,
+				{data: 'roles',
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
@@ -91,6 +69,45 @@ var KTDatatablesAdvancedColumnRendering = function() {
 						return return_string;
 					},
 				},
+				{data: 'accountEnabled',
+					render: function(data, type, full, meta) {
+						var color_span="kt-badge--success";
+						var text_span="Enabled";
+						if (!data){
+							color_span = "kt-badge--danger";
+							text_span = "Disabled"
+						}
+						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
+					},
+				},
+				{data: 'passwordNonExpired',
+					render: function(data, type, full, meta) {
+						var color_span="kt-badge--success";
+						var text_span="Non Expired";
+						if (!data){
+							color_span = "kt-badge--danger";
+							text_span = "Expired"
+						}
+						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
+					},
+				},
+				{'Actions': 'Actions', 
+					responsivePriority: -1,
+					orderable: false,
+				    searchable: false,
+					render: function(data, type, full, meta) {
+						return '\
+	                  <span class="dropdown">\
+	                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+	                        <i class="la la-ellipsis-h"></i>\
+	                      </a>\
+	                      <div class="dropdown-menu dropdown-menu-right">\
+	                          <a class="dropdown-item" href="/home/admin/users/edit/'+full['id']+'"><i class="la la-edit"></i> Edit Details</a>\
+	                          <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
+	                      </div>\
+	                  </span>';
+	              }
+				}
 			],
 			fnDrawCallback: function( settings, json ) {
 	        	ConfirmDeleteEvent.init();

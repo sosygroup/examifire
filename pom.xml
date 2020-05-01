@@ -105,8 +105,8 @@
 	</dependencies>
 
 	<build>
-		<!--
-			we need to enable resource filtering in order to properly set the @spring.profiles.active@ placeholder 
+		<!-- NO NEEDED SO FAR
+			We need to enable resource filtering in order to properly set the @spring.profiles.active@ placeholder 
 			of the property spring.profiles.active in the application.properties file according to the specified profile
 			for packaging (or running) the application.
 			
@@ -114,8 +114,9 @@
 			(i.e., append a -P parameter to switch among the specified Maven profiles). 
 			This command will package the application for prod profile. 
 			It also replaces the @spring.profiles.active@ placeholder with the value 'prod', to be used for this application when running.
-		-->
+		
 		<resources>
+			#copy and filter the file application.properties for the runtime
 	        <resource>
 	            <directory>${project.basedir}/src/main/resources</directory>
 	            <filtering>true</filtering>
@@ -123,6 +124,8 @@
           			<include>application.properties</include>
           		</includes>	
 	        </resource>
+	        # copy without filtering all the contents of the /src/main/resources directory for the runtime 
+	        # and exclude the application.properties
 	        <resource>
 	            <directory>${project.basedir}/src/main/resources</directory>
 	            <filtering>false</filtering>
@@ -131,7 +134,7 @@
           		</excludes>
 	        </resource>
 	    </resources>
-	    
+	    -->
 		<plugins>
 			<plugin>
 				<!--

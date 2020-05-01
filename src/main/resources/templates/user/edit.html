@@ -40,15 +40,16 @@
 			<div class="kt-subheader__toolbar">
 				<div class="kt-subheader__wrapper">
 						<!-- <a th:href="@{/home/admin/users}" class="btn btn-default btn-bold"> Back </a>-->
+						<a id="link-save-and-continue" class="btn btn-primary btn-bold" href="javascript:void(0);"><i class="la la-save"></i>Save Changes</a>
 						<div class="dropdown dropdown-inline">
                             <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="flaticon-more-1"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a id="link-save-and-continue" class="dropdown-item" href="javascript:void(0);"><i class="la la-save"></i> Save</a>
-                                <a class="dropdown-item" th:href="@{/home/admin/users/edit/{id}(id=${user.id})}"><i class="la la-reply"></i> Discard Changes</a>
+                                <a id="link-save-and-continue" class="dropdown-item" href="javascript:void(0);"><i class="la la-save"></i>Save Changes</a>
+                                <a class="dropdown-item" th:href="@{/home/admin/users/edit/{id}(id=${user.id})}"><i class="la la-reply"></i>Discard Changes</a>
                                 <div class="dropdown-divider"></div>
-                                <a id="link-save-and-exit" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i> Save &amp; Exit</a>
+                                <a id="link-save-and-exit" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i>Save &amp; Exit</a>
                             </div>
                         </div>
 				  </div>
@@ -254,17 +255,15 @@
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Account</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{active}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Active" data-off-text="Deactivated" data-on-color="success" data-off-color="danger">
-													<span class="form-text text-muted">Changes will take effect only after saving.</span>
-													<!-- <button id="deactivate_the_account" th:attr="data-href=|@{/home/admin/users/deactivate/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate</button> --> 
+													<input th:field="*{accountEnabled}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success" data-off-color="danger">
+													<span class="form-text text-muted">Changes will take effect only after saving</span>
 												</div>
 											</div>
 											<div class="form-group form-group-last row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Password</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{passwordExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Expired" data-off-text="Valid" data-on-color="danger" data-off-color="success">
-													<span class="form-text text-muted">Changes will take effect only after saving.</span>
-													<!-- <button id="expire_the_password" th:attr="data-href=|@{/home/admin/users/expire/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Expire</button> -->
+													<input th:field="*{passwordNonExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Non Expired" data-off-text="Expired" data-on-color="success" data-off-color="danger">
+													<span class="form-text text-muted">Changes will take effect only after saving</span>
 												</div>
 											</div>
 										</div>
