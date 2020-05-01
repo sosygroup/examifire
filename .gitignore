@@ -33,3 +33,4 @@ build/
 ### other ###
 .DS_Store
 *.log
+*.log.*.gz
