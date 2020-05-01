@@ -23,9 +23,9 @@ public class UserPrincipal implements UserDetails {
 
 	private String username;
 
-	private boolean active;
+	private boolean accountEnabled;
 
-	private boolean passwordExpired;
+	private boolean passwordNonExpired;
 
 	@JsonIgnore
 	private String password;
@@ -35,16 +35,16 @@ public class UserPrincipal implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, String firstname, String lastname, String username, boolean active,
-			boolean passwordExpired, String password, String email,
+	public UserPrincipal(Long id, String firstname, String lastname, String username, String email, String password, boolean accountEnabled,
+			boolean passwordNonExpired, 
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
-		this.active = active;
-		this.passwordExpired = passwordExpired;
+		this.accountEnabled = accountEnabled;
+		this.passwordNonExpired = passwordNonExpired;
 		this.password = password;
 		this.email = email;
 		this.authorities = authorities;
@@ -59,10 +59,10 @@ public class UserPrincipal implements UserDetails {
 				user.getFirstname(),
 				user.getLastname(),
 				user.getUsername(),
-				user.isActive(),
-				user.isPasswordExpired(),
-				user.getPassword(),
 				user.getEmail(),
+				user.getPassword(),
+				user.isAccountEnabled(),
+				user.isPasswordNonExpired(),
 				authorities);
 	}
 
@@ -100,36 +100,36 @@ public class UserPrincipal implements UserDetails {
 	
 	@Override
 	public boolean isAccountNonExpired() {
-		return active;
+		return accountEnabled;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return active;
+		return accountEnabled;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return !passwordExpired;
+		return passwordNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return active;
+		return accountEnabled;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
+		result = prime * result + (accountEnabled ? 1231 : 1237);
 		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + (passwordExpired ? 1231 : 1237);
+		result = prime * result + (passwordNonExpired ? 1231 : 1237);
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -143,7 +143,7 @@ public class UserPrincipal implements UserDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		UserPrincipal other = (UserPrincipal) obj;
-		if (active != other.active)
+		if (accountEnabled != other.accountEnabled)
 			return false;
 		if (authorities == null) {
 			if (other.authorities != null)
@@ -175,7 +175,7 @@ public class UserPrincipal implements UserDetails {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (passwordExpired != other.passwordExpired)
+		if (passwordNonExpired != other.passwordNonExpired)
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -188,9 +188,8 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public String toString() {
 		return "UserPrincipal [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username="
-				+ username + ", active=" + active + ", passwordExpired=" + passwordExpired + ", password=" + password
-				+ ", email=" + email + ", authorities=" + authorities + "]";
+				+ username + ", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired
+				+ ", password=" + password + ", email=" + email + ", authorities=" + authorities + "]";
 	}
-
 	   
 }

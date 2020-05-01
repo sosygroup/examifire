@@ -69,11 +69,11 @@ public class User extends EntityAudit<Long> {
 	private String email;
 
 	// this means that the user is both active and enabled
-	@Column(name = "active", columnDefinition = "boolean default true", nullable = false)
-	private boolean active = true;
+	@Column(name = "account_enabled", columnDefinition = "boolean default true", nullable = false)
+	private boolean accountEnabled = true;
 
-	@Column(name = "password_expired", columnDefinition = "boolean default false", nullable = false)
-	private boolean passwordExpired = false;
+	@Column(name = "password_non_expired", columnDefinition = "boolean default false", nullable = false)
+	private boolean passwordNonExpired = true;
 
 	@NotEmpty(message = "Please select at least one role")
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -129,20 +129,20 @@ public class User extends EntityAudit<Long> {
 		this.email = email;
 	}
 
-	public boolean isActive() {
-		return active;
+	public boolean isAccountEnabled() {
+		return accountEnabled;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setAccountEnabled(boolean accountEnabled) {
+		this.accountEnabled = accountEnabled;
 	}
 
-	public boolean isPasswordExpired() {
-		return passwordExpired;
+	public boolean isPasswordNonExpired() {
+		return passwordNonExpired;
 	}
 
-	public void setPasswordExpired(boolean passwordExpired) {
-		this.passwordExpired = passwordExpired;
+	public void setPasswordNonExpired(boolean passwordNonExpired) {
+		this.passwordNonExpired = passwordNonExpired;
 	}
 
 	public Set<Role> getRoles() {
@@ -157,13 +157,13 @@ public class User extends EntityAudit<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
+		result = prime * result + (accountEnabled ? 1231 : 1237);
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + (passwordExpired ? 1231 : 1237);
+		result = prime * result + (passwordNonExpired ? 1231 : 1237);
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -178,7 +178,7 @@ public class User extends EntityAudit<Long> {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (active != other.active)
+		if (accountEnabled != other.accountEnabled)
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -205,7 +205,7 @@ public class User extends EntityAudit<Long> {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (passwordExpired != other.passwordExpired)
+		if (passwordNonExpired != other.passwordNonExpired)
 			return false;
 		if (roles == null) {
 			if (other.roles != null)
@@ -223,8 +223,8 @@ public class User extends EntityAudit<Long> {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ ", password=" + password + ", email=" + email + ", active=" + active + ", passwordExpired="
-				+ passwordExpired + ", roles=" + roles + "]";
+				+ ", password=" + password + ", email=" + email + ", accountEnabled=" + accountEnabled
+				+ ", passwordNonExpired=" + passwordNonExpired + ", roles=" + roles + "]";
 	}
 
 }

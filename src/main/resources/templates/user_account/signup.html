@@ -70,6 +70,12 @@ License: You must have a valid license purchased only from themeforest(the above
 									<div class="kt-login__desc">Enter your details to create your account:</div>
 								</div>
 								<form class="kt-form" th:action="@{/signup}" th:object="${user}" method="post">
+												<!-- Form-level (or Global-level) error messages here -->
+			<div class="form-group row ">
+				<div class="col-sm-8">
+					<span class="text-danger" th:errors="*{global}"> </span>
+				</div>
+			</div>
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Firstname" name="firstname" th:field="*{firstname}">
 										<div th:if="${#fields.hasErrors('firstname')}" class="error invalid-feedback" style="display: block;">

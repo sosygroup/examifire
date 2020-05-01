@@ -130,7 +130,7 @@
 			<div class="kt-portlet__body">
 				<form id="user-edit-form" th:action="@{/home/admin/users/edit/{id}(id=${user.id})}"
 			th:object="${user}" method="post">
-					<input type="hidden" id="saveAndContinue" name="saveAndContinue" value="0">
+					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<div class="tab-content">
 						<div class="tab-pane active" id="kt_user_edit_tab_1"
@@ -252,29 +252,18 @@
 												</div>
 											</div>
 											<div class="form-group row">
-												<label class="col-xl-3 col-lg-3 col-form-label">The account is <code th:text="*{active} ? 'active' : 'deactivated'" >active | deactivated</code></label>
+												<label class="col-xl-3 col-lg-3 col-form-label">Account</label>
 												<div class="col-lg-9 col-xl-6">
-													<span class="kt-switch kt-switch--lg kt-switch--icon">
-														<label>
-															<input type="checkbox" th:field="*{active}">
-															<span></span>
-														</label>
-													</span>
-													<span class="form-text text-muted">This change will be effective only after saving.</span>
+													<input th:field="*{active}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Active" data-off-text="Deactivated" data-on-color="success" data-off-color="danger">
+													<span class="form-text text-muted">Changes will take effect only after saving.</span>
 													<!-- <button id="deactivate_the_account" th:attr="data-href=|@{/home/admin/users/deactivate/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate</button> --> 
 												</div>
 											</div>
 											<div class="form-group form-group-last row">
-												<label class="col-xl-3 col-lg-3 col-form-label">The password is <code th:text="*{passwordExpired} ? 'expired' : 'valid'" >valid | expired</code></label>
+												<label class="col-xl-3 col-lg-3 col-form-label">Password</label>
 												<div class="col-lg-9 col-xl-6">
-													<span class="kt-switch kt-switch--lg kt-switch--icon">
-														<span class="kt-switch kt-switch--lg kt-switch--icon">
-														<label>
-															<input type="checkbox" th:field="*{passwordExpired}">
-															<span></span>
-														</label>
-													</span>
-													<span class="form-text text-muted">This change will be effective only after saving.</span>
+													<input th:field="*{passwordExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Expired" data-off-text="Valid" data-on-color="danger" data-off-color="success">
+													<span class="form-text text-muted">Changes will take effect only after saving.</span>
 													<!-- <button id="expire_the_password" th:attr="data-href=|@{/home/admin/users/expire/{id}(id=${user.id})}|" type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Expire</button> -->
 												</div>
 											</div>

@@ -5,14 +5,14 @@ var UserEdit = function() {
 
 	var saveUserFormAndContinueEvent = function() {
 		$("#link-save-and-continue").click(function() {
-			$("#saveAndContinue").val(true);
+			$("#save_and_continue").val(true);
 			$("#user-edit-form").submit();
 		});
 	}
 	
 	var saveUserFormAndExitEvent = function() {
 		$("#link-save-and-exit").click(function() {
-			$("#saveAndContinue").val(false);
+			$("#save_and_continue").val(false);
 			$("#user-edit-form").submit();
 		});
 	}
@@ -52,8 +52,26 @@ var UserEdit = function() {
 	};
 }();
 
+var KTBootstrapSwitch = function() {
+
+	  // Private functions
+	  var demos = function() {
+	    // minimum setup
+	    $('[data-switch=true]').bootstrapSwitch();
+	  };
+
+	  return {
+	    // public functions
+	    init: function() {
+	      demos();
+	    },
+	  };
+	}();
+	
 jQuery(document).ready(function() {
 	UserEdit.init();
+	KTBootstrapSwitch.init();
+	
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
 	}	
