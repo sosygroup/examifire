@@ -1,0 +1,50 @@
+/******************* BUTTONS ************************/
+
+.my-btn-save-1{
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+    color: #fff !important;
+}
+
+.my-btn-save-1:hover {
+    background-color: #69ab3f !important;
+    border-color: #69ab3f !important;
+    color: #fff !important;
+}
+
+
+
+.my-btn-close-1 {
+    color: #6db33f !important;
+    border-color: #6db33f !important;
+}
+
+.my-btn-close-1:hover {
+	color: #fff !important;
+    background-color: #6db33f !important;
+    border-color: #6db33f !important;
+}
+
+.my-btn-close-1:not(:disabled):not(.disabled):active, 
+.my-btn-close-1:not(:disabled):not(.disabled).active, 
+.show > .my-btn-close-1.dropdown-toggle {
+	color: #fff !important;
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

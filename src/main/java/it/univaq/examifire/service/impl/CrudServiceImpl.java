@@ -29,7 +29,7 @@ public class CrudServiceImpl<MODEL, ID extends Serializable> implements CrudServ
 			this.tableName = ((Class<?>)((ParameterizedType) getClass().getGenericSuperclass())
 					.getActualTypeArguments()[0]).getAnnotation(Table.class).name();
 		} catch (Exception e) {
-			this.tableName = "";
+			this.tableName = "%TABLE_NAME_NOT_FOUND%";
 		}
     }
 
