@@ -15,10 +15,9 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements User
 	public Optional<User> findByUsername(String username) {
 		return ((UserRepository) repository).findByUsername(username);
 	}
-	
+
 	@Override
 	public Optional<User> findByEmail(String email) {
 		return ((UserRepository) repository).findByEmail(email);
 	}
-
 }

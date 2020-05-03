@@ -22,11 +22,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import it.univaq.examifire.model.audit.EntityAudit;
-import it.univaq.examifire.validation.DuplicatedEmail;
-import it.univaq.examifire.validation.DuplicatedUsername;
 
-@DuplicatedUsername
-@DuplicatedEmail
+
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -50,7 +47,7 @@ public class User extends EntityAudit<Long> {
 	@Size(max = 45, message = "Maximum 45 characters")
 	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastname;
-
+	
 	@NotBlank(message = "Please enter the username")
 	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters")
 	@Column(name = "username", nullable = false, unique = true, length = 32)

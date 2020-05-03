@@ -10,8 +10,8 @@ var UserEdit = function() {
 		});
 	}
 	
-	var saveUserFormAndExitEvent = function() {
-		$("#link-save-and-exit").click(function() {
+	var saveUserFormAndCloseEvent = function() {
+		$("#link-save-and-close").click(function() {
 			$("#save_and_add_new").val(false);
 			$("#user-add-form").submit();
 		});
@@ -25,7 +25,7 @@ var UserEdit = function() {
 		// public functions
 		init : function() {
 			saveUserFormAndAddNewEvent();
-			saveUserFormAndExitEvent();
+			saveUserFormAndCloseEvent();
 			applySelectPickerToRole();
 		}
 	};

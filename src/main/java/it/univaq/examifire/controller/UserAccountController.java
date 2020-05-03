@@ -17,20 +17,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.UserService;
+import it.univaq.examifire.validation.UserValidator;
 
 @Controller
 public class UserAccountController {
 	private static final Logger logger = LoggerFactory.getLogger(UserAccountController.class);
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
-	private Validator validator;
-	
+	private Validator springValidator;
+
+	@Autowired
+	private UserValidator userValidator;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/signup")
 	public String signup(Model model) {
 		logger.debug("HTTP GET request received at URL /signup");
@@ -40,23 +44,23 @@ public class UserAccountController {
 
 	@Transactional
 	@PostMapping("/signup")
-	public String registerUserAccount(@ModelAttribute("user") User user, BindingResult result, Model model) {
+	public String registerUserAccount(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 		logger.debug("HTTP POST request received at URL /signup");
-		
+
 		Role role = new Role();
 		role.setId(Role.STUDENT_ROLE_ID);
 		user.getRoles().add(role);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
-		validator.validate(user, result);
-		if (result.hasErrors()) {
-			result.getAllErrors().forEach((error) -> {
+
+		springValidator.validate(user, bindingResult);
+		userValidator.validate(user, bindingResult);
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
 			});
 			return "user_account/signup";
 		}
 
-		
 		userService.create(user);
 		logger.debug("The user with email {} has been added", user.getEmail());
 
@@ -65,17 +69,18 @@ public class UserAccountController {
 		createdUser.setCreatedBy(createdUser.getId());
 		createdUser.setLastModifiedBy(createdUser.getId());
 		userService.update(createdUser);
-		logger.debug("The created_by and the last_modified_by info of the user with email {} has been updated", user.getEmail());
-		
+		logger.debug("The created_by and the last_modified_by info of the user with email {} has been updated",
+				user.getEmail());
+
 		return "redirect:/signin";
 	}
-	
+
 	@GetMapping("/forgotpassword")
 	public String showForgotPassword(Model model) {
 		logger.debug("HTTP GET request received at URL /forgotpassword");
 		return "/user_account/forgotpassword";
 	}
-	
+
 	@PostMapping("/forgotpassword")
 	public String forgotPassword(@ModelAttribute("username") String username) {
 		logger.debug("HTTP POST request received at URL /forgotpassword");
@@ -83,5 +88,4 @@ public class UserAccountController {
 		return "redirect:/signin";
 	}
 
-	
 }

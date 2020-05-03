@@ -30,19 +30,15 @@ public class CrudServiceImpl<MODEL, ID extends Serializable> implements CrudServ
 	}
 
 	@Override
-	public void create(MODEL model) {
+	public void create(MODEL model){
 		repository.save(model);
 	}
 
 	@Override
-	public void update(MODEL model) {
+	public void update(MODEL model){
 		repository.save(model);
 	}
 
-	@Override
-	public void deleteById(ID id) {
-		repository.deleteById(id);
-	}
 	@Override
 	public void delete(MODEL model) {
 		repository.delete(model);

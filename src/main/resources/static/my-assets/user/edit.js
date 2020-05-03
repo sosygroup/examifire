@@ -1,5 +1,25 @@
 "use strict";
 
+var ConfirmDeleteEvent = function (){
+	var confirmDelete = function(){
+		$('a.confirm-delete').click(function (e) {
+			e.preventDefault();
+
+			ExamifireMessageUtil.showConfirmationMessage('warning', 'Are you sure?', 
+            		"You are going to delete <b>"+$(this).data("user-firstname-lastname")+"</b><br><br>You won't be able to revert this!", 
+            		'Delete', 'Auto close dialog', 'Deletion in progress...', $(this).attr('href'));               
+        });
+	}
+	
+	return {
+		//main function to initiate the module
+		init: function() {
+			confirmDelete();
+		}
+	};
+}();
+
+
 // Class definition
 var UserEdit = function() {
 
@@ -10,8 +30,8 @@ var UserEdit = function() {
 		});
 	}
 	
-	var saveUserFormAndExitEvent = function() {
-		$("#link-save-and-exit").click(function() {
+	var saveUserFormAndCloseEvent = function() {
+		$("#link-save-and-close").click(function() {
 			$("#save_and_continue").val(false);
 			$("#user-edit-form").submit();
 		});
@@ -44,7 +64,7 @@ var UserEdit = function() {
 		// public functions
 		init : function() {
 			saveUserFormAndContinueEvent();
-			saveUserFormAndExitEvent();
+			saveUserFormAndCloseEvent();
 			deactivateTheAccountEvent();
 			expireThePasswordEvent();
 			applySelectPickerToRole();
@@ -69,8 +89,10 @@ var KTBootstrapSwitch = function() {
 	}();
 	
 jQuery(document).ready(function() {
-	UserEdit.init();
 	KTBootstrapSwitch.init();
+	UserEdit.init();
+	ConfirmDeleteEvent.init();
+	
 	
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")

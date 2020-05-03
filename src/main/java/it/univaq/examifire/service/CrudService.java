@@ -33,8 +33,6 @@ public interface CrudService<MODEL, ID> {
 
 	void update(MODEL model);
 
-	void deleteById(ID id);
-
 	void delete(MODEL model);
 
 }
