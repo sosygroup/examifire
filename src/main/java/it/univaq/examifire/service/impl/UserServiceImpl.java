@@ -10,14 +10,15 @@ import it.univaq.examifire.service.UserService;
 
 @Service
 public class UserServiceImpl extends CrudServiceImpl<User, Long> implements UserService {
-
 	@Override
 	public Optional<User> findByUsername(String username) {
+		logger.debug("The method findByUsername has been invoked for the table {}, with parameter username={}", tableName, username);
 		return ((UserRepository) repository).findByUsername(username);
 	}
 
 	@Override
 	public Optional<User> findByEmail(String email) {
+		logger.debug("The method findByEmail has been invoked for the table {}, with parameter email={}", tableName, email);
 		return ((UserRepository) repository).findByEmail(email);
 	}
 }

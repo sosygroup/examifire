@@ -6,5 +6,4 @@ import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.service.RoleService;
 
 @Service
-public class RoleServiceImpl extends CrudServiceImpl<Role,Long> implements RoleService {
-}
+public class RoleServiceImpl extends CrudServiceImpl<Role,Long> implements RoleService {}
