@@ -1,4 +1,8 @@
-/******************* BUTTONS ************************/
+.my-icon-color {
+	color: #6db33f !important;
+}
+
+/******************* START BUTTONS ************************/
 
 .my-btn-save-1{
 	background-color: #6db33f !important;
@@ -31,13 +35,145 @@
 	color: #fff !important;
 	background-color: #6db33f !important;
     border-color: #6db33f !important;
-	
+}
+
+
+
+.my-btn-signout-1 {
+	background-color: rgba(109,179,63, 0.1) !important;
+	color: #6db33f !important;
+}
+
+label.my-btn-signout-1:focus, 
+label.my-btn-signout-1:hover, 
+label.my-btn-signout-1.active, 
+a.my-btn-signout-1:focus, 
+a.my-btn-signout-1:hover, 
+a.my-btn-signout-1.active, 
+button.my-btn-signout-1:focus, 
+button.my-btn-signout-1:hover, 
+button.my-btn-signout-1.active, 
+input.my-btn-signout-1:focus, 
+input.my-btn-signout-1:hover, 
+input.my-btn-signout-1.active {
+    background-color: #6db33f !important;
+   color: #fff !important;
+}
+
+/******************* END BUTTONS ************************/
+
+/******************* START ASIDE & TOPBAR MENU ************************/
+.my-aside__brand-aside-toggler-icon{
+	color:  #6db33f !important;
+}
+
+.kt-menu__item:hover > a .kt-menu__link-icon,
+.kt-menu__item:hover > a .kt-menu__link-text,
+.kt-menu__item:hover > a .kt-menu__hor-arrow {
+	color:  #6db33f !important;
+}
+
+.kt-menu__item--hover > a .kt-menu__link-icon,
+.kt-menu__item--hover > a .kt-menu__link-text,
+.kt-menu__item--hover > a .kt-menu__hor-arrow {
+	color:  #6db33f !important;
+}
+
+.kt-menu__item--active > a .kt-menu__link-icon,
+.kt-menu__item--active > a .kt-menu__link-text,
+.kt-menu__item--active > a .kt-menu__hor-arrow {
+	color:  #6db33f !important;
+}
+
+
+.kt-header__topbar-username {
+	color:  #6db33f !important;
+}
+
+.kt-header__topbar-icon {
+	color:  #6db33f !important;
+}
+
+.kt-pulse__ring {
+    border-color: #6db33f !important;
+}
+
+.my-user-card {
+	background-color: #6db33f !important;
+	background-image: none !important;
+}
+
+.my-user-card .kt-user-card__name {
+    color: #fff !important;
+}
+.my-notification .kt-notification__item:hover .kt-notification__item-details .kt-notification__item-title {
+	color:  #6db33f !important;
+}
+ 
+/******************* END ASIDE & TOPBAR MENU ************************/
+
+/******************* START NAV BAR ************************/
+a.nav-link.active{
+	color:  #6db33f !important;
+	border-bottom: 1px solid #6db33f !important;
+}
+a.nav-link:hover{
+	color:  #6db33f !important;
+	border-bottom: 1px solid #6db33f !important;
+}
+/******************* END NAV BAR ************************/
+
+
+
+/*
+.kt-menu__nav > .kt-menu__item.kt-menu__item--active > 
+.kt-menu__heading .kt-menu__link-text, 
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-text {
+    color: #6db33f !important;
+}*/
+/*
+.nav-tabs.nav-tabs-line.nav-tabs-line-3x a.nav-link {
+    border-bottom-width: 3px!important;
+}
+
+
+.nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link.active, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link.active {
+	color:  #6db33f !important;
+	border-bottom: 1px solid  #6db33f !important;
+}
+
+
+.nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link.active, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link.active {
+	color: #6db33f !important;
+	border-bottom: 4px solid #6db33f !important;
+}
+
+.kt-avatar .kt-avatar__upload i {
+color: #6db33f;
+}
+
+.kt-avatar .kt-avatar__upload:hover {
+
+background-color: #6db33f !important;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading .kt-menu__link-text, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-text {
+    color: #6db33f;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading .kt-menu__link-icon, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-icon {
+    color: #6db33f;
+}
+
+.kt-aside-menu .kt-menu__nav > .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover {
+color: #6db33f;
 }
 
 
 
 
-
+*/
 
 
 
