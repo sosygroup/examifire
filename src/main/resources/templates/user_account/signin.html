@@ -48,6 +48,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link th:href="@{/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 		<link th:href="@{/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
 
+		<!-- --> <link th:href="@{/my-assets/my-custom-style-1.css}" rel="stylesheet" type="text/css" />
+		
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
 	</head>
@@ -87,7 +89,7 @@ License: You must have a valid license purchased only from themeforest(the above
 											</label>
 										</div>
 										<div class="col kt-align-right">
-											<a th:href="@{/forgotpassword}" class="kt-login__link">Forgot Password ?</a>
+											<a th:href="@{/forgotpassword}" class="kt-login__link kt-link my-link">Forgot Password ?</a>
 										</div>
 									</div>
 									<div class="kt-login__actions">
@@ -100,7 +102,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									Don't have an account yet ?
 								</span>
 								&nbsp;&nbsp;
-								<a th:href="@{/signup}" class="kt-login__account-link">Sign Up!</a>
+								<a th:href="@{/signup}" class="kt-login__account-link kt-link my-link">Sign Up!</a>
 							</div>
 						</div>
 					</div>

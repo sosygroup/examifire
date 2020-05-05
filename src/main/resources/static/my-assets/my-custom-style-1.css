@@ -1,6 +1,83 @@
+.my-scrolltop {
+	background-color: #6db33f !important;
+}
+
 .my-icon-color {
 	color: #6db33f !important;
 }
+
+.my-badge-color {
+	background-color: #6db33f !important;
+}
+
+.my-font-danger {
+	color: #d24e5f !important;
+}
+
+/******************* START LINK ************************/
+.my-link {
+	color: #6db33f !important;
+}
+.my-link:hover {
+	color: #6db33f !important;
+}
+.my-link:hover:after {
+	border-bottom-color: #6db33f !important;
+}
+/******************* END LINK ************************/
+
+/******************* START INPUT ************************/
+input:focus {
+	border-color: #6db33f !important;
+}
+select:focus {
+	border-color: #6db33f !important;
+}
+/******************* END INPUT ************************/
+
+/******************* START INPUT BOOTSTRAP SELECT ************************/
+
+.bootstrap-select > .dropdown-toggle.btn-light:focus,
+.bootstrap-select > .dropdown-toggle.btn-light.active,
+.bootstrap-select > .dropdown-toggle.btn-secondary:focus,
+.bootstrap-select > .dropdown-toggle.btn-secondary.active,
+.bootstrap-select.show > .dropdown-toggle {
+    border-color: #6db33f !important;
+}
+
+.bootstrap-select .dropdown-item[role="option"].active, .dropdown-item[role="option"]:active {
+    background-color: #f7f8fa !important;
+    color: #fff !important;
+}
+.bootstrap-select .dropdown-item[role="option"].active, .dropdown-item[role="option"]:active > i{
+    color: #fff !important;
+}
+/******************* END INPUT BOOTSTRAP SELECT ************************/
+
+/******************* START INPUT SWITCH ************************/
+.bootstrap-switch.bootstrap-switch-focused {
+    border-color: #6db33f !important;
+}
+.my-input-switch-color__on {
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+}
+
+.my-input-switch-color__off {
+	background-color: #d24e5f !important;
+    border-color: #d24e5f !important;
+}
+/******************* END INPUT SWITCH ************************/
+
+/******************* START ALL DROPDOWN ITEMS not for select ************************/
+.dropdown-item:not([role="option"]).active, .dropdown-item:not([role="option"]):active {
+    background-color: #6db33f !important;
+    color: #fff !important;
+}
+.dropdown-item:not([role="option"]).active, .dropdown-item:not([role="option"]):active > i{
+    color: #fff !important;
+}
+/******************* END ALL DROPDOWN ITEMS not for select ************************/
 
 /******************* START BUTTONS ************************/
 
@@ -16,7 +93,7 @@
     color: #fff !important;
 }
 
-
+/**more**/
 
 .my-btn-close-1 {
     color: #6db33f !important;
@@ -37,7 +114,36 @@
     border-color: #6db33f !important;
 }
 
+/**more**/
+.my-btn-multiple-actions-1 {
+	border-color: #6db33f !important;
+	color: #6db33f !important;
+}
+.btn.my-btn-multiple-actions-1 > i {
+	color: #6db33f;
+}
+.my-btn-multiple-actions-1:hover {
+	color: #fff !important;
+    background-color: #6db33f !important;
+    border-color: #6db33f !important;
+}
 
+.my-btn-multiple-actions-1:not(:disabled):not(.disabled):active, 
+.my-btn-multiple-actions-1:not(:disabled):not(.disabled).active, 
+.show > .btn.my-btn-multiple-actions-1,
+.btn.my-btn-multiple-actions-1.active,
+.btn.my-btn-multiple-actions-1:active,
+.btn.my-btn-multiple-actions-1:hover  {
+	color: #fff !important;
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+}
+.my-btn-multiple-actions-1__dropdown-menu > a:hover,
+.my-btn-multiple-actions-1__dropdown-menu > a:hover > i {
+	color: #6db33f !important;
+}
+
+/**more**/
 
 .my-btn-signout-1 {
 	background-color: rgba(109,179,63, 0.1) !important;
@@ -60,8 +166,42 @@ input.my-btn-signout-1.active {
    color: #fff !important;
 }
 
-/******************* END BUTTONS ************************/
+/**more**/
 
+.my-btn-add-1{
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+    color: #fff !important;
+}
+
+.my-btn-add-1:hover {
+    background-color: #69ab3f !important;
+    border-color: #69ab3f !important;
+    color: #fff !important;
+}
+
+/**more**/
+
+/******************* END BUTTONS ************************/
+/******************* START DROPDOWN MENU for buttons ************************/
+.kt-nav__item:hover > a .kt-nav__link-icon,
+.kt-nav__item:hover > a .kt-nav__link-text,
+.kt-nav__item:hover > a .kt-nav__hor-arrow {
+	color:  #6db33f !important;
+}
+
+.kt-nav__item--hover > a .kt-nav__link-icon,
+.kt-nav__item--hover > a .kt-nav__link-text,
+.kt-nav__item--hover > a .kt-nav__hor-arrow {
+	color:  #6db33f !important;
+}
+
+.kt-nav__item--active > a .kt-nav__link-icon,
+.kt-nav__item--active > a .kt-nav__link-text,
+.kt-nav__item--active > a .kt-nav__hor-arrow {
+	color:  #6db33f !important;
+}
+/******************* END DROPDOWN MENU for buttons ************************/
 /******************* START ASIDE & TOPBAR MENU ************************/
 .my-aside__brand-aside-toggler-icon{
 	color:  #6db33f !important;
@@ -123,64 +263,77 @@ a.nav-link:hover{
 }
 /******************* END NAV BAR ************************/
 
-
-
-/*
-.kt-menu__nav > .kt-menu__item.kt-menu__item--active > 
-.kt-menu__heading .kt-menu__link-text, 
-
-.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-text {
-    color: #6db33f !important;
-}*/
-/*
-.nav-tabs.nav-tabs-line.nav-tabs-line-3x a.nav-link {
-    border-bottom-width: 3px!important;
-}
-
-
-.nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link.active, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link.active {
-	color:  #6db33f !important;
-	border-bottom: 1px solid  #6db33f !important;
-}
-
-
-.nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand.nav.nav-tabs .nav-link.active, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link:hover, .nav-tabs.nav-tabs-line.nav-tabs-line-brand a.nav-link.active {
+/******************* START AVATAR UPLOAD AND CANCEL ICONS ************************/
+.my-avatar__upload > i {
 	color: #6db33f !important;
-	border-bottom: 4px solid #6db33f !important;
+}
+.my-avatar__upload:hover {
+	background-color: #6db33f !important;
+}
+.my-avatar__upload:hover > i{
+	color: #fff !important;
 }
 
-.kt-avatar .kt-avatar__upload i {
-color: #6db33f;
+.my-avatar__cancel:hover > i {
+	color: #6db33f !important;
+}
+/******************* END AVATAR UPLOAD AND CANCEL ICONS ************************/
+
+
+/******************* START BOOTSTRAP NOTIFY ************************/
+.alert-success {
+	background-color: #6db33f !important;
+	border-color: #6db33f !important;
+}
+.alert-success > [data-notify="icon"] {
+	/*height: 50px;
+	magin-right: 12px;*/
+}
+.alert-success > [data-notify="title"] {
+	/*color: rgb(51, 51, 51);
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;*/
+}
+.alert-success > [data-notify="message"] {
+	/*font-size: 80%;*/
 }
 
-.kt-avatar .kt-avatar__upload:hover {
+.alert-danger {
+	background-color: #d24e5f !important;
+	border-color: #d24e5f !important;
+}
+.alert-danger > [data-notify="icon"] {
+	/*height: 50px;
+	magin-right: 12px;*/
+}
+.alert-danger > [data-notify="title"] {
+	/*color: rgb(51, 51, 51);
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;*/
+}
+	.alert-danger > [data-notify="message"] {
+	/*font-size: 80%;*/
+}
+/******************* END BOOTSTRAP NOTIFY ************************/
 
-background-color: #6db33f !important;
+/******************* START DATATABLES ************************/
+.dataTables_wrapper .pagination .page-item.previous > .page-link:hover,
+.dataTables_wrapper .pagination .page-item.next > .page-link:hover,
+.dataTables_wrapper .pagination .page-item.last > .page-link:hover,
+.dataTables_wrapper .pagination .page-item.first > .page-link:hover {
+	background-color: #6db33f !important; 
 }
 
-.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading .kt-menu__link-text, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-text {
-    color: #6db33f;
+.dataTables_wrapper .pagination .page-item.active > .page-link {
+	background-color: #6db33f !important; 
 }
 
-.kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading .kt-menu__link-icon, .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-icon {
-    color: #6db33f;
+.dataTables_wrapper .pagination .page-item:hover > .page-link {
+	background-color: #6db33f !important; 
 }
-
-.kt-aside-menu .kt-menu__nav > .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover {
-color: #6db33f;
-}
-
-
-
-
-*/
-
-
-
-
-
-
-
+/******************* END DATATABLES ************************/
 
 
 

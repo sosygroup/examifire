@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorate="~{layout/layout.html}" th:with="aside_menu_active_link='dashboard'">
+	layout:decorate="~{layout/layout.html}"
+	th:with="aside_menu_active_link='dashboard'">
 <!-- th:with="currentPage='index'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
 <head>
 <title>Home</title>
@@ -9,461 +10,454 @@
 
 <body>
 
-	
+
 	<!-- begin:: Content -->
-						<div layout:fragment="content" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-							<div class="row">
-								<div class="col-xl-6">
+	<div layout:fragment="content"
+		class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+		<div class="row">
+			<div class="col-xl-6">
 
-									<!--begin::Portlet-->
-									<div class="kt-portlet">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon kt-hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="kt-portlet__head-title">
-													State Colors
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-											<div class="kt-section">
-												<div class="kt-section__info">
-													You can apply Bootstrap and Metronic state color helper classes to the most of the Keen's components:
-												</div>
-												<div class="kt-section__content">
-													<div class="table-responsive">
-														<table class="table table-bordered table-head-solid">
-															<thead>
-																<tr>
-																	<th style="width: 150px">State</th>
-																	<th style="width: 200px">Class postfix</th>
-																	<th>Usage example</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td colspan="4"><span class="kt-font-bold">Bootstrap States</span></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--success">Success</span></td>
-																	<td><code>*-success</code></td>
-																	<td><code>btn-success</code> <code>kt-font-success</code></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--warning">Warning</span></td>
-																	<td><code>*-warning</code></td>
-																	<td><code>btn-warning</code> <code>kt-font-warning</code></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--danger">Danger</span></td>
-																	<td><code>*-danger</code></td>
-																	<td><code>btn-danger</code> <code>kt-font-danger</code></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--info">Info</span></td>
-																	<td><code>*-info</code></td>
-																	<td><code>btn-info</code> <code>kt-font-info</code></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--primary">Primary</span></td>
-																	<td><code>*-primary</code></td>
-																	<td><code>btn-primary</code> <code>kt-font-primary</code></td>
-																</tr>
-																<tr>
-																	<td colspan="4"><span class="kt-font-bold">Metronic Custom States</span></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--brand">Brand</span></td>
-																	<td><code>*-brand</code></td>
-																	<td><code>btn-success</code> <code>kt-font-brand</code></td>
-																</tr>
-																<tr>
-																	<td><span class="kt-badge kt-badge--inline kt-badge--dark">Dark</span></td>
-																	<td><code>*-dark</code></td>
-																	<td><code>btn-dark</code> <code>kt-font-dark</code></td>
-																</tr>
-																<tr class="active">
-																	<td><span class="kt-badge kt-badge--inline kt-badge--light">Light</span></td>
-																	<td><code>*-light</code></td>
-																	<td><code>btn-light</code> <code>kt-font-light</code></td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">Custom Theme Buttons</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th>Button</th>
+												<th>CSS class to append</th>
+												<th>Button</th>
+												<th>CSS class to append</th>
+												<th>Button</th>
+												<th>CSS class to append</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Save
+														buttons</span></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-brand my-btn-save-1">Save</a></td>
+												<td><code>my-btn-save-1</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Close
+														buttons</span></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-outline-brand my-btn-close-1">Close</a></td>
+												<td><code>my-btn-close-1</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Multiple actions buttons</span></td>
+											</tr>
+											<tr>
+												<td>
+													<div class="dropdown dropdown-inline">
+							                            <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							                                <i class="flaticon-more-1"></i>
+							                            </button>
+							                            <div class="dropdown-menu dropdown-menu-right my-btn-multiple-actions-1__dropdown-menu">
+							                                <a class="dropdown-item" href="#"><i class="la la-reply"></i>Discard Changes</a>
+							                                <div class="dropdown-divider"></div>
+							                                <a class="dropdown-item" href="#"><i class="la la-trash"></i>Delete</a>
+							                            </div>
+							                        </div>
+												</td>
+												<td><code>my-btn-multiple-actions-1</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Sign Out buttons</span></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-label-brand my-btn-signout-1">Sign Out</a></td>
+												<td><code>my-btn-signout-1</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
 
-									<!--end::Portlet-->
-
-									<!--begin::Portlet-->
-									<div class="kt-portlet">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon kt-hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="kt-portlet__head-title">
-													Base Colors
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-
-											<!--begin::Section-->
-											<div class="kt-section">
-												<div class="kt-section__info">
-													You can apply Keen's base color helper classes to the most of the Keen's components:
-												</div>
-												<div class="kt-section__content ">
-													<div class="table-responsive">
-														<table class="table table-bordered table-head-solid">
-															<thead>
-																<tr>
-																	<th style="width: 150px">Level</th>
-																	<th width="200">Preview</th>
-																	<th>Class example</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td colspan="4"><span class="kt-font-bold">Label Classes</span></td>
-																</tr>
-																<tr>
-																	<td>Level 1</td>
-																	<td>
-																		<span class="kt-label-font-color-1">Font Color</span>
-																		&nbsp;
-																		<span class="kt-label-bg-color-1" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-label-font-color-1</code>&nbsp;
-																		<code>kt-label-bg-color-1</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 2</td>
-																	<td>
-																		<span class="kt-label-font-color-2">Font Color</span>
-																		&nbsp;
-																		<span class="kt-label-bg-color-2" style="padding: 5px;  color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-label-font-color-2</code>&nbsp;
-																		<code>kt-label-bg-color-2</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 3</td>
-																	<td>
-																		<span class="kt-label-font-color-3">Font Color</span>
-																		&nbsp;
-																		<span class="kt-label-bg-color-3" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-label-font-color-3</code>&nbsp;
-																		<code>kt-label-bg-color-3</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 4</td>
-																	<td>
-																		<span class="kt-label-font-color-4">Font Color</span>
-																		&nbsp;
-																		<span class="kt-label-bg-color-4" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-label-font-color-4</code>&nbsp;
-																		<code>kt-label-bg-color-4</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td colspan="4"><span class="kt-font-bold">Shape Classes</span></td>
-																</tr>
-																<tr>
-																	<td>Level 1</td>
-																	<td>
-																		<span class="kt-shape-font-color-1">Font Color</span>
-																		&nbsp;
-																		<span class="kt-shape-bg-color-1" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-shape-font-color-1</code>&nbsp;
-																		<code>kt-shape-bg-color-1</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 2</td>
-																	<td>
-																		<span class="kt-shape-font-color-2">Font Color</span>
-																		&nbsp;
-																		<span class="kt-shape-bg-color-2" style="padding: 5px;  color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-shape-font-color-2</code>&nbsp;
-																		<code>kt-shape-bg-color-2</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 3</td>
-																	<td>
-																		<span class="kt-shape-font-color-3">Font Color</span>
-																		&nbsp;
-																		<span class="kt-shape-bg-color-3" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-shape-font-color-3</code>&nbsp;
-																		<code>kt-shape-bg-color-3</code>
-																	</td>
-																</tr>
-																<tr>
-																	<td>Level 4</td>
-																	<td>
-																		<span class="kt-shape-font-color-4">Font Color</span>
-																		&nbsp;
-																		<span class="kt-shape-bg-color-4" style="padding: 5px; color: #fff;">BG Color</span>
-																	</td>
-																	<td>
-																		<code>kt-shape-font-color-4</code>&nbsp;
-																		<code>kt-shape-bg-color-4</code>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-
-											<!--end::Section-->
-										</div>
-									</div>
-
-									<!--end::Portlet-->
-								</div>
-								<div class="col-xl-6">
-
-									<!--begin::Portlet-->
-									<div class="kt-portlet kt-portlet--tab">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon kt-hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="kt-portlet__head-title">
-													Typography Examples
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-
-											<!--begin::Section-->
-											<div class="kt-section">
-												<div class="kt-section__desc">
-													Apply state color classes to any typography element:
-												</div>
-												<div class="kt-section__content kt-section__content--solid--">
-													<span class="kt-font-success">Success state text</span>&nbsp;
-													<span class="kt-font-warning">Warning state text</span>&nbsp;
-													<span class="kt-font-info">Info state text</span><br><br>
-													<span class="kt-font-danger kt-font-bold">Danger state text</span>&nbsp;
-													<span class="kt-font-primary kt-font-bold">Primary state text</span>&nbsp;
-													<span class="kt-font-brand kt-font-bold">Focus state text</span>
-												</div>
-												<div class="kt-separator kt-separator--space-lg kt-separator--border-dashed"></div>
-												<div class="kt-section__desc">
-													Apply base color classes to any typography element:
-												</div>
-												<div class="kt-section__content kt-section__content--solid--">
-													<span class="kt-label-font-color-4">Label color level 4</span>&nbsp;&nbsp;
-													<span class="kt-label-font-color-3">Label color level 3</span>&nbsp;&nbsp;
-													<span class="kt-label-font-color-2">Label color level 2</span>&nbsp;&nbsp;
-													<span class="kt-label-font-color-1">Label color level 1</span>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<!--end::Portlet-->
-
-									<!--begin::Portlet-->
-									<div class="kt-portlet kt-portlet--tab">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon kt-hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="kt-portlet__head-title">
-													Button Examples
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-
-											<!--begin::Section-->
-											<div class="kt-section">
-												<div class="kt-section__info">
-													Apply color classes to any component:
-												</div>
-												<div class="kt-section__content kt-section__content--solid--">
-													<a href="#" class="btn my-btn-style-1-1">Success</a>
-													<a href="#" class="btn my-btn-style-1-2">Warning</a>
-													<a href="#" class="btn my-btn-style-1-3">Danger</a>
-													<a href="#" class="btn my-btn-style-1-4">Dark</a>
-													<a href="#" class="btn my-btn-style-1-5">Brand</a>
-													<a href="#" class="btn my-btn-style-1-6">Primary</a>
-													<div class="kt-separator kt-separator--space-lg kt-separator--border-dashed"></div>
-													<a href="#" class="btn my-btn-style-2-1">Success</a>
-													<a href="#" class="btn my-btn-style-2-2">Warning</a>
-													<a href="#" class="btn my-btn-style-2-3">Danger</a>
-													<a href="#" class="btn my-btn-style-2-4">Dark</a>
-													<a href="#" class="btn my-btn-style-2-5">Brand</a>
-													<a href="#" class="btn my-btn-style-2-6">Primary</a>
-													<div class="kt-separator kt-separator--space-lg kt-separator--border-dashed"></div>
-													<a href="#" class="btn my-btn-style-3-1 btn-bold">Success</a>
-													<a href="#" class="btn my-btn-style-3-2 btn-bold">Warning</a>
-													<a href="#" class="btn my-btn-style-3-3 btn-bold">Danger</a>
-													<a href="#" class="btn my-btn-style-3-4 btn-bold">Dark</a>
-													<a href="#" class="btn my-btn-style-3-5 btn-bold">Brand</a>
-													<a href="#" class="btn my-btn-style-3-6 btn-bold">Primary</a>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<!--end::Portlet-->
-
-									<!--begin::Portlet-->
-									<div class="kt-portlet kt-portlet--tab">
-										<div class="kt-portlet__head">
-											<div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon kt-hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="kt-portlet__head-title">
-													Alert Examples
-												</h3>
-											</div>
-										</div>
-										<div class="kt-portlet__body">
-
-											<!--begin::Section-->
-											<div class="kt-section">
-												<div class="kt-section__content">
-													<div class="alert my-alert-style-1-1" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-1-2" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-1-3" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-1-4" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-1-5" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-1-6" role="alert">
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													
-													
-													<div class="alert my-alert-style-2-1 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-2-2 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-2-3 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-2-4 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-2-5 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-2-6 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													
-													
-													<div class="alert my-alert-style-3-1 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-3-2 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-3-3 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-3-4 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													<div class="alert my-alert-style-3-5 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													
-													<div class="alert my-alert-style-3-6 alert-dismissible fade show" role="alert">
-														<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-														</button>
-														<strong>Well done!</strong> You successfully read this important alert message.
-													</div>
-													
-													
-													
-													
-													<div class="progress">
-														<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-													</div>
-													<div class="kt-space-10"></div>
-													<div class="progress">
-														<div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="kt-space-10"></div>
-													<div class="progress">
-														<div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-												</div>
-											</div>
-
-											<!--end::Section-->
-										</div>
-									</div>
-
-									<!--end::Portlet-->
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<!--end::Portlet-->
+				
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">Custom Theme Icons</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th>Icon</th>
+												<th>Usage example</th>
+												<th>Icon</th>
+												<th>Usage example</th>
+												<th>Icon</th>
+												<th>Usage example</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<i class="my-icon-color flaticon2-calendar-3 kt-font-success" style=" font-size: 20px;"></i>
+												</td>
+												<td><code>&lt;i class="my-icon-color flaticon2-calendar-3 kt-font-success"&gt;&lt;/i&gt;</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end::Portlet-->
+				
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">Custom Theme Links</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th>Link</th>
+												<th>Usage example</th>
+												<th>Link</th>
+												<th>Usage example</th>
+												<th>Link</th>
+												<th>Usage example</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<a href="#" class="kt-link my-link">Forgot Password ?</a>
+												</td>
+												<td><code>&lt;a href="#" class="kt-link my-link"&gt;Forgot Password ?&lt;/a&gt;</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end::Portlet-->
+				
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">Custom Theme Input</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th>Input</th>
+												<th>Usage example</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<input type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off">
+												</td>
+												<td><code>&lt;input type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off"&gt;</code></td>
+											</tr>
+											<tr>
+												<td>
+													<select class="form-control kt-selectpicker" multiple="multiple">
+													    <option data-content='<span class="kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color">option 1</span>'></option>
+													    <option data-content='<span class="kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color">option 2</span>'></option>
+													    <option data-content='<span class="kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color">option 3</span>'></option>
+													</select>
+												</td>
+												<td><code>Inspect the element</code></td>
+											</tr>
+											
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end::Portlet-->
 
-						<!-- end:: Content -->
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">Default Theme Buttons</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__info">You can apply Bootstrap and
+								Metronic state color helper classes to the most of the Keen's
+								components:</div>
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th>Button</th>
+												<th>CSS class</th>
+												<th>Button Outline</th>
+												<th>CSS class</th>
+												<th>Button Label</th>
+												<th>CSS class</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Bootstrap
+														state colors</span></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-primary">Primary</a></td>
+												<td><code>btn btn-primary</code></td>
+												<td><a href="#" class="btn btn-outline-primary">Primary</a></td>
+												<td><code>btn btn-outline-primary</code></td>
+												<td><a href="#" class="btn btn-label-primary btn-bold">Primary</a></td>
+												<td><code>btn btn-label-primary btn-bold</code></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-success">Success</a></td>
+												<td><code>btn btn-success</code></td>
+												<td><a href="#" class="btn btn-outline-success">Success</a></td>
+												<td><code>btn btn-outline-success</code></td>
+												<td><a href="#" class="btn btn-label-success btn-bold">Success</a></td>
+												<td><code>btn btn-label-success btn-bold</code></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-warning">Warning</a></td>
+												<td><code>btn btn-warning</code></td>
+												<td><a href="#" class="btn btn-outline-warning">Warning</a></td>
+												<td><code>btn btn-outline-warning</code></td>
+												<td><a href="#" class="btn btn-label-warning btn-bold">Warning</a></td>
+												<td><code>btn btn-label-warning btn-bold</code></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-danger">Danger</a></td>
+												<td><code>btn btn-danger</code></td>
+												<td><a href="#" class="btn btn-outline-danger">Danger</a></td>
+												<td><code>btn btn-outline-danger</code></td>
+												<td><a href="#" class="btn btn-label-danger btn-bold">Danger</a></td>
+												<td><code>btn btn-label-danger btn-bold</code></td>
+											</tr>
+											<tr>
+												<td colspan="6"><span class="kt-font-bold">Metronic
+														custom state colors</span></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-brand">Brand</a></td>
+												<td><code>btn btn-brand</code></td>
+												<td><a href="#" class="btn btn-outline-brand">Brand</a></td>
+												<td><code>btn btn-outline-brand</code></td>
+												<td><a href="#" class="btn btn-label-brand btn-bold">Brand</a></td>
+												<td><code>btn btn-label-brand btn-bold</code></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-dark">Dark</a></td>
+												<td><code>btn btn-dark</code></td>
+												<td><a href="#" class="btn btn-outline-dark">Dark</a></td>
+												<td><code>btn btn-outline-dark</code></td>
+												<td><a href="#" class="btn btn-label-dark btn-bold">Dark</a></td>
+												<td><code>btn btn-label-dark btn-bold</code></td>
+											</tr>
+											<tr>
+												<td><a href="#" class="btn btn-light">Light</a></td>
+												<td><code>btn btn-light</code></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end::Portlet-->
 
 
+				<!--begin::Portlet-->
+				<div class="kt-portlet">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon kt-hide"> <i
+								class="la la-gear"></i>
+							</span>
+							<h3 class="kt-portlet__head-title">State Colors</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="kt-section">
+							<div class="kt-section__info">You can apply Bootstrap and
+								Metronic state color helper classes to the most of the Keen's
+								components:</div>
+							<div class="kt-section__content">
+								<div class="table-responsive">
+									<table class="table table-bordered table-head-solid">
+										<thead>
+											<tr>
+												<th style="width: 150px">State</th>
+												<th style="width: 200px">Class postfix</th>
+												<th>Usage example</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="4"><span class="kt-font-bold">Bootstrap
+														States</span></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--success">Success</span></td>
+												<td><code>*-success</code></td>
+												<td><code>btn-success</code> <code>kt-font-success</code></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--warning">Warning</span></td>
+												<td><code>*-warning</code></td>
+												<td><code>btn-warning</code> <code>kt-font-warning</code></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--danger">Danger</span></td>
+												<td><code>*-danger</code></td>
+												<td><code>btn-danger</code> <code>kt-font-danger</code></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--info">Info</span></td>
+												<td><code>*-info</code></td>
+												<td><code>btn-info</code> <code>kt-font-info</code></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--primary">Primary</span></td>
+												<td><code>*-primary</code></td>
+												<td><code>btn-primary</code> <code>kt-font-primary</code></td>
+											</tr>
+											<tr>
+												<td colspan="4"><span class="kt-font-bold">Metronic
+														Custom States</span></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--brand">Brand</span></td>
+												<td><code>*-brand</code></td>
+												<td><code>btn-success</code> <code>kt-font-brand</code></td>
+											</tr>
+											<tr>
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--dark">Dark</span></td>
+												<td><code>*-dark</code></td>
+												<td><code>btn-dark</code> <code>kt-font-dark</code></td>
+											</tr>
+											<tr class="active">
+												<td><span
+													class="kt-badge kt-badge--inline kt-badge--light">Light</span></td>
+												<td><code>*-light</code></td>
+												<td><code>btn-light</code> <code>kt-font-light</code></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--end::Portlet-->
+
+			</div>
+		</div>
+	</div>
+	<!-- end:: Content -->
+	
+	<!--begin::Page Scripts(used by this page) -->
+	<th:block layout:fragment="scripts">
+		<script>
+			jQuery(document).ready(function() {	
+				$('[data-switch=true]').bootstrapSwitch();
+				$('.kt-selectpicker').selectpicker();
+			});
+		</script>
+	</th:block>
+	<!--end::Page Scripts -->
 </body>
 </html>

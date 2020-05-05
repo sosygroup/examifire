@@ -42,10 +42,10 @@
 						<a th:href="@{/home/admin/users}" class="btn btn-default my-btn-close-1"> Close </a>
 						<a id="link-save-and-continue" class="btn btn-brand my-btn-save-1" href="javascript:void(0);">Save Changes</a>
 						<div class="dropdown dropdown-inline">
-                            <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="flaticon-more-1"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-menu dropdown-menu-right my-btn-multiple-actions-1__dropdown-menu">
                                 <a class="dropdown-item" th:href="@{/home/admin/users/edit/{id}(id=${user.id})}"><i class="la la-reply"></i>Discard Changes</a>
                                 <a id="link-save-and-close" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i>Save &amp; Close</a>
                                 <div class="dropdown-divider"></div>
@@ -71,11 +71,11 @@
 						class="nav nav-tabs nav-tabs-space-xl nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand"
 						role="tablist">
 						<li class="nav-item">
-							<a th:classappend="${#fields.hasErrors('user.firstname') or #fields.hasErrors('user.lastname')}? kt-font-danger" class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_1" role="tab">
+							<a th:classappend="${#fields.hasErrors('user.firstname') or #fields.hasErrors('user.lastname')}? 'kt-font-danger my-font-danger':''" class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_1" role="tab">
 								<span class="fa fa-address-book kt-margin-r-5"></span>Profile</a>
 						</li>
 						<li class="nav-item">
-							<a th:classappend="${#fields.hasErrors('user.roles') or #fields.hasErrors('user.username') or #fields.hasErrors('user.email') }? kt-font-danger" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
+							<a th:classappend="${#fields.hasErrors('user.roles') or #fields.hasErrors('user.username') or #fields.hasErrors('user.email') }? 'kt-font-danger my-font-danger':''" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
 							<span class="fa fa-user kt-margin-r-5"></span>Account</a>
 						</li>
 						<li class="nav-item">
@@ -111,11 +111,11 @@
 														id="kt_user_edit_avatar">
 														<div class="kt-avatar__holder"
 															th:style="'background-image: url(' + @{/assets/media/users/300_20.jpg} + ');'"></div>
-														<label class="kt-avatar__upload" data-toggle="kt-tooltip"
+														<label class="kt-avatar__upload my-avatar__upload" data-toggle="kt-tooltip"
 															title="" data-original-title="Change avatar"> <i
 															class="fa fa-pen"></i> <input type="file"
 															name="profile_avatar" accept=".png, .jpg, .jpeg">
-														</label> <span class="kt-avatar__cancel" data-toggle="kt-tooltip"
+														</label> <span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip"
 															title="" data-original-title="Cancel avatar"> <i
 															class="fa fa-times"></i>
 														</span>
@@ -126,14 +126,14 @@
 												<label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{firstname}">
-													<span class="text-danger" th:errors="*{firstname}">Firstname field errors</span>
+													<span class="text-danger my-font-danger" th:errors="*{firstname}">Firstname field errors</span>
 												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{lastname}">
-													<span class="text-danger" th:errors="*{lastname}">Lastname field errors</span>
+													<span class="text-danger my-font-danger" th:errors="*{lastname}">Lastname field errors</span>
 												</div>
 											</div>
 										</div>
@@ -156,7 +156,7 @@
 												<label class="col-form-label col-lg-3 col-sm-12">Roles</label>
 												<div class="col-lg-4 col-md-9 col-sm-12">
 													<select class="form-control kt-selectpicker" th:field="*{roles}" multiple="multiple">
-													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded &quot;>' + ${role.name} + '</span>'"
+													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color &quot;>' + ${role.name} + '</span>'"
 													    		th:each="role : ${roles}"
 													            th:field="*{roles}"
 													            th:value="${role.id}"
@@ -168,8 +168,8 @@
 												<label class="col-xl-3 col-lg-3 col-form-label">Username</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{username}">
-													<span class="text-danger" th:errors="*{username}">Username field errors</span>
-												<!-- <span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span> -->
+													<span class="text-danger my-font-danger" th:errors="*{username}">Username field errors</span>
+												<!-- <span class="text-danger my-font-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span> -->
 												</div>
 											</div>
 											<div class="form-group row">
@@ -183,9 +183,9 @@
 															th:field="*{email}" placeholder="Email"
 															aria-describedby="basic-addon1">
 													</div>
-													<span class="text-danger" th:errors="*{email}">Email field errors</span>
-												<!-- 	<span class="text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span>-->
-													<span class="form-text text-muted">We'll never share your email with anyone else and will not be publicly displayed. <a href="#" class="kt-link">Learn more</a>.
+													<span class="text-danger my-font-danger" th:errors="*{email}">Email field errors</span>
+												<!-- 	<span class="text-danger my-font-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span>-->
+													<span class="form-text text-muted">We'll never share your email with anyone else and will not be publicly displayed. <a href="#" class="kt-link my-link">Learn more</a>.
 													</span>
 												</div>
 											</div>
@@ -211,14 +211,14 @@
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Account</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{accountEnabled}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success" data-off-color="danger">
+													<input th:field="*{accountEnabled}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off">
 													<span class="form-text text-muted">Changes will take effect only after saving</span>
 												</div>
 											</div>
 											<div class="form-group form-group-last row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Password</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{passwordNonExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Non Expired" data-off-text="Expired" data-on-color="success" data-off-color="danger">
+													<input th:field="*{passwordNonExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Non Expired" data-off-text="Expired" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off">
 													<span class="form-text text-muted">Changes will take effect only after saving</span>
 												</div>
 											</div>

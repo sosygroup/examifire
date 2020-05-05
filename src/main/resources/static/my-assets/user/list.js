@@ -48,22 +48,9 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						var roles = {
-							1: {'ROLE_NAME':'ADMIN', 'class': 'kt-badge--danger'},
-							2: {'ROLE_NAME':'TEACHER' , 'class': 'kt-badge--primary'},
-							3: {'ROLE_NAME':'STUDENT' , 'class': 'kt-badge--success'},
-							//4: {'ROLE_NAME': '??', 'class': 'kt-badge--brand'},
-							//5: {'ROLE_NAME': '??', 'class': ' kt-badge--metal'},
-							//6: {'ROLE_NAME': '??', 'class': ' kt-badge--info'},
-							//7: {'ROLE_NAME': '??', 'class': ' kt-badge--warning'}
-						};
 						var return_string="";
 						data.forEach(function(role) {
-							var color_span = "kt-badge--warning";
-							if (typeof roles[role.id] != 'undefined') {
-								color_span = roles[role.id].class;
-							}
-							return_string=return_string+'<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + role.name + '</span>';
+							return_string=return_string+'<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--brand my-badge-color">' + role.name + '</span>';
 						});
 					
 						return return_string;
@@ -71,10 +58,10 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				},
 				{data: 'accountEnabled',
 					render: function(data, type, full, meta) {
-						var color_span="kt-badge--success";
+						var color_span="kt-badge--success my-input-switch-color__on";
 						var text_span="Enabled";
 						if (!data){
-							color_span = "kt-badge--danger";
+							color_span = "kt-badge--danger my-input-switch-color__off";
 							text_span = "Disabled"
 						}
 						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
@@ -82,10 +69,10 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				},
 				{data: 'passwordNonExpired',
 					render: function(data, type, full, meta) {
-						var color_span="kt-badge--success";
+						var color_span="kt-badge--success my-input-switch-color__on";
 						var text_span="Non Expired";
 						if (!data){
-							color_span = "kt-badge--danger";
+							color_span = "kt-badge--danger my-input-switch-color__off";
 							text_span = "Expired"
 						}
 						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
@@ -101,7 +88,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 	                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
 	                        <i class="la la-ellipsis-h"></i>\
 	                      </a>\
-	                      <div class="dropdown-menu dropdown-menu-right">\
+	                      <div class="dropdown-menu dropdown-menu-right my-btn-multiple-actions-1__dropdown-menu">\
 	                          <a class="dropdown-item" href="/home/admin/users/edit/'+full['id']+'"><i class="la la-edit"></i> Edit Details</a>\
 	                          <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
 	                      </div>\
