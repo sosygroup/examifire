@@ -1,6 +1,7 @@
 package it.univaq.examifire.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
@@ -12,9 +13,19 @@ public class UserValidator {
 	@Autowired
 	private UserService userService;
 
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	public void validate(User user, BindingResult bindingResult) {
 		duplicatedEmailValidation(user, bindingResult);
 		duplicatedUsernameValidation(user, bindingResult);
+
+	}
+	
+	public void validate(User user, String currentPassword, String newPassword, String verifyPassword, BindingResult bindingResult) {
+		validate (user, bindingResult);
+		passwordUpdateValidation(user, currentPassword, newPassword, verifyPassword, bindingResult);
 
 	}
 
@@ -64,4 +75,15 @@ public class UserValidator {
 		bindingResult.rejectValue("username", "", "The username already exists");
 	}
 
+	
+	private void passwordUpdateValidation(User user, String currentPassword, String newPassword, String verifyPassword, BindingResult bindingResult) {
+		User persistentUser = userService.findById(user.getId()).orElse(null);
+
+		if (passwordEncoder.matches(currentPassword, persistentUser.getPassword()) && verifyPassword.equals(newPassword)) {
+			return;
+		}
+		
+		bindingResult.rejectValue("password", "", "Please, retype the new password and verify it: make sure your passwords match");
+		
+	}
 }

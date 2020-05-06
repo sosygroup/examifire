@@ -5,10 +5,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 	layout:decorate="~{layout/layout.html}"
-	th:with="aside_menu_active_link='users'">
+	th:with="aside_menu_active_link=''">
 <!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
 <head>
-<title>Edit User</title>
+<title>Profile</title>
 <!--
 	You don't need to put the layout:fragment attribute
 	into the <head> - the decoration process will automatically copy the 
@@ -39,19 +39,15 @@
 			</div>
 			<div class="kt-subheader__toolbar">
 				<div class="kt-subheader__wrapper">
-						<a th:href="@{/home/admin/users}" class="btn btn-default my-btn-close-1"> Close </a>
+						<a th:href="@{/home}" class="btn btn-default my-btn-close-1"> Close </a>
 						<a id="link-save-and-continue" class="btn btn-brand my-btn-save-1" href="javascript:void(0);">Save Changes</a>
 						<div class="dropdown dropdown-inline">
                             <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="flaticon-more-1"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right my-btn-multiple-actions-1__dropdown-menu">
-                                <a class="dropdown-item" th:href="@{/home/admin/users/edit/{id}(id=${user.id})}"><i class="la la-reply"></i>Discard Changes</a>
+                                <a class="dropdown-item" th:href="@{/home/profile}"><i class="la la-reply"></i>Discard Changes</a>
                                 <a id="link-save-and-close" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i>Save &amp; Close</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item confirm-delete" 
-                                  th:attr="data-user-firstname-lastname=|${user.firstname} ${user.firstname}|" 
-                                  th:href="@{/home/admin/users/delete/{id}(id=${user.id})}"><i class="la la-trash"></i>Delete</a>
                             </div>
                         </div>
 				  </div>
@@ -75,18 +71,17 @@
 								<span class="fa fa-address-book kt-margin-r-5"></span>Profile</a>
 						</li>
 						<li class="nav-item">
-							<a th:classappend="${#fields.hasErrors('user.roles') or #fields.hasErrors('user.username') or #fields.hasErrors('user.email') }? 'kt-font-danger my-font-danger':''" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
+							<a th:classappend="${#fields.hasErrors('user.username') or #fields.hasErrors('user.email') }? 'kt-font-danger my-font-danger':''" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
 							<span class="fa fa-user kt-margin-r-5"></span>Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_3" role="tab"><span class="fa fa-user-secret kt-margin-r-5"></span>Security</a>
+							<a th:classappend="${#fields.hasErrors('user.password')}? 'kt-font-danger my-font-danger':''"  class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_3" role="tab"><span class="fa fa-user-secret kt-margin-r-5"></span>Security</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="kt-portlet__body">
-				<form id="user-edit-form" th:action="@{/home/admin/users/edit/{id}(id=${user.id})}"
-			th:object="${user}" method="post">
+				<form id="user-edit-form" th:action="@{/home/profile}" th:object="${user}" method="post">
 					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<div class="tab-content">
@@ -153,18 +148,6 @@
 												</div>
 											</div>
 											<div class="form-group row">
-												<label class="col-form-label col-lg-3 col-sm-12">Roles</label>
-												<div class="col-lg-4 col-md-9 col-sm-12">
-													<select class="form-control kt-selectpicker" th:field="*{roles}" multiple="multiple">
-													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color &quot;>' + ${role.name} + '</span>'"
-													    		th:each="role : ${roles}"
-													            th:field="*{roles}"
-													            th:value="${role.id}"
-													            th:text="${role.name}">Roles</option>
-													</select>
-												</div>
-											</div>
-											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Username</label>
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{username}">
@@ -189,9 +172,6 @@
 													</span>
 												</div>
 											</div>
-											
-											
-										
 										</div>
 									</div>
 								</div>
@@ -209,17 +189,24 @@
 												</div>
 											</div>
 											<div class="form-group row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Account</label>
+												<label class="col-xl-3 col-lg-3 col-form-label">Current Password</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{accountEnabled}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Enabled" data-off-text="Disabled" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off">
-													<span class="form-text text-muted">Changes will take effect only after saving</span>
+													<input id="current_password" name="current_password" type="password" class="form-control" value=""
+														placeholder="Current password">
+														<span class="form-text "><a href="/forgotpassword" class="kt-link my-link kt-font-sm kt-font-bold kt-margin-t-5">Forgot password ?</a></span>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">New Password</label>
+												<div class="col-lg-9 col-xl-6">
+													<input id="new_password" name="new_password" type="password" class="form-control" value="" placeholder="New password">
+													<span class="text-danger my-font-danger" th:errors="*{password}">Password field errors</span>
 												</div>
 											</div>
 											<div class="form-group form-group-last row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Password</label>
+												<label class="col-xl-3 col-lg-3 col-form-label">Verify Password</label>
 												<div class="col-lg-9 col-xl-6">
-													<input th:field="*{passwordNonExpired}" type="checkbox" data-switch="true" data-size="small" data-handle-width="90" data-on-text="Non Expired" data-off-text="Expired" data-on-color="success my-input-switch-color__on" data-off-color="danger my-input-switch-color__off">
-													<span class="form-text text-muted">Changes will take effect only after saving</span>
+													<input id="verify_password" name="verify_password" type="password" class="form-control" value="" placeholder="Verify password">
 												</div>
 											</div>
 										</div>
@@ -238,7 +225,7 @@
 	<!--begin::Page Scripts(used by this page) -->
 	<th:block layout:fragment="scripts">
 		<script th:src="@{/assets/js/pages/custom/user/edit-user.js}" type="text/javascript"></script>
-		<script th:src="@{/my-assets/user/edit.js}" type="text/javascript"></script>
+		<script th:src="@{/my-assets/js/account/profile.js}" type="text/javascript"></script>
 	</th:block>
 	<!--end::Page Scripts -->
 

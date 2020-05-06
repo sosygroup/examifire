@@ -29,8 +29,8 @@ import it.univaq.examifire.validation.UserValidator;
 
 @Controller()
 @RequestMapping("/home/admin/users")
-public class UserController {
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+public class AdminUserController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 	@Autowired
 	private UserService userService;
 
@@ -49,7 +49,7 @@ public class UserController {
 	@GetMapping()
 	public String findAll(Model model) {
 		logger.debug("HTTP GET request received at URL /home/admin/users");
-		return "user/list";
+		return "admin/user/list";
 	}
 
 	@RequestMapping("/datatable.jquery")
@@ -63,7 +63,7 @@ public class UserController {
 		logger.debug("HTTP GET request received at URL /home/admin/users/add");
 		model.addAttribute("roles", roleService.findAll());
 		model.addAttribute("user", new User());
-		return "user/add";
+		return "admin/user/add";
 	}
 
 	@PostMapping("/add")
@@ -72,6 +72,7 @@ public class UserController {
 		logger.debug(
 				"HTTP POST request received at URL /home/admin/users/add with a request parameter save_and_add_new={}",
 				saveAndAddNew);
+		// NOTE that the password has not been changed (because the admin cannot change this) and hence it is valid
 		user.setPassword(PasswordGeneratorUtils.generateCommonLangPassword());
 		
 		springValidator.validate(user, bindingResult);
@@ -82,7 +83,7 @@ public class UserController {
 			});
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("confirm_crud_operation", "add_failed");
-			return "user/add";
+			return "admin/user/add";
 		}
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -105,7 +106,7 @@ public class UserController {
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + id));
 		model.addAttribute("user", user);
 		model.addAttribute("roles", roleService.findAll());
-		return "user/edit";
+		return "admin/user/edit";
 	}
 
 	@Transactional
@@ -128,7 +129,7 @@ public class UserController {
 			// restore the roles otherwise they are not retained in the model
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("confirm_crud_operation", "update_failed");
-			return "user/edit";
+			return "admin/user/edit";
 		}
 		
 		userService.update(user);

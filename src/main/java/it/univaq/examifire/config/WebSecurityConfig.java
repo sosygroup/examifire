@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsServiceImpl).passwordEncoder(passwordEncoder());
@@ -100,7 +100,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	              .tokenRepository(persistentTokenRepository())
 	              .tokenValiditySeconds(24 * 60 * 60) //24 hours
 	              .and()
-	            .exceptionHandling();
+	              .exceptionHandling();
+	           
 	    }
 	    
 		PersistentTokenRepository persistentTokenRepository() {

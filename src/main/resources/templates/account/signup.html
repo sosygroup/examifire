@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>Signin</title>
+		<title>Signup</title>
 		<meta name="description" content="Login page example">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -25,11 +25,6 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
 
 		<!--end::Fonts -->
-
-		<!--begin::Page Custom Styles(used by this page) -->
-		<link href="assets/css/pages/login/login-3.css" rel="stylesheet" type="text/css" />
-
-		<!--end::Page Custom Styles -->
 
 		<!--begin::Page Custom Styles(used by this page) -->
 		<link th:href="@{/assets/css/pages/login/login-3.css}" rel="stylesheet" type="text/css" />
@@ -48,7 +43,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link th:href="@{/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 		<link th:href="@{/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
 
-		<!-- --> <link th:href="@{/my-assets/my-custom-style-1.css}" rel="stylesheet" type="text/css" />
+		<!-- --> <link th:href="@{/my-assets/css/my-custom-style-1.css}" rel="stylesheet" type="text/css" />
 		
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
@@ -70,39 +65,62 @@ License: You must have a valid license purchased only from themeforest(the above
 									<img th:src="@{/assets/media/logos/logo-5.png}">
 								</a>
 							</div>
+							
 							<div class="">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Sign In</h3>
+									<h3 class="kt-login__title">Sign Up</h3>
+									<div class="kt-login__desc">Enter your details to create your account:</div>
 								</div>
-								<form class="kt-form" th:action="@{/signin}" method="post">
+								<form class="kt-form" th:action="@{/signup}" th:object="${user}" method="post">
 									<div class="input-group">
-										<input class="form-control" type="text" placeholder="Username" name="username" autocomplete="off">
+										<input class="form-control" type="text" placeholder="Firstname" name="firstname" th:field="*{firstname}">
+										<div th:if="${#fields.hasErrors('firstname')}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger my-font-danger" th:errors="*{firstname}">Error message</span>
+										</div>
 									</div>
 									<div class="input-group">
-										<input class="form-control" type="password" placeholder="Password" name="password">
+										<input class="form-control" type="text" placeholder="Lastname" name="lastname" th:field="*{lastname}">
+										<div th:if="${#fields.hasErrors('lastname')}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger my-font-danger" th:errors="*{lastname}">Error message</span>
+										</div>
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="Username" name="username" th:field="*{username}">
+										<div th:if="${#fields.hasErrors('email')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger my-font-danger" th:errors="*{username}">Error message</span>
+											<!-- <span class="text-danger my-font-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span>  -->
+										</div>
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="Email" name="email" th:field="*{email}">
+										<div th:if="${#fields.hasErrors('email')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger my-font-danger" th:errors="*{email}">Error message</span>
+											<!-- <span class="text-danger my-font-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span> -->
+										</div>
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="password" placeholder="Password" name="password" th:field="*{password}">
+										<div th:if="${#fields.hasErrors('password')}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger my-font-danger" th:errors="*{password}">Error message</span>
+										</div>
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="password" placeholder="Confirm Password" name="rpassword">
 									</div>
 									<div class="row kt-login__extra">
-										<div class="col">
-											<label class="kt-checkbox">
-												<input type="checkbox" name="remember-me"> Remember me
-												<span></span>
-											</label>
-										</div>
-										<div class="col kt-align-right">
-											<a th:href="@{/forgotpassword}" class="kt-login__link kt-link my-link">Forgot Password ?</a>
-										</div>
+										<span>By signing up, you are agreeing to our <a href="#" class="kt-link my-link">Terms of Service</a> and <a href="#" class="kt-link my-link">Privacy Policy.</a></span>
 									</div>
 									<div class="kt-login__actions">
-										<button type="submit" class="btn btn-brand btn-elevate kt-login__btn-primary">Sign In</button>
+										<button type="submit" class="btn btn-brand btn-elevate kt-login__btn-primary">Sign Up</button>&nbsp;&nbsp;
 									</div>
 								</form>
 							</div>
 							<div class="kt-login__account">
 								<span class="kt-login__account-msg">
-									Don't have an account yet ?
+									Already have an account ?
 								</span>
 								&nbsp;&nbsp;
-								<a th:href="@{/signup}" class="kt-login__account-link kt-link my-link">Sign Up!</a>
+								<a th:href="@{/signin}" class="kt-login__account-link kt-link my-link">Sign in!</a>
 							</div>
 						</div>
 					</div>

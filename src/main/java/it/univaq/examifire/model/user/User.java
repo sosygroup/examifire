@@ -55,7 +55,7 @@ public class User extends EntityAudit<Long> {
 	private String username;
 
 	@NotBlank(message = "Please enter the password")
-	@Size(max = 255, min = 10, message = "Minimum 10 characters and maximum 255 characters")
+	@Size(max = 255, min = 5, message = "Minimum 5 characters and maximum 255 characters")
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
 

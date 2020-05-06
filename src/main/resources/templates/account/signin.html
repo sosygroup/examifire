@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>Forgot password</title>
+		<title>Signin</title>
 		<meta name="description" content="Login page example">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -25,6 +25,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
 
 		<!--end::Fonts -->
+
+		<!--begin::Page Custom Styles(used by this page) -->
+		<link href="assets/css/pages/login/login-3.css" rel="stylesheet" type="text/css" />
+
+		<!--end::Page Custom Styles -->
 
 		<!--begin::Page Custom Styles(used by this page) -->
 		<link th:href="@{/assets/css/pages/login/login-3.css}" rel="stylesheet" type="text/css" />
@@ -43,7 +48,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<link th:href="@{/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 		<link th:href="@{/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
 
-		<!-- --> <link th:href="@{/my-assets/my-custom-style-1.css}" rel="stylesheet" type="text/css" />
+		<!-- --> <link th:href="@{/my-assets/css/my-custom-style-1.css}" rel="stylesheet" type="text/css" />
 		
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
@@ -67,25 +72,32 @@ License: You must have a valid license purchased only from themeforest(the above
 							</div>
 							<div class="">
 								<div class="kt-login__head">
-									<h3 class="kt-login__title">Forgot Password ?</h3>
-									<div class="kt-login__desc">Enter your email to reset your password:</div>
+									<h3 class="kt-login__title">Sign In</h3>
 								</div>
-								<form class="kt-form" th:action="@{/forgotpassword}" method="post">
+								<form class="kt-form" th:action="@{/signin}" method="post">
 									<div class="input-group">
-										<input class="form-control" type="text" placeholder="email" name="email" id="kt_email" autocomplete="off">
+										<input class="form-control" type="text" placeholder="Username" name="username" autocomplete="off">
+									</div>
+									<div class="input-group">
+										<input class="form-control" type="password" placeholder="Password" name="password">
+									</div>
+									<div class="row kt-login__extra">
+										<div class="col">
+											<label class="kt-checkbox">
+												<input type="checkbox" name="remember-me"> Remember me
+												<span></span>
+											</label>
+										</div>
+										<div class="col kt-align-right">
+											<a th:href="@{/forgotpassword}" class="kt-login__link kt-link my-link">Forgot Password ?</a>
+										</div>
 									</div>
 									<div class="kt-login__actions">
-										<button type="submit" class="btn btn-brand btn-elevate kt-login__btn-primary">Request</button>&nbsp;&nbsp;
+										<button type="submit" class="btn btn-brand btn-elevate kt-login__btn-primary">Sign In</button>
 									</div>
 								</form>
 							</div>
 							<div class="kt-login__account">
-								<span class="kt-login__account-msg">
-									Already have an account ?
-								</span>
-								&nbsp;&nbsp;
-								<a th:href="@{/signin}" class="kt-login__account-link kt-link my-link">Sign in!</a>
-								<br><br>
 								<span class="kt-login__account-msg">
 									Don't have an account yet ?
 								</span>
