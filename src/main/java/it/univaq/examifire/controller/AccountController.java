@@ -1,7 +1,12 @@
 package it.univaq.examifire.controller;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,8 +114,8 @@ public class AccountController {
 	public String edit(Authentication authentication, @RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "current_password") String currentPassword,
 			@RequestParam(name = "new_password") String newPassword,
-			@RequestParam(name = "verify_password") String verifyPassword,
-		User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			@RequestParam(name = "confirm_password") String confirmPassword,
+		@Valid() User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug(
@@ -117,21 +123,17 @@ public class AccountController {
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
 		
-		user.setId(persistentUser.getId());
-		user.setAccountEnabled(persistentUser.isAccountEnabled());
-		user.setPasswordNonExpired(persistentUser.isPasswordNonExpired());
-		user.setRoles(persistentUser.getRoles());
-
-		
-		if (newPassword.isEmpty()) {
-			user.setPassword(persistentUser.getPassword());
-			springValidator.validate(user, bindingResult);
-			userValidator.validate(user, bindingResult);
-		}else {
-			user.setPassword(newPassword);
-			springValidator.validate(user, bindingResult);
-			userValidator.validate(user, currentPassword, newPassword, verifyPassword, bindingResult);
+		/*
+		 * this will copy the properties from persistentUser to user with the same name
+		 * only, by excluding "firstname","lastname","username","email"
+		 */
+		BeanUtils.copyProperties(persistentUser, user, "firstname","lastname","username","email");
+		springValidator.validate(user, bindingResult);
+		userValidator.validate(user, bindingResult);
+		if (!newPassword.isEmpty()) {
+			userValidator.validatePassword(persistentUser.getPassword(), currentPassword, newPassword, confirmPassword, bindingResult);
 		}
+		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());

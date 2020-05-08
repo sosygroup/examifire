@@ -84,7 +84,10 @@
 			<artifactId>spring-data-jpa-datatables</artifactId>
 			<version>5.0.0</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+		</dependency>
 		<!-- for testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
