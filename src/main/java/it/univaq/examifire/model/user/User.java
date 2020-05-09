@@ -31,6 +31,7 @@ import it.univaq.examifire.model.audit.EntityAudit;
 public class User extends EntityAudit<Long> {
 	public interface Registration {}
 	public interface Profile {}
+	public interface ChangePassword {}
 	public interface CreateEditByAdmin {}
 	
 	@Id
@@ -60,7 +61,7 @@ public class User extends EntityAudit<Long> {
 	private String username;
 	
 	@NotBlank(message = "Please enter the password", groups = {Default.class, User.Registration.class, User.CreateEditByAdmin.class})
-	@Size(max = 15, min = 8, message = "Minimum 8 characters and maximum 15 characters", groups = {Default.class, User.Registration.class, User.CreateEditByAdmin.class})
+	@Size(max = 15, min = 8, message = "Minimum 8 characters and maximum 15 characters", groups = {Default.class, User.Registration.class, User.ChangePassword.class, User.CreateEditByAdmin.class})
 	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$", message = "The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
 	@Column(name = "password", nullable = false)
 	private String password;

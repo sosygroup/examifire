@@ -17,21 +17,11 @@ var UserEdit = function() {
 		});
 	}
 	
-	var saveNavigationTabActiveLink = function() {
-		$("#tab_profile").click(function() {
-			$("#navigation_tab_active_link").val("profile");
-		});
-		$("#tab_account").click(function() {
-			$("#navigation_tab_active_link").val("account");
-		});
-	}
-	
 	return {
 		// public functions
 		init : function() {
 			saveUserFormAndContinueEvent();
 			saveUserFormAndCloseEvent();
-			saveNavigationTabActiveLink();
 		}
 	};
 }();
@@ -41,10 +31,10 @@ jQuery(document).ready(function() {
 	
 	
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
+		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The password has been updated!")
 	}	
 	if($("#confirm_crud_operation").val() == 'update_failed') {
-		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Update failed, please check the errors!")
+		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Password update failed, please check the errors!")
 	}
 	
 	

@@ -33,23 +33,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt", "createdBy", "lastModifiedBy" }, allowGetters = true)
+@JsonIgnoreProperties(value = { "createdBy", "createdAt", "lastUpdatedBy","lastUpdatedAt"}, allowGetters = true)
 public abstract class EntityAudit<U> {
 	@CreatedBy
-	@Column(nullable = true, updatable = true)
-	protected U createdBy;
+	@Column(name = "created_by", nullable = true, updatable = true)
+	private U createdBy;
 
 	@CreatedDate
-	@Column(nullable = false, updatable = false)
+	@Column(name = "created_at", nullable = false, updatable = false)
 	private Instant createdAt;
 
 	@LastModifiedBy
-	@Column(nullable = true, updatable = true)
-	protected U lastModifiedBy;
+	@Column(name = "last_updated_by", nullable = true, updatable = true)
+	private U lastUpdatedBy;
 
 	@LastModifiedDate
-	@Column(nullable = false, updatable = true)
-	private Instant updatedAt;
+	@Column(name = "last_updated_at", nullable = false, updatable = true)
+	private Instant lastUpdatedAt;
 
 	public U getCreatedBy() {
 		return createdBy;
@@ -67,19 +67,22 @@ public abstract class EntityAudit<U> {
 		this.createdAt = createdAt;
 	}
 
-	public U getLastModifiedBy() {
-		return lastModifiedBy;
+	public U getLastUpdatedBy() {
+		return lastUpdatedBy;
 	}
 
-	public void setLastModifiedBy(U lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
+	public void setLastUpdatedBy(U lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	public Instant getUpdatedAt() {
-		return updatedAt;
+	public Instant getLastUpdatedAt() {
+		return lastUpdatedAt;
 	}
 
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setLastUpdatedAt(Instant lastUpdatedAt) {
+		this.lastUpdatedAt = lastUpdatedAt;
 	}
+
+
+	
 }

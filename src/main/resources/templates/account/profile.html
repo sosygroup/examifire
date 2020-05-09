@@ -75,17 +75,11 @@
 																 ${(navigation_tab_active_link == 'account' ? 'active':'')}|" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
 							<span class="fa fa-user kt-margin-r-5"></span>Account</a>
 						</li>
-						<li class="nav-item">
-							<a id="tab_security" th:classappend="|${(#fields.hasErrors('user.password') ? 'kt-font-danger my-font-danger':'')}
-																 ${(navigation_tab_active_link == 'security'  ? 'active':'')}|"  class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_3" role="tab">
-							<span class="fa fa-user-secret kt-margin-r-5"></span>Security</a>
-						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="kt-portlet__body">
 				<form id="user-edit-form" th:action="@{/home/profile}" th:object="${user}" method="post">
-					<!-- <input type="hidden" th:field="*{roles}">-->
 					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<input type="hidden" id="navigation_tab_active_link" name="navigation_tab_active_link" th:value="${navigation_tab_active_link}">
@@ -175,45 +169,6 @@
 												<!-- 	<span class="text-danger my-font-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span>-->
 													<span class="form-text text-muted">We'll never share your email with anyone else and will not be publicly displayed. <a href="#" class="kt-link my-link">Learn more</a>.
 													</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div th:classappend="${(navigation_tab_active_link == 'security' ? 'active':'')}" class="tab-pane" id="kt_user_edit_tab_3" role="tabpanel">
-							<div class="kt-form kt-form--label-right">
-								<div class="kt-form__body">
-									<div class="kt-section kt-section--first">
-										<div class="kt-section__body">
-											<div class="row">
-												<label class="col-xl-3"></label>
-												<div class="col-lg-9 col-xl-6">
-													<h3 class="kt-section__title kt-section__title-sm">Security:</h3>
-												</div>
-											</div>
-											<div class="form-group row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Current Password</label>
-												<div class="col-lg-9 col-xl-6">
-													<input id="current_password" name="current_password" type="password" class="form-control" value=""
-														placeholder="Current password">
-														 <span class="form-text text-danger my-font-danger" th:each="e : ${#fields.detailedErrors()}" th:if="${e.code == 'PasswordMatchError'}" th:text="${e.message}">PasswordMatchError</span>
-														 <span class="form-text "><a href="/forgotpassword" class="kt-link my-link kt-font-sm kt-font-bold kt-margin-t-5">Forgot password ?</a></span>
-												</div>
-											</div>
-											<div class="form-group row">
-												<label class="col-xl-3 col-lg-3 col-form-label">New Password</label>
-												<div class="col-lg-9 col-xl-6">
-													<input id="new_password" name="new_password" type="password" class="form-control" value="" placeholder="New password">
-													<span class="form-text text-danger my-font-danger" th:each="e : ${#fields.detailedErrors()}" th:if="${e.code == 'PasswordFormatError'}" th:text="${e.message}">PasswordFormatValidationError</span>
-												</div>
-											</div>
-											<div class="form-group form-group-last row">
-												<label class="col-xl-3 col-lg-3 col-form-label">Confirm Password</label>
-												<div class="col-lg-9 col-xl-6">
-													<input id="confirm_password" name="confirm_password" type="password" class="form-control" value="" placeholder="Confirm password">
-													<span class="form-text text-danger my-font-danger" th:each="e : ${#fields.detailedErrors()}" th:if="${e.code == 'ConfirmPasswordError'}" th:text="${e.message}">ConfirmPasswordError</span>
 												</div>
 											</div>
 										</div>

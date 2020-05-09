@@ -81,6 +81,48 @@ select:focus {
 
 /******************* START BUTTONS ************************/
 
+.my-btn-signin-1{
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+    color: #fff !important;
+}
+
+.my-btn-signin-1:hover {
+    background-color: #69ab3f !important;
+    border-color: #69ab3f !important;
+    color: #fff !important;
+}
+
+/**more**/
+
+.my-btn-signup-1{
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+    color: #fff !important;
+}
+
+.my-btn-signup-1:hover {
+    background-color: #69ab3f !important;
+    border-color: #69ab3f !important;
+    color: #fff !important;
+}
+
+/**more**/
+
+.my-btn-request-1{
+	background-color: #6db33f !important;
+    border-color: #6db33f !important;
+    color: #fff !important;
+}
+
+.my-btn-request-1:hover {
+    background-color: #69ab3f !important;
+    border-color: #69ab3f !important;
+    color: #fff !important;
+}
+
+/**more**/
+
 .my-btn-save-1{
 	background-color: #6db33f !important;
     border-color: #6db33f !important;

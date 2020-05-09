@@ -18,10 +18,10 @@ public class UserValidator {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public void validatePassword(String persistentPassword, String currentPassword, String newPassword,
+	public void validatePassword(String persistentPassword, String oldPassword, String newPassword,
 			String confirmPassword, BindingResult bindingResult) {
 
-		if (!passwordEncoder.matches(currentPassword, persistentPassword)) {
+		if (!passwordEncoder.matches(oldPassword, persistentPassword)) {
 			bindingResult.rejectValue("password", "PasswordMatchError", "The password is wrong");
 		}
 

@@ -6,6 +6,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	/*@Bean
+	public HttpTraceRepository htttpTraceRepository(){
+	  return new InMemoryHttpTraceRepository();
+	}*/
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
