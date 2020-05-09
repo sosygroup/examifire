@@ -60,9 +60,9 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "username", nullable = false, unique = true, length = 32)
 	private String username;
 	
-	@NotBlank(message = "Please enter the password", groups = {Default.class, User.Registration.class, User.CreateEditByAdmin.class})
-	@Size(max = 15, min = 8, message = "Minimum 8 characters and maximum 15 characters", groups = {Default.class, User.Registration.class, User.ChangePassword.class, User.CreateEditByAdmin.class})
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$", message = "The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@NotBlank(message = "Please enter the password", groups = {Default.class, User.Registration.class, User.ChangePassword.class})
+	@Size(max = 15, min = 8, message = "Minimum 8 characters and maximum 15 characters", groups = {Default.class, User.Registration.class, User.ChangePassword.class})
+	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$", message = "The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character", groups = {Default.class, User.Registration.class, User.ChangePassword.class})
 	@Column(name = "password", nullable = false)
 	private String password;
 

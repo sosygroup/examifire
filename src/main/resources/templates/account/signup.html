@@ -107,6 +107,10 @@ License: You must have a valid license purchased only from themeforest(the above
 									</div>
 									<div class="input-group">
 										<input id="confirm_password" name="confirm_password" type="password" class="form-control" value="" placeholder="Confirm password">
+										<div class="error invalid-feedback" style="display: block;">
+										<span class="form-text text-danger my-font-danger" th:each="e : ${#fields.detailedErrors()}" th:if="${e.code == 'ConfirmPasswordError'}" th:text="${e.message}">ConfirmPasswordError</span>
+										</div>
+										
 									</div>
 									<div class="row kt-login__extra">
 										<span>By signing up, you are agreeing to our <a href="#" class="kt-link my-link">Terms of Service</a> and <a href="#" class="kt-link my-link">Privacy Policy.</a></span>

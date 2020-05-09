@@ -375,6 +375,10 @@ a.nav-link:hover{
 .dataTables_wrapper .pagination .page-item:hover > .page-link {
 	background-color: #6db33f !important; 
 }
+
+.dataTables_wrapper table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child:before {
+	color: #6db33f !important; 
+}
 /******************* END DATATABLES ************************/
 
 

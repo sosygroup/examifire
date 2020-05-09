@@ -4,7 +4,6 @@ package it.univaq.examifire.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.Role;
@@ -29,15 +26,11 @@ import it.univaq.examifire.validation.UserValidator;
 
 @Controller
 public class AccountController {
-	
-	 @ExceptionHandler(Exception.class)
-     @ResponseStatus
-     public void handle(HttpMessageNotReadableException e) {
-  	   logger.warn("Returning HTTP 400 Bad Request", e);
-         throw e;
-     }
-	
-	
+	/*
+	 * org.springframework.validation.Errors /
+	 * org.springframework.validation.BindingResult validation results for a
+	 * preceding command or form object (the immediately preceding method argument).
+	 */
 	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
 	@Autowired
@@ -50,17 +43,15 @@ public class AccountController {
 	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/signup")
-	public String signup(Model model) {
+	public String showSignup(Model model) {
 		logger.debug("HTTP GET request received at URL /signup");
 		model.addAttribute("user", new User());
 		return "account/signup";
 	}
-	/*
-	 * The @RequestParam must be placed as first ! 
-	 */
+
 	@Transactional
 	@PostMapping("/signup")
-	public String registerUserAccount(
+	public String signup(
 			@RequestParam(name = "confirm_password") String confirmPassword,
 			@Validated(User.Registration.class) User user,
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
@@ -118,20 +109,18 @@ public class AccountController {
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug("HTTP GET request received at URL /home/profile by the user with id {}", authenticatedUserId);
 		
-		User user = userService.findById(authenticatedUserId)
+		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		model.addAttribute("user", user);
+		model.addAttribute("user", persistentUser);
 		return "account/profile";
 	}
 	
 	@Transactional
 	@PostMapping("/home/profile")
-	public String profile(Authentication authentication, @RequestParam(name = "save_and_continue") boolean saveAndContinue,
-			@RequestParam(name = "current_password") String currentPassword,
-			@RequestParam(name = "new_password") String newPassword,
-			@RequestParam(name = "confirm_password") String confirmPassword,
+	public String profile(Authentication authentication,
+			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
-		@Validated(User.Profile.class) User user, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug(
@@ -143,9 +132,6 @@ public class AccountController {
 		user.setId(authenticatedUserId);
 		userValidator.validateDuplicatedUsername(user, bindingResult);
 		userValidator.validateDuplicatedEmail(user, bindingResult);
-		if (!newPassword.isEmpty()) {
-			userValidator.validatePassword(persistentUser.getPassword(), currentPassword, newPassword, confirmPassword, bindingResult);
-		}
 		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
@@ -158,20 +144,17 @@ public class AccountController {
 		}
 		
 		// if this variable is true, we force the logout 
-		boolean expireUser = (!persistentUser.getUsername().equals(user.getUsername()))? true : false;
+		boolean forceUserLogout = (!persistentUser.getUsername().equals(user.getUsername()))? true : false;
 	
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
 		persistentUser.setUsername(user.getUsername());
 		persistentUser.setEmail(user.getEmail());
-		if (!newPassword.isEmpty()) {
-			user.setPassword(passwordEncoder.encode(newPassword));	
-		}
-		
+			
 		userService.update(persistentUser);
 		logger.debug("The user with id {} has been updated", persistentUser.getId());
 		
-		if(expireUser) {
+		if(forceUserLogout) {
 			logger.debug("Force the logout for the user {}, since the user changed authentication information", user.getId());
 			return "redirect:/logout";
 		}
@@ -192,20 +175,21 @@ public class AccountController {
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug("HTTP GET request received at URL /home/changepassword by the user with id {}", authenticatedUserId);
 		
-		User user = userService.findById(authenticatedUserId)
+		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		model.addAttribute("user", user);
+		model.addAttribute("user", persistentUser);
 		return "account/changepassword";
 	}
 	
-
 	@Transactional
 	@PostMapping("/home/changepassword")
 	public String changepassword(
+			Authentication authentication,
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "old_password") String oldPassword,
 			@RequestParam(name = "confirm_password") String confirmPassword,
-			@Validated(User.ChangePassword.class) User user, Authentication authentication, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+			@Validated(User.ChangePassword.class) User user, BindingResult bindingResult, 
+			Model model, RedirectAttributes redirectAttributes) {
 		
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug(
@@ -215,7 +199,6 @@ public class AccountController {
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
 		
 		userValidator.validatePassword(persistentUser.getPassword(), oldPassword, user.getPassword(), confirmPassword, bindingResult);
-			user.setId(authenticatedUserId);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());

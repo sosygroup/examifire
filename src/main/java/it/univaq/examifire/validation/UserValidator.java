@@ -22,7 +22,7 @@ public class UserValidator {
 			String confirmPassword, BindingResult bindingResult) {
 
 		if (!passwordEncoder.matches(oldPassword, persistentPassword)) {
-			bindingResult.rejectValue("password", "PasswordMatchError", "The password is wrong");
+			bindingResult.rejectValue("", "PasswordMatchError", "The password is wrong");
 		}
 
 		validateConfirmPassword(newPassword, confirmPassword, bindingResult);
@@ -30,38 +30,15 @@ public class UserValidator {
 	
 	public void validateConfirmPassword(String newPassword,
 			String confirmPassword, BindingResult bindingResult) {
-		//this.validatePassword(newPassword, bindingResult);
 		
 		if (!confirmPassword.equals(newPassword)) {
-			bindingResult.rejectValue("password", "ConfirmPasswordError",
+			bindingResult.rejectValue("", "ConfirmPasswordError",
 					"Please, retype the new password and confirm it correctly");
 
 		}
 
 	}
 
-/*
-	private void validatePassword(String password, BindingResult bindingResult) {
-		try {
-			assertThat(password, not(blankOrNullString()));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "PasswordFormatError", "Please, enter the password");
-		}
-
-		try {
-			assertThat(password.length(), is(both(greaterThanOrEqualTo(5)).and(lessThanOrEqualTo(255))));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "PasswordFormatError", "Minimum 5 characters and maximum 255 characters");
-		}
-
-		try {
-			assertThat(password, matchesPattern("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$"));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "PasswordFormatError",
-					"The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
-		}
-	}
-*/
 	public void validateDuplicatedEmail (User user, BindingResult bindingResult) {
 		// NOTE: this validation is called by during both user creation and modification
 		User persistentUser = userService.findByEmail(user.getEmail()).orElse(null);

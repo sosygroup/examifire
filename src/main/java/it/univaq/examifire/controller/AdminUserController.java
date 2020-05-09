@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,15 +30,18 @@ import it.univaq.examifire.validation.UserValidator;
 @Controller()
 @RequestMapping("/home/admin/users")
 public class AdminUserController {
+	/*
+	 * org.springframework.validation.Errors /
+	 * org.springframework.validation.BindingResult validation results for a
+	 * preceding command or form object (the immediately preceding method argument).
+	 */
 	private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
+	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private RoleService roleService;
-
-	@Autowired
-	private Validator springValidator;
 
 	@Autowired
 	private UserValidator userValidator;
@@ -53,7 +56,7 @@ public class AdminUserController {
 	}
 
 	@RequestMapping("/datatable.jquery")
-	public @ResponseBody DataTablesOutput<User> listPOST(Model model, @Valid DataTablesInput input) {
+	public @ResponseBody DataTablesOutput<User> findPaginated (Model model, @Valid DataTablesInput input) {
 		logger.debug("HTTP GET request received at URL /home/admin/users/datatable.jquery");
 		return userService.findAll(input);
 	}
@@ -67,27 +70,29 @@ public class AdminUserController {
 	}
 
 	@PostMapping("/add")
-	public String add(@RequestParam(name = "save_and_add_new") boolean saveAndAddNew, User user, BindingResult bindingResult,
-			Model model, RedirectAttributes redirectAttributes) {
-		logger.debug(
-				"HTTP POST request received at URL /home/admin/users/add with a request parameter save_and_add_new={}",
-				saveAndAddNew);
-		// NOTE that the password has not been changed (because the admin cannot change this) and hence it is valid
-		user.setPassword(PasswordGeneratorUtils.generateCommonLangPassword());
+	public String add(
+			@RequestParam(name = "save_and_add_new") boolean saveAndAddNew, 
+			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
-		springValidator.validate(user, bindingResult);
+		logger.debug(
+				"HTTP POST request received at URL /home/admin/users/add with a request parameter save_and_add_new={}", saveAndAddNew);
+		
 		userValidator.validateDuplicatedEmail(user, bindingResult);
 		userValidator.validateDuplicatedUsername(user, bindingResult);
+		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
 			});
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("confirm_crud_operation", "add_failed");
+			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "admin/user/add";
 		}
 
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		// automatically generate the password for the user 
+		user.setPassword(passwordEncoder.encode(PasswordGeneratorUtils.generateCommonLangPassword()));
 		userService.create(user);
 		logger.debug("The user with email {} has been added", user.getEmail());
 
@@ -103,25 +108,24 @@ public class AdminUserController {
 	@GetMapping("/edit/{id}")
 	public String showEdit(@PathVariable("id") Long id, Model model) {
 		logger.debug("HTTP GET request received at URL /home/admin/users/edit/{}", id);
-		User user = userService.findById(id)
+		User persistentUser = userService.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + id));
-		model.addAttribute("user", user);
+		model.addAttribute("user", persistentUser);
 		model.addAttribute("roles", roleService.findAll());
 		return "admin/user/edit";
 	}
 
 	@Transactional
 	@PostMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Long id, @RequestParam(name = "save_and_continue") boolean saveAndContinue,
-			User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String edit(
+			@PathVariable("id") Long id, 
+			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
+			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		logger.debug(
 				"HTTP POST request received at URL /home/admin/users/edit/{} with a request parameter save_and_continue={}",
 				id, saveAndContinue);
-		User persistentUser = userService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id: " + id));
-		user.setPassword(persistentUser.getPassword());
 		
-		springValidator.validate(user, bindingResult);
 		userValidator.validateDuplicatedEmail(user, bindingResult);
 		userValidator.validateDuplicatedUsername(user, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -131,16 +135,29 @@ public class AdminUserController {
 			// restore the roles otherwise they are not retained in the model
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("confirm_crud_operation", "update_failed");
+			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "admin/user/edit";
 		}
 		
-		userService.update(user);
+		User persistentUser = userService.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id: " + id));
+		
+		persistentUser.setFirstname(user.getFirstname());
+		persistentUser.setLastname(user.getLastname());
+		persistentUser.setRoles(user.getRoles());
+		persistentUser.setUsername(user.getUsername());
+		persistentUser.setEmail(user.getEmail());
+		persistentUser.setAccountEnabled(user.isAccountEnabled());
+		persistentUser.setPasswordNonExpired(user.isPasswordNonExpired());
+		
+		userService.update(persistentUser);
 		logger.debug("The user with id {} has been updated", id);
 
 		if (saveAndContinue) {
 			model.addAttribute("roles", roleService.findAll());
 			model.addAttribute("user", userService.findById(id).get());
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			redirectAttributes.addFlashAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "redirect:/home/admin/users/edit/" + id;
 		} else {
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
@@ -152,9 +169,9 @@ public class AdminUserController {
 	public String delete(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes)
 			throws Exception {
 		logger.debug("HTTP GET request received at URL /home/admin/users/delete/{}", id);
-		User user = userService.findById(id)
+		User persistentUser = userService.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + id));
-		userService.delete(user);
+		userService.delete(persistentUser);
 		logger.debug("The user with id {} has been deleted", id);
 		model.addAttribute("users", userService.findAll());
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "delete_succeeded");

@@ -17,6 +17,15 @@ var UserEdit = function() {
 		});
 	}
 	
+	var saveNavigationTabActiveLink = function() {
+		$("#tab_profile").click(function() {
+			$("#navigation_tab_active_link").val("profile");
+		});
+		$("#tab_account").click(function() {
+			$("#navigation_tab_active_link").val("account");
+		});
+	}
+	
 	var applySelectPickerToRole = function(){
 		$('.kt-selectpicker').selectpicker();
 	}
@@ -26,6 +35,7 @@ var UserEdit = function() {
 		init : function() {
 			saveUserFormAndAddNewEvent();
 			saveUserFormAndCloseEvent();
+			saveNavigationTabActiveLink();
 			applySelectPickerToRole();
 		}
 	};

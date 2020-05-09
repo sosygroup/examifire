@@ -71,15 +71,19 @@
 						class="nav nav-tabs nav-tabs-space-xl nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand"
 						role="tablist">
 						<li class="nav-item">
-							<a th:classappend="${#fields.hasErrors('user.firstname') or #fields.hasErrors('user.lastname')}? 'kt-font-danger my-font-danger':''" class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_1" role="tab">
+							<a id="tab_profile" th:classappend="|${(#fields.hasErrors('user.firstname') or #fields.hasErrors('user.lastname') ? 'kt-font-danger my-font-danger':'')} 
+																 ${(navigation_tab_active_link == 'profile' or navigation_tab_active_link == null or navigation_tab_active_link == '' ? 'active':'')}|"  
+								class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_1" role="tab">
 								<span class="fa fa-address-book kt-margin-r-5"></span>Profile</a>
 						</li>
 						<li class="nav-item">
-							<a th:classappend="${#fields.hasErrors('user.roles') or #fields.hasErrors('user.username') or #fields.hasErrors('user.email') }? 'kt-font-danger my-font-danger':''" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
+							<a id="tab_account" th:classappend="|${(#fields.hasErrors('user.username') or #fields.hasErrors('user.email') or #fields.hasErrors('user.roles') ? 'kt-font-danger my-font-danger':'')}
+																 ${(navigation_tab_active_link == 'account' ? 'active':'')}|" 
+								class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab"> 
 							<span class="fa fa-user kt-margin-r-5"></span>Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_3" role="tab"><span class="fa fa-user-secret kt-margin-r-5"></span>Security</a>
+							<a id="tab_security" th:classappend="|${(navigation_tab_active_link == 'security' ? 'active':'')}|" class="nav-link" data-toggle="tab" href="#kt_user_edit_tab_3" role="tab"><span class="fa fa-user-secret kt-margin-r-5"></span>Security</a>
 						</li>
 					</ul>
 				</div>
@@ -89,9 +93,10 @@
 			th:object="${user}" method="post">
 					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
+					<input type="hidden" id="navigation_tab_active_link" name="navigation_tab_active_link" th:value="${navigation_tab_active_link}">
 					<div class="tab-content">
-						<div class="tab-pane active" id="kt_user_edit_tab_1"
-							role="tabpanel">
+						<div th:classappend="${(navigation_tab_active_link == 'profile' or navigation_tab_active_link == null or navigation_tab_active_link == '' ? 'active':'')}"
+							 class="tab-pane" id="kt_user_edit_tab_1" role="tabpanel">
 							<div class="kt-form kt-form--label-right">
 								<div class="kt-form__body">
 									<div class="kt-section kt-section--first">
@@ -141,7 +146,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="kt_user_edit_tab_2" role="tabpanel">
+						<div th:classappend="${(navigation_tab_active_link == 'account' ? 'active':'')}" class="tab-pane" id="kt_user_edit_tab_2" role="tabpanel">
 							<div class="kt-form kt-form--label-right">
 								<div class="kt-form__body">
 									<div class="kt-section kt-section--first">
@@ -197,7 +202,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="kt_user_edit_tab_3" role="tabpanel">
+						<div th:classappend="${(navigation_tab_active_link == 'security' ? 'active':'')}" class="tab-pane" id="kt_user_edit_tab_3" role="tabpanel">
 							<div class="kt-form kt-form--label-right">
 								<div class="kt-form__body">
 									<div class="kt-section kt-section--first">
