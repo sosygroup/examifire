@@ -24,6 +24,7 @@ import it.univaq.examifire.model.audit.EntityAudit;
 @Entity
 @Table(name = "course")
 public class Course extends EntityAudit<Long> {
+	public interface Registration {}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "course_id")

@@ -20,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 
 import it.univaq.examifire.model.audit.EntityAudit;
 
@@ -28,6 +29,10 @@ import it.univaq.examifire.model.audit.EntityAudit;
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends EntityAudit<Long> {
+	public interface Registration {}
+	public interface Profile {}
+	public interface CreateEditByAdmin {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -37,30 +42,32 @@ public class User extends EntityAudit<Long> {
 	// messages in the ValidationMessages.properties e.g.,
 	// user.firstname.invalid='${validatedValue}' is an invalid username. It must be
 	// minimum {min} chars and maximum {max} chars.
-	@NotBlank(message = "Please enter the firstname")
-	@Size(max = 45, message = "Maximum 45 characters")
+	@NotBlank(message = "Please enter the firstname", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Size(max = 45, message = "Maximum 45 characters", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
 	@Column(name = "first_name", nullable = false, length = 45)
 	private String firstname;
 
 	// TODO Username can only contain letters, numbers and underscores (and no spaces!)
-	@NotBlank(message = "Please enter the lastname")
-	@Size(max = 45, message = "Maximum 45 characters")
+	@NotBlank(message = "Please enter the lastname", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Size(max = 45, message = "Maximum 45 characters", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
 	@Column(name = "last_name", nullable = false, length = 45)
 	private String lastname;
 	
-	@NotBlank(message = "Please enter the username")
-	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters")
+	@NotBlank(message = "Please enter the username", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Size(max = 32, min = 5, message = "Minimum 5 characters and maximum 32 characters", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Pattern(regexp = "^[a-zA-Z0-9]+[_\\.\\-]?[a-zA-Z0-9]+$", message = "Please use only alpha numeric characters, possibly with either '_', '-' or '.' in between", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
 	@Column(name = "username", nullable = false, unique = true, length = 32)
-	@Pattern(regexp = "^[a-zA-Z0-9]+[_\\.\\-]?[a-zA-Z0-9]+$", message = "Please use only alpha numeric characters, possibly with either '_', '-' or '.' in between")
 	private String username;
-
 	
-	@Column(name = "password", nullable = false, length = 255)
+	@NotBlank(message = "Please enter the password", groups = {Default.class, User.Registration.class, User.CreateEditByAdmin.class})
+	@Size(max = 15, min = 8, message = "Minimum 8 characters and maximum 15 characters", groups = {Default.class, User.Registration.class, User.CreateEditByAdmin.class})
+	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$", message = "The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@NotBlank(message = "Please enter the email")
-	@Size(max = 50, message = "Maximum 50 characters")
-	@Email(message = "Invalid email")
+	@NotBlank(message = "Please enter the email", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Size(max = 50, message = "Maximum 50 characters", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
+	@Email(message = "Invalid email", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateEditByAdmin.class})
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
 
@@ -71,7 +78,7 @@ public class User extends EntityAudit<Long> {
 	@Column(name = "password_non_expired", columnDefinition = "boolean default false", nullable = false)
 	private boolean passwordNonExpired = true;
 
-	@NotEmpty(message = "Please select at least one role")
+	@NotEmpty(message = "Please select at least one role", groups= {Default.class, User.CreateEditByAdmin.class})
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
@@ -148,6 +155,8 @@ public class User extends EntityAudit<Long> {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {

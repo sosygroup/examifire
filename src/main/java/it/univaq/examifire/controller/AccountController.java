@@ -1,12 +1,8 @@
 package it.univaq.examifire.controller;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,9 +32,6 @@ public class AccountController {
 	private UserService userService;
 	
 	@Autowired
-	private Validator springValidator;
-
-	@Autowired
 	private UserValidator userValidator;
 
 	@Autowired
@@ -51,18 +43,26 @@ public class AccountController {
 		model.addAttribute("user", new User());
 		return "account/signup";
 	}
-
+	/*
+	 * The @RequestParam must be placed as first ! 
+	 */
 	@Transactional
 	@PostMapping("/signup")
-	public String registerUserAccount(@ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+	public String registerUserAccount(
+			@RequestParam(name = "confirm_password") String confirmPassword,
+			@Validated(User.Registration.class) User user,
+			BindingResult bindingResult, Model model) {
+		
 		logger.debug("HTTP POST request received at URL /signup");
 
 		Role role = new Role();
 		role.setId(Role.STUDENT_ROLE_ID);
 		user.getRoles().add(role);
 		
-		springValidator.validate(user, bindingResult);
-		userValidator.validate(user, bindingResult);
+		userValidator.validateDuplicatedEmail(user, bindingResult);
+		userValidator.validateDuplicatedUsername(user, bindingResult);
+		userValidator.validateConfirmPassword(user.getPassword(), confirmPassword, bindingResult);
+		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
@@ -115,7 +115,71 @@ public class AccountController {
 			@RequestParam(name = "current_password") String currentPassword,
 			@RequestParam(name = "new_password") String newPassword,
 			@RequestParam(name = "confirm_password") String confirmPassword,
-		@Valid() User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+		@Validated(User.Profile.class) User user, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
+		logger.debug(
+				"HTTP POST request received at URL /home/profile by the user with id {} and with a request parameter save_and_continue={}", authenticatedUserId, saveAndContinue);
+		
+		User persistentUser = userService.findById(authenticatedUserId)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		
+		user.setId(authenticatedUserId);
+		userValidator.validateDuplicatedUsername(user, bindingResult);
+		userValidator.validateDuplicatedEmail(user, bindingResult);
+		if (!newPassword.isEmpty()) {
+			userValidator.validatePassword(persistentUser.getPassword(), currentPassword, newPassword, confirmPassword, bindingResult);
+		}
+		
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach((error) -> {
+				logger.debug("Validation error: {}", error.getDefaultMessage());
+			});
+			// restore the roles otherwise they are not retained in the model
+			model.addAttribute("confirm_crud_operation", "update_failed");
+			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
+			return "account/profile";
+		}
+		
+		// if this variable is true, we force the logout 
+		boolean expireUser = (!persistentUser.getUsername().equals(user.getUsername()))? true : false;
+	
+		persistentUser.setFirstname(user.getFirstname());
+		persistentUser.setLastname(user.getLastname());
+		persistentUser.setUsername(user.getUsername());
+		persistentUser.setEmail(user.getEmail());
+		if (!newPassword.isEmpty()) {
+			user.setPassword(passwordEncoder.encode(newPassword));	
+		}
+		
+		userService.update(persistentUser);
+		logger.debug("The user with id {} has been updated", persistentUser.getId());
+		
+		if(expireUser) {
+			logger.debug("Force the logout for the user {}, since the user changed authentication information", user.getId());
+			return "redirect:/logout";
+		}
+
+		if (saveAndContinue) {
+			model.addAttribute("user", userService.findById(persistentUser.getId()).get());
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			redirectAttributes.addFlashAttribute("navigation_tab_active_link", navigationTabActiveLink);
+			return "redirect:/home/profile";
+		} else {
+			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			return "redirect:/home";
+		}
+	}
+	/*
+	@Transactional
+	@PostMapping("/home/profile")
+	public String edit(Authentication authentication, @RequestParam(name = "save_and_continue") boolean saveAndContinue,
+			@RequestParam(name = "current_password") String currentPassword,
+			@RequestParam(name = "new_password") String newPassword,
+			@RequestParam(name = "confirm_password") String confirmPassword,
+			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug(
@@ -123,12 +187,13 @@ public class AccountController {
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
 		
-		/*
-		 * this will copy the properties from persistentUser to user with the same name
-		 * only, by excluding "firstname","lastname","username","email"
-		 */
+		
+		
+		 //this will copy the properties from persistentUser to user with the same name
+		 // only, by excluding "firstname","lastname","username","email"
+		 
 		BeanUtils.copyProperties(persistentUser, user, "firstname","lastname","username","email");
-		springValidator.validate(user, bindingResult);
+		//springValidator.va.validate(user, bindingResult);
 		userValidator.validate(user, bindingResult);
 		if (!newPassword.isEmpty()) {
 			userValidator.validatePassword(persistentUser.getPassword(), currentPassword, newPassword, confirmPassword, bindingResult);
@@ -140,6 +205,7 @@ public class AccountController {
 			});
 			// restore the roles otherwise they are not retained in the model
 			model.addAttribute("confirm_crud_operation", "update_failed");
+			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "account/profile";
 		}
 		
@@ -161,10 +227,12 @@ public class AccountController {
 		if (saveAndContinue) {
 			model.addAttribute("user", userService.findById(user.getId()).get());
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+			redirectAttributes.addFlashAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "redirect:/home/profile";
 		} else {
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 			return "redirect:/home";
 		}
 	}
+	*/
 }

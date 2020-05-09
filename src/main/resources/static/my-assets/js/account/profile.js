@@ -17,11 +17,24 @@ var UserEdit = function() {
 		});
 	}
 	
+	var saveNavigationTabActiveLink = function() {
+		$("#tab_profile").click(function() {
+			$("#navigation_tab_active_link").val("profile");
+		});
+		$("#tab_account").click(function() {
+			$("#navigation_tab_active_link").val("account");
+		});
+		$("#tab_security").click(function() {
+			$("#navigation_tab_active_link").val("security");
+		});
+	}
+	
 	return {
 		// public functions
 		init : function() {
 			saveUserFormAndContinueEvent();
 			saveUserFormAndCloseEvent();
+			saveNavigationTabActiveLink();
 		}
 	};
 }();
@@ -36,5 +49,7 @@ jQuery(document).ready(function() {
 	if($("#confirm_crud_operation").val() == 'update_failed') {
 		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Update failed, please check the errors!")
 	}
+	
+	
 	
 });

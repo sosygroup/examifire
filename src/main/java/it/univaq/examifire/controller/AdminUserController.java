@@ -76,7 +76,8 @@ public class AdminUserController {
 		user.setPassword(PasswordGeneratorUtils.generateCommonLangPassword());
 		
 		springValidator.validate(user, bindingResult);
-		userValidator.validate(user, bindingResult);
+		userValidator.validateDuplicatedEmail(user, bindingResult);
+		userValidator.validateDuplicatedUsername(user, bindingResult);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
@@ -121,7 +122,8 @@ public class AdminUserController {
 		user.setPassword(persistentUser.getPassword());
 		
 		springValidator.validate(user, bindingResult);
-		userValidator.validate(user, bindingResult);
+		userValidator.validateDuplicatedEmail(user, bindingResult);
+		userValidator.validateDuplicatedUsername(user, bindingResult);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());

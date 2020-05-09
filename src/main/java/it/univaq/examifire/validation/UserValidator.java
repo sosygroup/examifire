@@ -1,14 +1,5 @@
 package it.univaq.examifire.validation;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.blankOrNullString;
-import static org.hamcrest.Matchers.both;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.hamcrest.Matchers.matchesPattern;
-import static org.hamcrest.Matchers.not;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -23,36 +14,56 @@ import it.univaq.examifire.service.UserService;
 public class UserValidator {
 	@Autowired
 	private UserService userService;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	public void validate(User user, BindingResult bindingResult) {
-		duplicatedEmailValidation(user, bindingResult);
-		duplicatedUsernameValidation(user, bindingResult);
-
-	}
 
 	public void validatePassword(String persistentPassword, String currentPassword, String newPassword,
 			String confirmPassword, BindingResult bindingResult) {
 
 		if (!passwordEncoder.matches(currentPassword, persistentPassword)) {
-			bindingResult.rejectValue("password", "current_password", "The password is wrong");
+			bindingResult.rejectValue("password", "PasswordMatchError", "The password is wrong");
 		}
 
+		validateConfirmPassword(newPassword, confirmPassword, bindingResult);
+	}
+	
+	public void validateConfirmPassword(String newPassword,
+			String confirmPassword, BindingResult bindingResult) {
+		//this.validatePassword(newPassword, bindingResult);
+		
 		if (!confirmPassword.equals(newPassword)) {
-			bindingResult.rejectValue("password", "new_password",
+			bindingResult.rejectValue("password", "ConfirmPasswordError",
 					"Please, retype the new password and confirm it correctly");
 
 		}
 
-		this.validatePassword(newPassword, bindingResult);
-
 	}
 
-	private void duplicatedEmailValidation(User user, BindingResult bindingResult) {
-		// NOTE: this validation is called by during both user creation and modification
+/*
+	private void validatePassword(String password, BindingResult bindingResult) {
+		try {
+			assertThat(password, not(blankOrNullString()));
+		} catch (AssertionError e) {
+			bindingResult.rejectValue("password", "PasswordFormatError", "Please, enter the password");
+		}
 
+		try {
+			assertThat(password.length(), is(both(greaterThanOrEqualTo(5)).and(lessThanOrEqualTo(255))));
+		} catch (AssertionError e) {
+			bindingResult.rejectValue("password", "PasswordFormatError", "Minimum 5 characters and maximum 255 characters");
+		}
+
+		try {
+			assertThat(password, matchesPattern("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$"));
+		} catch (AssertionError e) {
+			bindingResult.rejectValue("password", "PasswordFormatError",
+					"The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
+		}
+	}
+*/
+	public void validateDuplicatedEmail (User user, BindingResult bindingResult) {
+		// NOTE: this validation is called by during both user creation and modification
 		User persistentUser = userService.findByEmail(user.getEmail()).orElse(null);
 
 		// The DB does not contains any users for the given email, hence the chosen
@@ -80,10 +91,10 @@ public class UserValidator {
 			return;
 		}
 
-		bindingResult.rejectValue("email", "", "The email already exists");
+		bindingResult.rejectValue("email", "DuplicatedEmail", "The email already exists");
 	}
 
-	private void duplicatedUsernameValidation(User user, BindingResult bindingResult) {
+	public void validateDuplicatedUsername(User user, BindingResult bindingResult) {
 		User persistentUser = userService.findByUsername(user.getUsername()).orElse(null);
 
 		if (persistentUser == null) {
@@ -93,29 +104,8 @@ public class UserValidator {
 			return;
 		}
 
-		bindingResult.rejectValue("username", "", "The username already exists");
+		bindingResult.rejectValue("username", "DuplicatedUsername", "The username already exists");
 	}
 
-	public void validatePassword(String password, BindingResult bindingResult) {
-
-		try {
-			assertThat(password, not(blankOrNullString()));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "new_password", "Please, enter the password");
-		}
-
-		try {
-			assertThat(password.length(), is(both(greaterThanOrEqualTo(5)).and(lessThanOrEqualTo(255))));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "new_password", "Minimum 5 characters and maximum 255 characters");
-		}
-
-		try {
-			assertThat(password, matchesPattern("^[a-zA-Z0-9]+[_\\.\\-]?[a-zA-Z0-9]+$"));
-		} catch (AssertionError e) {
-			bindingResult.rejectValue("password", "new_password",
-					"Please use only alpha numeric characters, possibly with either '_', '-' or '.' in between");
-		}
-
-	}
+	
 }
