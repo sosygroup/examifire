@@ -51,7 +51,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item confirm-delete" 
                                   th:attr="data-user-firstname-lastname=|${user.firstname} ${user.firstname}|" 
-                                  th:href="@{/home/admin/users/delete/{id}(id=${user.id})}"><i class="la la-trash"></i>Delete</a>
+                                  th:href="@{/home/admin/users/delete/{id}(id=${user.id})}"><i class="la la-trash"></i>Delete User</a>
                             </div>
                         </div>
 				  </div>
@@ -90,7 +90,7 @@
 			</div>
 			<div class="kt-portlet__body">
 				<form id="user-edit-form" th:action="@{/home/admin/users/edit/{id}(id=${user.id})}"
-			th:object="${user}" method="post">
+			th:object="${user}" enctype="multipart/form-data" method="post">
 					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<input type="hidden" id="navigation_tab_active_link" name="navigation_tab_active_link" th:value="${navigation_tab_active_link}">
@@ -111,21 +111,18 @@
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Avatar</label>
 												<div class="col-lg-9 col-xl-6">
-													<div
-														class="kt-avatar kt-avatar--outline kt-avatar--circle-"
-														id="kt_user_edit_avatar">
-														<div class="kt-avatar__holder"
-															th:style="'background-image: url(' + @{/assets/media/users/300_20.jpg} + ');'"></div>
-														<label class="kt-avatar__upload my-avatar__upload" data-toggle="kt-tooltip"
-															title="" data-original-title="Change avatar"> <i
-															class="fa fa-pen"></i> <input type="file"
-															name="profile_avatar" accept=".png, .jpg, .jpeg">
-														</label> <span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip"
-															title="" data-original-title="Cancel avatar"> <i
-															class="fa fa-times"></i>
-														</span>
+													<div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_user_avatar_3">
+														<div class="kt-avatar__holder" th:style="${user.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpg;base64,' + ${user.avatar} + ');'"></div>
+															<label class="kt-avatar__upload my-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
+																<i class="fa fa-pen"></i>
+																<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+															</label>
+															<span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+																<i class="fa fa-times"></i>
+															</span>
+														</div>
+														<span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
 													</div>
-												</div>
 											</div>
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
@@ -167,6 +164,7 @@
 													            th:value="${role.id}"
 													            th:text="${role.name}">Roles</option>
 													</select>
+													<span class="text-danger my-font-danger" th:errors="*{roles}">Role field errors</span>
 												</div>
 											</div>
 											<div class="form-group row">

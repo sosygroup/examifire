@@ -1,6 +1,9 @@
 package it.univaq.examifire.controller;
 
 
+import java.io.IOException;
+import java.util.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.Role;
@@ -120,6 +125,7 @@ public class AccountController {
 	public String profile(Authentication authentication,
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
@@ -137,6 +143,12 @@ public class AccountController {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
 			});
+			
+			// restore the user avatar otherwise it is not retained in the model
+			user.setAvatar(userService.findById(authenticatedUserId)
+					.orElseThrow(() -> new IllegalArgumentException("User Not Found with id: " + authenticatedUserId))
+					.getAvatar());
+
 			// restore the roles otherwise they are not retained in the model
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
@@ -145,7 +157,16 @@ public class AccountController {
 		
 		// if this variable is true, we force the logout 
 		boolean forceUserLogout = (!persistentUser.getUsername().equals(user.getUsername()))? true : false;
-	
+		
+		try {
+			if (profileAvatar != null &&
+					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
+				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
+				persistentUser.setAvatar(new String(encodeBase64));
+			}
+		} catch (IOException e) {
+		}
+		
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
 		persistentUser.setUsername(user.getUsername());

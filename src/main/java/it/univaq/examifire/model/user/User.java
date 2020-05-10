@@ -13,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -38,6 +39,10 @@ public class User extends EntityAudit<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;
+	
+	@Lob
+	@Column(name = "avatar", nullable = true)
+	private String avatar;
 
 	// @NotBlank(message = "{user.firstname.invalid}") externalize validation
 	// messages in the ValidationMessages.properties e.g.,
@@ -84,6 +89,8 @@ public class User extends EntityAudit<Long> {
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> roles = new HashSet<>();
+	
+	
 
 	public Long getId() {
 		return id;
@@ -91,6 +98,15 @@ public class User extends EntityAudit<Long> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getFirstname() {
@@ -156,14 +172,14 @@ public class User extends EntityAudit<Long> {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (accountEnabled ? 1231 : 1237);
+		result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -185,6 +201,11 @@ public class User extends EntityAudit<Long> {
 			return false;
 		User other = (User) obj;
 		if (accountEnabled != other.accountEnabled)
+			return false;
+		if (avatar == null) {
+			if (other.avatar != null)
+				return false;
+		} else if (!avatar.equals(other.avatar))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -228,9 +249,12 @@ public class User extends EntityAudit<Long> {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ ", password=" + password + ", email=" + email + ", accountEnabled=" + accountEnabled
-				+ ", passwordNonExpired=" + passwordNonExpired + ", roles=" + roles + "]";
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname="
+				+ lastname + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired + ", roles="
+				+ roles + "]";
 	}
+
+	
 
 }

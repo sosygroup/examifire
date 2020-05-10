@@ -1,5 +1,8 @@
 package it.univaq.examifire.controller;
 
+import java.io.IOException;
+import java.util.Base64;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.User;
@@ -73,6 +78,7 @@ public class AdminUserController {
 	public String add(
 			@RequestParam(name = "save_and_add_new") boolean saveAndAddNew, 
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		logger.debug(
@@ -93,6 +99,14 @@ public class AdminUserController {
 
 		// automatically generate the password for the user 
 		user.setPassword(passwordEncoder.encode(PasswordGeneratorUtils.generateCommonLangPassword()));
+		try {
+			if (profileAvatar != null &&
+					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
+				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
+				user.setAvatar(new String(encodeBase64));
+			}
+		} catch (IOException e) {
+		}
 		userService.create(user);
 		logger.debug("The user with email {} has been added", user.getEmail());
 
@@ -121,6 +135,7 @@ public class AdminUserController {
 			@PathVariable("id") Long id, 
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		logger.debug(
 				"HTTP POST request received at URL /home/admin/users/edit/{} with a request parameter save_and_continue={}",
@@ -134,6 +149,11 @@ public class AdminUserController {
 			});
 			// restore the roles otherwise they are not retained in the model
 			model.addAttribute("roles", roleService.findAll());
+			
+			// restore the user avatar otherwise it is not retained in the model
+			user.setAvatar(userService.findById(id)
+					.orElseThrow(() -> new IllegalArgumentException("User Not Found with id: " + id)).getAvatar());
+			
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			model.addAttribute("navigation_tab_active_link", navigationTabActiveLink);
 			return "admin/user/edit";
@@ -141,6 +161,15 @@ public class AdminUserController {
 		
 		User persistentUser = userService.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id: " + id));
+		
+		try {
+			if (profileAvatar != null &&
+					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
+				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
+				persistentUser.setAvatar(new String(encodeBase64));
+			}
+		} catch (IOException e) {
+		}
 		
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());

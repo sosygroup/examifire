@@ -78,12 +78,24 @@ var KTDatatablesAdvancedColumnRendering = function() {
 						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
 					},
 				},
-				{'Actions': 'Actions', 
+				{'Actions': 'Actions',
+				    className: "dt-center",
 					responsivePriority: -1,
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						return '\
+						return'\
+						<div class="dropdown dropdown-inline">\
+                        <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover  btn-circle btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
+                            <i class="flaticon-more-1"></i>\
+                        </button>\
+                        <div class="dropdown-menu dropdown-menu-right my-btn-multiple-actions-1__dropdown-menu">\
+                        <a class="dropdown-item" href="/home/admin/users/edit/'+full['id']+'"><i class="la la-edit"></i> Edit Details</a>\
+                        <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
+                        </div>\
+                    </div>';
+						
+						/*'\
 	                  <span class="dropdown">\
 	                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
 	                        <i class="la la-ellipsis-h"></i>\
@@ -92,7 +104,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 	                          <a class="dropdown-item" href="/home/admin/users/edit/'+full['id']+'"><i class="la la-edit"></i> Edit Details</a>\
 	                          <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
 	                      </div>\
-	                  </span>';
+	                  </span>';*/
 	              }
 				}
 			],

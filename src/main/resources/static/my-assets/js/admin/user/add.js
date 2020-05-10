@@ -1,6 +1,20 @@
 "use strict";
+//Class definition
+var KTAvatarDemo = function () {
+	// Private functions
+	var initDemos = function () {
+        var avatar3 = new KTAvatar('kt_user_avatar_3');
+	}
 
-// Class definition
+	return {
+		// public functions
+		init: function() {
+			initDemos();
+		}
+	};
+}();
+
+
 var UserEdit = function() {
 
 	var saveUserFormAndAddNewEvent = function() {
@@ -43,6 +57,8 @@ var UserEdit = function() {
 
 jQuery(document).ready(function() {
 	UserEdit.init();
+	KTAvatarDemo.init();
+	
 	if($("#confirm_crud_operation").val() == 'add_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been added!")
 	}	

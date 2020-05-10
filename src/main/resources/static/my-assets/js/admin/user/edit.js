@@ -1,5 +1,19 @@
 "use strict";
 
+var KTAvatarDemo = function () {
+	// Private functions
+	var initDemos = function () {
+        var avatar3 = new KTAvatar('kt_user_avatar_3');
+	}
+
+	return {
+		// public functions
+		init: function() {
+			initDemos();
+		}
+	};
+}();
+
 var ConfirmDeleteEvent = function (){
 	var confirmDelete = function(){
 		$('a.confirm-delete').click(function (e) {
@@ -84,6 +98,7 @@ var KTBootstrapSwitch = function() {
 jQuery(document).ready(function() {
 	KTBootstrapSwitch.init();
 	UserEdit.init();
+	KTAvatarDemo.init();
 	ConfirmDeleteEvent.init();
 		
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {

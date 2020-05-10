@@ -1,5 +1,17 @@
 "use strict";
+var KTAvatarDemo = function () {
+	// Private functions
+	var initDemos = function () {
+        var avatar3 = new KTAvatar('kt_user_avatar_3');
+	}
 
+	return {
+		// public functions
+		init: function() {
+			initDemos();
+		}
+	};
+}();
 // Class definition
 var UserEdit = function() {
 
@@ -38,7 +50,9 @@ var UserEdit = function() {
 
 jQuery(document).ready(function() {
 	UserEdit.init();
+	KTAvatarDemo.init();
 	
+
 	
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
 		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
