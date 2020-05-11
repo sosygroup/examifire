@@ -1,5 +1,6 @@
 package it.univaq.examifire.model.user;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class User extends EntityAudit<Long> {
 	
 	@Lob
 	@Column(name = "avatar", nullable = true)
-	private String avatar;
+	private byte[] avatar;
 
 	// @NotBlank(message = "{user.firstname.invalid}") externalize validation
 	// messages in the ValidationMessages.properties e.g.,
@@ -101,11 +102,13 @@ public class User extends EntityAudit<Long> {
 	}
 	
 
-	public String getAvatar() {
+	
+
+	public byte[] getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(String avatar) {
+	public void setAvatar(byte[] avatar) {
 		this.avatar = avatar;
 	}
 
@@ -173,13 +176,12 @@ public class User extends EntityAudit<Long> {
 		this.roles = roles;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (accountEnabled ? 1231 : 1237);
-		result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
+		result = prime * result + Arrays.hashCode(avatar);
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -202,10 +204,7 @@ public class User extends EntityAudit<Long> {
 		User other = (User) obj;
 		if (accountEnabled != other.accountEnabled)
 			return false;
-		if (avatar == null) {
-			if (other.avatar != null)
-				return false;
-		} else if (!avatar.equals(other.avatar))
+		if (!Arrays.equals(avatar, other.avatar))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -249,11 +248,11 @@ public class User extends EntityAudit<Long> {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired + ", roles="
-				+ roles + "]";
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", accountEnabled=" + accountEnabled
+				+ ", passwordNonExpired=" + passwordNonExpired + ", roles=" + roles + "]";
 	}
+
 
 	
 

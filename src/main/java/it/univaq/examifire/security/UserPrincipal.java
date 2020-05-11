@@ -1,5 +1,6 @@
 package it.univaq.examifire.security;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class UserPrincipal implements UserDetails {
 
 	private Long id;
 
-	private String avatar;
+	private byte[] avatar;
 	
 	private String firstname;
 
@@ -37,7 +38,7 @@ public class UserPrincipal implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, String avatar, String firstname, String lastname, String username, String email, String password, boolean accountEnabled,
+	public UserPrincipal(Long id, byte[] avatar, String firstname, String lastname, String username, String email, String password, boolean accountEnabled,
 			boolean passwordNonExpired, 
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
@@ -75,7 +76,7 @@ public class UserPrincipal implements UserDetails {
 		return id;
 	}
 	
-	public String getAvatar() {
+	public byte[] getAvatar() {
 		return avatar;
 	}
 
@@ -132,7 +133,7 @@ public class UserPrincipal implements UserDetails {
 		int result = 1;
 		result = prime * result + (accountEnabled ? 1231 : 1237);
 		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
-		result = prime * result + ((avatar == null) ? 0 : avatar.hashCode());
+		result = prime * result + Arrays.hashCode(avatar);
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -142,8 +143,6 @@ public class UserPrincipal implements UserDetails {
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -161,10 +160,7 @@ public class UserPrincipal implements UserDetails {
 				return false;
 		} else if (!authorities.equals(other.authorities))
 			return false;
-		if (avatar == null) {
-			if (other.avatar != null)
-				return false;
-		} else if (!avatar.equals(other.avatar))
+		if (!Arrays.equals(avatar, other.avatar))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -203,11 +199,11 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "UserPrincipal [id=" + id + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", username=" + username + ", accountEnabled=" + accountEnabled
-				+ ", passwordNonExpired=" + passwordNonExpired + ", password=" + password + ", email=" + email
-				+ ", authorities=" + authorities + "]";
+		return "UserPrincipal [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username="
+				+ username + ", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired
+				+ ", password=" + password + ", email=" + email + ", authorities=" + authorities + "]";
 	}
 
+	
 	
 }

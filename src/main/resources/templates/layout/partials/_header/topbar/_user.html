@@ -13,7 +13,7 @@
 			<span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
 			<span sec:authentication="principal.username" class="kt-header__topbar-username kt-hidden-mobile">Username</span>
 			
-			<img class="" alt="Pic" th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${#authentication.principal.avatar}}" />
+			<img class="" alt="Pic" th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}" />
 			
 			<!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
 			<span class="kt-hidden kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">S</span>

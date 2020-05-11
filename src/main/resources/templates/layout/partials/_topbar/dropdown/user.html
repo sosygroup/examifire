@@ -10,7 +10,7 @@
 <!--begin: Head -->
 <div class="my-user-card kt-user-card kt-user-card--skin-light kt-notification-item-padding-x" th:style="'background-image: url(' + @{/assets/media/misc/bg-1.jpg} + ');'">
 	<div class="kt-user-card__avatar">
-		<img class="" alt="Pic" th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${#authentication.principal.avatar}}" />
+		<img class="" alt="Pic" th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}" />
 
 		<!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
 		<span class="kt-hidden kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">S</span>

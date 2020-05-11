@@ -103,7 +103,7 @@ public class AdminUserController {
 			if (profileAvatar != null &&
 					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
 				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
-				user.setAvatar(new String(encodeBase64));
+				user.setAvatar(encodeBase64);
 			}
 		} catch (IOException e) {
 		}
@@ -166,7 +166,7 @@ public class AdminUserController {
 			if (profileAvatar != null &&
 					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
 				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
-				persistentUser.setAvatar(new String(encodeBase64));
+				persistentUser.setAvatar(encodeBase64);
 			}
 		} catch (IOException e) {
 		}
