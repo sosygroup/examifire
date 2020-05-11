@@ -19,7 +19,7 @@ public class UserPrincipal implements UserDetails {
 	private Long id;
 
 	private byte[] avatar;
-	
+
 	private String firstname;
 
 	private String lastname;
@@ -38,8 +38,8 @@ public class UserPrincipal implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, byte[] avatar, String firstname, String lastname, String username, String email, String password, boolean accountEnabled,
-			boolean passwordNonExpired, 
+	public UserPrincipal(Long id, byte[] avatar, String firstname, String lastname, String username, String email,
+			String password, boolean accountEnabled, boolean passwordNonExpired,
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.id = id;
@@ -58,24 +58,32 @@ public class UserPrincipal implements UserDetails {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList());
 
-		return new UserPrincipal(
-				user.getId(),
-				user.getAvatar(),
-				user.getFirstname(),
-				user.getLastname(),
-				user.getUsername(),
-				user.getEmail(),
-				user.getPassword(),
-				user.isAccountEnabled(),
-				user.isPasswordNonExpired(),
-				authorities);
+		return new UserPrincipal(user.getId(), user.getAvatar(), user.getFirstname(), user.getLastname(),
+				user.getUsername(), user.getEmail(), user.getPassword(), user.isAccountEnabled(),
+				user.isPasswordNonExpired(), authorities);
 	}
 
-	
+	public void update(User user) {
+
+		this.id = user.getId();
+		this.avatar = user.getAvatar();
+		this.firstname = user.getFirstname();
+		this.lastname = user.getLastname();
+		this.username = user.getUsername();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.accountEnabled = user.isAccountEnabled();
+		this.passwordNonExpired = user.isPasswordNonExpired();
+		this.authorities = user.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList());;
+
+
+	}
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public byte[] getAvatar() {
 		return avatar;
 	}
@@ -87,7 +95,7 @@ public class UserPrincipal implements UserDetails {
 	public String getLastname() {
 		return lastname;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -106,7 +114,7 @@ public class UserPrincipal implements UserDetails {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return accountEnabled;
@@ -204,6 +212,4 @@ public class UserPrincipal implements UserDetails {
 				+ ", password=" + password + ", email=" + email + ", authorities=" + authorities + "]";
 	}
 
-	
-	
 }

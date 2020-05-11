@@ -81,6 +81,7 @@
 			<div class="kt-portlet__body">
 				<form id="user-edit-form" th:action="@{/home/profile}" th:object="${user}" enctype="multipart/form-data" method="post">
 					<input type="hidden" id="save_and_continue" name="save_and_continue" value="0">
+					<input type="hidden" id="reset_avatar" name="reset_avatar" value="0">
 					<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 					<input type="hidden" id="navigation_tab_active_link" name="navigation_tab_active_link" th:value="${navigation_tab_active_link}">
 					<div class="tab-content">
@@ -106,11 +107,12 @@
 																<i class="fa fa-pen"></i>
 																<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
 															</label>
-															<span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+															<span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Restore avatar">
 																<i class="fa fa-times"></i>
 															</span>
 														</div>
-														<span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
+														<span class="form-text"><a id="link-reset-avatar" href="javascript:void(0);" class="kt-link my-link">Reset Avatar</a></span>
+														<span class="form-text text-muted"> Allowed file types: png, jpg, jpeg.</span>
 													</div>
 											</div>
 											<div class="form-group row">

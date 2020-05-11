@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -16,12 +16,12 @@
 				</a>
 			</li>
 			
-			<li class="kt-menu__section ">
+			<li sec:authorize="hasRole('ROLE_ADMIN')" class="kt-menu__section ">
 				<h4 class="kt-menu__section-text">Administration</h4>
 				<i class="kt-menu__section-icon flaticon-more-v2"></i>
 			</li>
 			
-			<li th:classappend="${aside_menu_active_link == 'users'} ? 'kt-menu__item--active'" class="kt-menu__item " aria-haspopup="true">
+			<li sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="${aside_menu_active_link == 'users'} ? 'kt-menu__item--active'" class="kt-menu__item " aria-haspopup="true">
 				<a th:href="@{/home/admin/users}" class="kt-menu__link ">
 					<span class="kt-menu__link-icon fa fa-users"></span><span class="kt-menu__link-text">Users</span>
 				</a>

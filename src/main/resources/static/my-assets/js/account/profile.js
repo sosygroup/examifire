@@ -38,12 +38,32 @@ var UserEdit = function() {
 		});
 	}
 	
+	var resetAvatar = function() {
+		$("#link-reset-avatar").click(function() {
+			$("#reset_avatar").val(true);
+			$('.kt-avatar__cancel').click();
+			$('.kt-avatar__holder').css("background-image", "url(/my-assets/media/users/default.jpg)");
+		});
+	}
+	var undoResetAvatar = function() {
+		$("input[name='profile_avatar']").change(function (){
+		   if (this.value.length){
+		       $("#reset_avatar").val(false);
+		   }else{
+			   $('.kt-avatar__cancel').click();
+			   
+		   }   
+		});
+	}
+	
 	return {
 		// public functions
 		init : function() {
 			saveUserFormAndContinueEvent();
 			saveUserFormAndCloseEvent();
 			saveNavigationTabActiveLink();
+			resetAvatar();
+			undoResetAvatar();
 		}
 	};
 }();

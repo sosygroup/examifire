@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.model.user.User;
+import it.univaq.examifire.security.UserAuthenticationUpdater;
 import it.univaq.examifire.security.UserPrincipal;
 import it.univaq.examifire.service.UserService;
 import it.univaq.examifire.validation.UserValidator;
@@ -46,6 +47,9 @@ public class AccountController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserAuthenticationUpdater userAuthenticationUpdater;
 	
 	@GetMapping("/signup")
 	public String showSignup(Model model) {
@@ -105,7 +109,8 @@ public class AccountController {
 	@PostMapping("/forgotpassword")
 	public String forgotPassword(@ModelAttribute("username") String username) {
 		logger.debug("HTTP POST request received at URL /forgotpassword");
-		// TODO implement the forgot password functionality
+		// TODO implement the forgot password functionality 
+		// https://www.baeldung.com/spring-security-registration-i-forgot-my-password
 		return "redirect:/signin";
 	}
 
@@ -125,6 +130,7 @@ public class AccountController {
 	public String profile(Authentication authentication,
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
+			@RequestParam(name = "reset_avatar") boolean resetAvatar,
 			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
@@ -155,15 +161,17 @@ public class AccountController {
 			return "account/profile";
 		}
 		
-		// if this variable is true, we force the logout 
-		boolean forceUserLogout = (!persistentUser.getUsername().equals(user.getUsername()))? true : false;
-		
 		try {
-			if (profileAvatar != null &&
-					profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
-				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
-				persistentUser.setAvatar(encodeBase64);
+			if (resetAvatar) {
+				persistentUser.setAvatar(null);
+			}else {
+				if (profileAvatar != null &&
+						profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
+					byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
+					persistentUser.setAvatar(encodeBase64);
+				}
 			}
+			
 		} catch (IOException e) {
 		}
 		
@@ -174,12 +182,9 @@ public class AccountController {
 			
 		userService.update(persistentUser);
 		logger.debug("The user with id {} has been updated", persistentUser.getId());
+	
+		userAuthenticationUpdater.update(authentication);
 		
-		if(forceUserLogout) {
-			logger.debug("Force the logout for the user {}, since the user changed authentication information", user.getId());
-			return "redirect:/logout";
-		}
-
 		if (saveAndContinue) {
 			model.addAttribute("user", userService.findById(persistentUser.getId()).get());
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
