@@ -50,6 +50,20 @@ public class AccountController {
 	
 	@Autowired
 	private UserAuthenticationUpdater userAuthenticationUpdater;
+	/*
+	@RequestMapping(value = "/home/resetavatar", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<HttpStatus> resetAvatar(Authentication authentication) {
+		logger.debug("HTTP GET request received at URL /home/resetavatar");
+		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
+		User persistentUser = userService.findById(authenticatedUserId)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		persistentUser.setAvatar(null);
+		userService.update(persistentUser);
+		logger.debug("The user with id {} has been updated", persistentUser.getId());
+		return ResponseEntity.ok(HttpStatus.OK);
+    }*/
+	
+	
 	
 	@GetMapping("/signup")
 	public String showSignup(Model model) {
@@ -130,7 +144,6 @@ public class AccountController {
 	public String profile(Authentication authentication,
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
-			@RequestParam(name = "reset_avatar") boolean resetAvatar,
 			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
@@ -162,19 +175,14 @@ public class AccountController {
 		}
 		
 		try {
-			if (resetAvatar) {
-				persistentUser.setAvatar(null);
-			}else {
-				if (profileAvatar != null &&
-						profileAvatar.getBytes() !=null && profileAvatar.getSize() !=0) {
-					byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
-					persistentUser.setAvatar(encodeBase64);
-				}
+			if (profileAvatar != null && profileAvatar.getBytes() != null && profileAvatar.getSize() != 0) {
+
+				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
+				persistentUser.setAvatar(encodeBase64);
 			}
-			
 		} catch (IOException e) {
 		}
-		
+
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
 		persistentUser.setUsername(user.getUsername());
@@ -194,6 +202,20 @@ public class AccountController {
 			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 			return "redirect:/home";
 		}
+	}
+	
+	@GetMapping("/home/resetavatar")
+	public String resetAvatar(Authentication authentication, Model model, RedirectAttributes redirectAttributes)
+			throws Exception {
+		logger.debug("HTTP GET request received at URL /home/resetavatar");
+		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
+		User persistentUser = userService.findById(authenticatedUserId)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		persistentUser.setAvatar(null);
+		userService.update(persistentUser);
+		logger.debug("The user with id {} has been updated", persistentUser.getId());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+		return "redirect:/home/profile";
 	}
 	
 	@GetMapping("/home/changepassword")

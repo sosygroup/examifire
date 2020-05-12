@@ -50,7 +50,7 @@
                                 <a id="link-save-and-close" class="dropdown-item" href="javascript:void(0);"><i class="la la-sign-in"></i>Save &amp; Close</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item confirm-delete" 
-                                  th:attr="data-user-firstname-lastname=|${user.firstname} ${user.firstname}|" 
+                                  th:attr="data-user-firstname-lastname=|${user.firstname} ${user.lastname}|" 
                                   th:href="@{/home/admin/users/delete/{id}(id=${user.id})}"><i class="la la-trash"></i>Delete User</a>
                             </div>
                         </div>
@@ -117,10 +117,13 @@
 																<i class="fa fa-pen"></i>
 																<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
 															</label>
-															<span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+															<span class="kt-avatar__cancel my-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Restore avatar">
 																<i class="fa fa-times"></i>
 															</span>
 														</div>
+														<span class="form-text"><a id="link-reset-avatar"
+														th:attr="data-user-firstname-lastname=|*{firstname} *{lastname}|"  
+														th:href="@{/home/admin/users/resetavatar/{id}(id=*{id})}" class="kt-link my-link">Reset Avatar</a></span>
 														<span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
 													</div>
 											</div>

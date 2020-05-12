@@ -5,11 +5,31 @@ var KTAvatarDemo = function () {
 	var initDemos = function () {
         var avatar3 = new KTAvatar('kt_user_avatar_3');
 	}
+	
+	var bugfixAvatarInputFile = function() {
+		$("input[name='profile_avatar']").change(function (){
+			if (!this.value.length){
+				$('.kt-avatar__cancel').click();
+			}   
+		});
+	}
+	
+	var confirmResetAvatar = function(){
+		$('#link-reset-avatar').click(function (e) {
+			e.preventDefault();
+
+			ExamifireMessageUtil.showConfirmationMessage('warning', 'Are you sure?', 
+            		"You are going to reset the avatar of</br><b>"+$(this).data("user-firstname-lastname")+"</b>", 
+            		'Reset', 'Auto close dialog', 'Reset in progress...', $(this).attr('href'));               
+        });
+	}
 
 	return {
 		// public functions
 		init: function() {
 			initDemos();
+			bugfixAvatarInputFile();
+			confirmResetAvatar();
 		}
 	};
 }();
@@ -100,9 +120,10 @@ jQuery(document).ready(function() {
 	UserEdit.init();
 	KTAvatarDemo.init();
 	ConfirmDeleteEvent.init();
+	
 		
 	if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
+		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","Update successful!")
 	}	
 	if($("#confirm_crud_operation").val() == 'update_failed') {
 		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Update failed, please check the errors!")

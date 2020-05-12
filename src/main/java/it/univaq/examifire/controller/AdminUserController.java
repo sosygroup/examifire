@@ -206,5 +206,19 @@ public class AdminUserController {
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
 		return "redirect:/home/admin/users";
 	}
+	
+	@GetMapping("/resetavatar/{id}")
+	public String resetAvatar(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes)
+			throws Exception {
+		logger.debug("HTTP GET request received at URL /home/admin/users/delete/{}", id);
+		
+		User persistentUser = userService.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + id));
+		persistentUser.setAvatar(null);
+		userService.update(persistentUser);
+		logger.debug("The user with id {} has been updated", persistentUser.getId());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+		return "redirect:/home/admin/users/edit/" + id;
+	}
 
 }

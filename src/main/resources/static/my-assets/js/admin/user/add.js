@@ -6,10 +6,19 @@ var KTAvatarDemo = function () {
         var avatar3 = new KTAvatar('kt_user_avatar_3');
 	}
 
+	var bugfixAvatarInputFile = function() {
+		$("input[name='profile_avatar']").change(function (){
+			if (!this.value.length){
+				$('.kt-avatar__cancel').click();
+			}   
+		});
+	}
+	
 	return {
 		// public functions
 		init: function() {
 			initDemos();
+			bugfixAvatarInputFile();
 		}
 	};
 }();
