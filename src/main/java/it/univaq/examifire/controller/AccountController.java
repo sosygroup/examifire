@@ -135,6 +135,8 @@ public class AccountController {
 		
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		
+		
 		model.addAttribute("user", persistentUser);
 		return "account/profile";
 	}
@@ -203,7 +205,7 @@ public class AccountController {
 			return "redirect:/home";
 		}
 	}
-	
+		
 	@GetMapping("/home/resetavatar")
 	public String resetAvatar(Authentication authentication, Model model, RedirectAttributes redirectAttributes)
 			throws Exception {

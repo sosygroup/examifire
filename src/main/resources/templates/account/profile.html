@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	layout:decorate="~{layout/layout.html}"
 	th:with="aside_menu_active_link=''">
 <head>
@@ -126,6 +127,16 @@
 												<div class="col-lg-9 col-xl-6">
 													<input class="form-control" type="text" th:field="*{lastname}">
 													<span class="text-danger my-font-danger" th:errors="*{lastname}">Lastname field errors</span>
+												</div>
+											</div>
+											
+											<div th:if="${#authorization.expression('hasRole(''ROLE_STUDENT'')')}"
+												 class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Student ID</label>
+												<div class="col-lg-9 col-xl-6">
+													<input class="form-control" type="text"
+														   th:field="*{identificationNumber}">
+													<span class="text-danger my-font-danger" th:errors="*{identificationNumber}">Student ID errors</span>
 												</div>
 											</div>
 										</div>
