@@ -19,5 +19,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/signin").setViewName("account/signin");
 		registry.addViewController("/forgotpassword").setViewName("account/forgotpassword");
 	}
-	
+
 }

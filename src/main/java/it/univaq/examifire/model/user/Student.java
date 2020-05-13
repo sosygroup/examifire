@@ -20,6 +20,7 @@ import it.univaq.examifire.model.course.CourseRegistration;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends User {
 	
+
 	@Column(name = "identification_number", nullable = true, unique = true)
 	private String identificationNumber;
 

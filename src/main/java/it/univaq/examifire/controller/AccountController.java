@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -28,9 +29,11 @@ import it.univaq.examifire.security.UserAuthenticationUpdater;
 import it.univaq.examifire.security.UserPrincipal;
 import it.univaq.examifire.service.UserService;
 import it.univaq.examifire.validation.UserValidator;
- 
+
+
 
 @Controller
+@SessionAttributes("user")
 public class AccountController {
 	/*
 	 * org.springframework.validation.Errors /
@@ -50,19 +53,6 @@ public class AccountController {
 	
 	@Autowired
 	private UserAuthenticationUpdater userAuthenticationUpdater;
-	/*
-	@RequestMapping(value = "/home/resetavatar", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<HttpStatus> resetAvatar(Authentication authentication) {
-		logger.debug("HTTP GET request received at URL /home/resetavatar");
-		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
-		User persistentUser = userService.findById(authenticatedUserId)
-				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		persistentUser.setAvatar(null);
-		userService.update(persistentUser);
-		logger.debug("The user with id {} has been updated", persistentUser.getId());
-		return ResponseEntity.ok(HttpStatus.OK);
-    }*/
-	
 	
 	
 	@GetMapping("/signup")
@@ -135,11 +125,16 @@ public class AccountController {
 		
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		
-		
+		/*
+		 * Thanks, to the controller level annotation @SessionAttributes("user"),
+		 * in this controller session user can be of type, e.g., Student or Teacher 
+		 * depending on the type of persistentuser. Thus, the user type is retained
+		 * for the User user parameter of the following @PostMapping profile method   
+		 */
 		model.addAttribute("user", persistentUser);
 		return "account/profile";
 	}
+	
 	
 	@Transactional
 	@PostMapping("/home/profile")
@@ -148,7 +143,10 @@ public class AccountController {
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
 			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
 		@Validated(User.Profile.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-
+		/*
+		 * Here, the user type (e.g., Student or Teacher) depends on the corresponding type in this controller section, 
+		 * see comment in the @GetMapping profile method above. 
+		 */
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		logger.debug(
 				"HTTP POST request received at URL /home/profile by the user with id {} and with a request parameters save_and_continue={}, navigation_tab_active_link={}", authenticatedUserId, saveAndContinue, navigationTabActiveLink);
@@ -176,14 +174,15 @@ public class AccountController {
 			return "account/profile";
 		}
 		
-		try {
-			if (profileAvatar != null && profileAvatar.getBytes() != null && profileAvatar.getSize() != 0) {
-
+		
+		if (profileAvatar != null && profileAvatar.getSize() != 0) {
+			try {
 				byte[] encodeBase64 = Base64.getEncoder().encode(profileAvatar.getBytes());
 				persistentUser.setAvatar(encodeBase64);
+			} catch (IOException e) {
 			}
-		} catch (IOException e) {
 		}
+		
 
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
