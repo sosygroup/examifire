@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.examifire.model.user.Role;
+import it.univaq.examifire.model.user.Student;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.security.UserAuthenticationUpdater;
 import it.univaq.examifire.security.UserPrincipal;
@@ -58,7 +59,7 @@ public class AccountController {
 	@GetMapping("/signup")
 	public String showSignup(Model model) {
 		logger.debug("HTTP GET request received at URL /signup");
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new Student());
 		return "account/signup";
 	}
 
@@ -66,18 +67,18 @@ public class AccountController {
 	@PostMapping("/signup")
 	public String signup(
 			@RequestParam(name = "confirm_password") String confirmPassword,
-			@Validated(User.Registration.class) User user,
+			@ModelAttribute (name = "user") @Validated(User.Registration.class) Student student,
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		logger.debug("HTTP POST request received at URL /signup");
 
 		Role role = new Role();
 		role.setId(Role.STUDENT_ROLE_ID);
-		user.getRoles().add(role);
+		student.getRoles().add(role);
 		
-		userValidator.validateDuplicatedEmail(user, bindingResult);
-		userValidator.validateDuplicatedUsername(user, bindingResult);
-		userValidator.validateConfirmPassword(user.getPassword(), confirmPassword, bindingResult);
+		userValidator.validateDuplicatedEmail(student, bindingResult);
+		userValidator.validateDuplicatedUsername(student, bindingResult);
+		userValidator.validateConfirmPassword(student.getPassword(), confirmPassword, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
@@ -88,17 +89,18 @@ public class AccountController {
 			return "account/signup";
 		}
 		
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		userService.create(user);
-		logger.debug("The user with email {} has been added", user.getEmail());
+		student.setPassword(passwordEncoder.encode(student.getPassword()));
+		
+		userService.create(student);
+		logger.debug("The user with email {} has been added", student.getEmail());
 
 		//set the creationBy and the lastmodifiedBy
-		user.setCreatedBy(user.getId());
-		user.setLastUpdatedBy(user.getId());
-		userService.update(user);
+		student.setCreatedBy(student.getId());
+		student.setLastUpdatedBy(student.getId());
+		userService.update(student);
 		
-		logger.debug("The created_by and the last_updated_by info of the user with email {} has been updated",
-				user.getEmail());
+		logger.debug("The created_by and the last_updated_by info of the student with email {} has been updated",
+				student.getEmail());
 
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "add_succeeded");
 		return "redirect:/signin";

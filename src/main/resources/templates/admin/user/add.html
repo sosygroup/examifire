@@ -140,6 +140,19 @@
 												</div>
 											</div>
 											<div class="form-group row">
+												<label class="col-form-label col-lg-3 col-sm-12">Role</label>
+												<div class="col-lg-4 col-md-9 col-sm-12">
+													<select class="form-control kt-selectpicker" th:field="*{roles}">
+													    <option th:attr="data-content='<span class=&quot;kt-badge kt-badge--primary kt-badge--inline kt-badge--rounded my-badge-color &quot;>' + ${role.name} + '</span>'"
+													    		th:each="role : ${roles}"
+													            th:field="*{roles}"
+													            th:value="${role.id}"
+													            th:text="${role.name}">Roles</option>
+													</select>
+													<span class="text-danger my-font-danger" th:errors="*{roles}">Role field errors</span>
+												</div>
+											</div>
+											<!--<div class="form-group row">
 												<label class="col-form-label col-lg-3 col-sm-12">Roles</label>
 												<div class="col-lg-4 col-md-9 col-sm-12">
 													<select class="form-control kt-selectpicker" th:field="*{roles}" multiple="multiple">
@@ -152,6 +165,26 @@
 													<span class="text-danger my-font-danger" th:errors="*{roles}">Role field errors</span>
 												</div>
 											</div>
+											-->
+											<!-- 
+											=====================================
+											= start -- THIS IS ONLY FOR STUDENT =
+											=====================================
+											 -->											
+											<div th:if="${not user.roles.?[id == T(it.univaq.examifire.model.user.Role).STUDENT_ROLE_ID].isEmpty()}"
+												 class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Student ID number</label>
+												<div class="col-lg-9 col-xl-6">
+													<input class="form-control" type="text"
+														   th:field="*{identificationNumber}">
+													<span class="text-danger my-font-danger" th:errors="*{identificationNumber}">Student ID errors</span>
+												</div>
+											</div>
+											<!-- 
+											===================================
+											= end -- THIS IS ONLY FOR STUDENT =
+											===================================
+											 -->							
 											<div class="form-group row">
 												<label class="col-xl-3 col-lg-3 col-form-label">Username</label>
 												<div class="col-lg-9 col-xl-6">

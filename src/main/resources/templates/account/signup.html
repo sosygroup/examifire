@@ -69,10 +69,18 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="">
 								<div class="kt-login__head">
 									<h3 class="kt-login__title">Sign Up</h3>
-									<div class="kt-login__desc">Enter your details to create your account:</div>
+									<div class="kt-login__desc">Create a student account</div>
 								</div>
 								 <form id="signup-form" class="kt-form" th:action="@{/signup}" th:object="${user}" method="post" >
 									<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
+									
+									<div class="input-group">
+										<input class="form-control" type="text" placeholder="Student ID number (leave it empty if you don't have it yet)" name="identificationNumber" th:field="*{identificationNumber}">
+										<div th:if="${#fields.hasErrors('identificationNumber')}" class="error invalid-feedback" style="display: block;">
+											<span class="text-danger">Leave it empty  if you do not have it yet</span>
+											<span class="text-danger my-font-danger" th:errors="*{lastname}">Error message</span>
+										</div>
+									</div>
 									<div class="input-group">
 										<input class="form-control" type="text" placeholder="Firstname" name="firstname" th:field="*{firstname}">
 										<div th:if="${#fields.hasErrors('firstname')}" class="error invalid-feedback" style="display: block;">
