@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!--begin::Header-->
+<div th:fragment="user">
+<div class="d-flex align-items-center p-8 rounded-top">
+
+	<!--begin::Symbol-->
+	<div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
+		<img th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}"
+			 alt="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|" />
+	</div>
+
+	<!--end::Symbol-->
+
+	<!--begin::Text-->
+	<div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5"
+	     th:text="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|">Firstname Lastname</div>
+	<span class="label label-light-success label-lg font-weight-bold label-inline">3 messages</span>
+
+	<!--end::Text-->
+</div>
+<div class="separator separator-solid"></div>
+
+<!--end::Header-->
+
+<!--begin::Nav-->
+<div class="navi navi-spacer-x-0 pt-5">
+
+	<!--begin::Item-->
+	<a th:href="@{/home/profile}" class="navi-item px-8">
+		<div class="navi-link">
+			<div class="navi-icon mr-2">
+				<i class="flaticon-profile-1 text-success"></i>
+			</div>
+			<div class="navi-text">
+				<div class="font-weight-bold">
+					My Profile
+				</div>
+				<div class="text-muted">
+					Account settings and more
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--end::Item-->
+
+	<!--begin::Item-->
+	<a th:href="@{/home/changepassword}" class="navi-item px-8">
+		<div class="navi-link">
+			<div class="navi-icon mr-2">
+				<i class="flaticon-security text-warning"></i>
+			</div>
+			<div class="navi-text">
+				<div class="font-weight-bold">
+					Security
+				</div>
+				<div class="text-muted">
+					Password settings and more
+				</div>
+			</div>
+		</div>
+	</a>
+	<!--end::Item-->
+
+	<!--begin::Footer-->
+	<div class="navi-separator mt-3"></div>
+	<div class="navi-footer  px-8 py-5">
+		<a th:href="@{/logout}" target="_blank" class="btn btn-light-primary font-weight-bold">Sign Out</a>
+	</div>
+
+	<!--end::Footer-->
+</div>
+
+<!--end::Nav-->
+</div>
+
+</body>
+</html>

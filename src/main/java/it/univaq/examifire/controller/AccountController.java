@@ -55,13 +55,13 @@ public class AccountController {
 	@Autowired
 	private UserAuthenticationUpdater userAuthenticationUpdater;
 	
-	
 	@GetMapping("/signup")
 	public String showSignup(Model model) {
 		logger.debug("HTTP GET request received at URL /signup");
 		model.addAttribute("user", new Student());
 		return "account/signup";
 	}
+	
 
 	@Transactional
 	@PostMapping("/signup")

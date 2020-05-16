@@ -6,23 +6,44 @@
 </head>
 <body>
 
-<!-- begin:: Subheader -->
-<div th:fragment="subheader-v1" class="kt-subheader   kt-grid__item" id="kt_subheader">
-	<div class="kt-container  kt-container--fluid ">
-		<div class="kt-subheader__main">
-			<h3 class="kt-subheader__title">
-				Dashboard </h3>
-		</div>
-		<div class="kt-subheader__toolbar">
-			<div class="kt-subheader__wrapper">
-				<a href="#" class="btn kt-subheader__btn-primary">
-					Actions &nbsp;
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+	<div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
 
-					<!--<i class="flaticon2-calendar-1"></i>-->
-				</a>
-				<div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="Quick actions" data-placement="left">
-					<a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success kt-svg-icon--md">
+		<!--begin::Info-->
+		<div class="d-flex align-items-center flex-wrap mr-1">
+
+			<!--begin::Page Heading-->
+			<div class="d-flex align-items-baseline mr-5">
+
+				<!--begin::Page Title-->
+				<h5 class="text-dark font-weight-bold my-2 mr-5">
+					Dashboard </h5>
+
+				<!--end::Page Title-->
+			</div>
+
+			<!--end::Page Heading-->
+		</div>
+
+		<!--end::Info-->
+
+		<!--begin::Toolbar-->
+		<div class="d-flex align-items-center">
+
+			<!--begin::Actions-->
+			<a href="#" class="btn btn-light font-weight-bold btn-sm">
+				Actions
+			</a>
+
+			<!--end::Actions-->
+
+			<!--begin::Dropdown-->
+			<div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
+				<a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="svg-icon svg-icon-success svg-icon-2x">
+
+						<!--begin::Svg Icon | path:assets/media/svg/icons/Files/File-plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								<polygon points="0 0 24 0 24 24 0 24" />
 								<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
@@ -30,60 +51,76 @@
 							</g>
 						</svg>
 
-						<!--<i class="flaticon2-plus"></i>-->
-					</a>
-					<div class="dropdown-menu dropdown-menu-fit dropdown-menu-md dropdown-menu-right">
+						<!--end::Svg Icon--></span> </a>
+				<div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0 m-0">
 
-						<!--begin::Nav-->
-						<ul class="kt-nav">
-							<li class="kt-nav__head">
-								Add anything or jump to:
-								<i class="flaticon2-information" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more..."></i>
-							</li>
-							<li class="kt-nav__separator"></li>
-							<li class="kt-nav__item">
-								<a href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-drop"></i>
-									<span class="kt-nav__link-text">Order</span>
-								</a>
-							</li>
-							<li class="kt-nav__item">
-								<a href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-calendar-8"></i>
-									<span class="kt-nav__link-text">Ticket</span>
-								</a>
-							</li>
-							<li class="kt-nav__item">
-								<a href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-telegram-logo"></i>
-									<span class="kt-nav__link-text">Goal</span>
-								</a>
-							</li>
-							<li class="kt-nav__item">
-								<a href="#" class="kt-nav__link">
-									<i class="kt-nav__link-icon flaticon2-new-email"></i>
-									<span class="kt-nav__link-text">Support Case</span>
-									<span class="kt-nav__link-badge">
-										<span class="kt-badge kt-badge--success">5</span>
-									</span>
-								</a>
-							</li>
-							<li class="kt-nav__separator"></li>
-							<li class="kt-nav__foot">
-								<a class="btn btn-label-brand btn-bold btn-sm" href="#">Upgrade plan</a>
-								<a class="btn btn-clean btn-bold btn-sm" href="#" data-toggle="kt-tooltip" data-placement="right" title="Click to learn more...">Learn more</a>
-							</li>
-						</ul>
+					<!--[html-partial:begin:{"id":"demo1/dist/inc/view/partials/content/dropdowns/dropdown-1","page":"index"}]/-->
 
-						<!--end::Nav-->
-					</div>
+					<!--begin::Navigation-->
+					<ul class="navi navi-hover">
+						<li class="navi-header font-weight-bold py-4">
+							<span class="font-size-lg">Choose Label:</span>
+							<i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
+						</li>
+						<li class="navi-separator mb-3 opacity-70"></li>
+						<li class="navi-item">
+							<a href="#" class="navi-link">
+								<span class="navi-text">
+									<span class="label label-xl label-inline label-light-success">Customer</span>
+								</span>
+							</a>
+						</li>
+						<li class="navi-item">
+							<a href="#" class="navi-link">
+								<span class="navi-text">
+									<span class="label label-xl label-inline label-light-danger">Partner</span>
+								</span>
+							</a>
+						</li>
+						<li class="navi-item">
+							<a href="#" class="navi-link">
+								<span class="navi-text">
+									<span class="label label-xl label-inline label-light-warning">Suplier</span>
+								</span>
+							</a>
+						</li>
+						<li class="navi-item">
+							<a href="#" class="navi-link">
+								<span class="navi-text">
+									<span class="label label-xl label-inline label-light-primary">Member</span>
+								</span>
+							</a>
+						</li>
+						<li class="navi-item">
+							<a href="#" class="navi-link">
+								<span class="navi-text">
+									<span class="label label-xl label-inline label-light-dark">Staff</span>
+								</span>
+							</a>
+						</li>
+						<li class="navi-separator mt-3 opacity-70"></li>
+						<li class="navi-footer py-4">
+							<a class="btn btn-clean font-weight-bold btn-sm" href="#">
+								<i class="ki ki-plus icon-sm"></i>
+								Add new
+							</a>
+						</li>
+					</ul>
+
+					<!--end::Navigation-->
+
+					<!--[html-partial:end:{"id":"demo1/dist/inc/view/partials/content/dropdowns/dropdown-1","page":"index"}]/-->
 				</div>
 			</div>
+
+			<!--end::Dropdown-->
 		</div>
+
+		<!--end::Toolbar-->
 	</div>
 </div>
 
-<!-- end:: Subheader -->
+<!--end::Subheader-->
 
 </body>
 </html>

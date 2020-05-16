@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!--begin::Header-->
+<div th:fragment="_header" id="kt_header" class="header  header-fixed ">
+
+	<!--begin::Container-->
+	<div class=" container-fluid  d-flex align-items-stretch justify-content-between">
+
+		<!--begin::Header Menu Wrapper-->
+		<div class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+
+			<!--begin::Header Menu-->
+			<div id="kt_header_menu" class="header-menu header-menu-mobile  header-menu-layout-default ">
+
+				<!--begin::Header Nav-->
+				<ul class="menu-nav ">
+					<li class="menu-item  menu-item-open menu-item-here menu-item-submenu menu-item-rel menu-item-open menu-item-here menu-item-active" data-menu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><span class="menu-text">Pages</span><i class="menu-arrow"></i></a>
+						<div class="menu-submenu menu-submenu-classic menu-submenu-left">
+							<ul class="menu-subnav">
+								<li class="menu-item  menu-item-active " aria-haspopup="true"><a href="index.html" class="menu-link "><i class="menu-icon flaticon-file"></i><span class="menu-text">My Account</span></a></li>
+								<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-diagram"></i><span class="menu-text">Task Manager</span><span class="menu-label"><span class="label label-success label-rounded">2</span></span></a></li>
+								<li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-medal"></i><span class="menu-text">Team Manager</span><i class="menu-arrow"></i></a>
+									<div class="menu-submenu menu-submenu-classic menu-submenu-right">
+										<ul class="menu-subnav">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Add Team Member</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Edit Team Member</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Delete Team Member</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Team Member Reports</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Assign Tasks</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Promote Team Member</span></a></li>
+										</ul>
+									</div>
+								</li>
+								<li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true"><a href="#" class="menu-link menu-toggle"><i class="menu-icon flaticon-settings"></i><span class="menu-text">Projects Manager</span><i class="menu-arrow"></i></a>
+									<div class="menu-submenu menu-submenu-classic menu-submenu-right">
+										<ul class="menu-subnav">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Latest Projects</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Ongoing Projects</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Urgent Projects</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Completed Projects</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Dropped Projects</span></a></li>
+										</ul>
+									</div>
+								</li>
+								<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-interface-9"></i><span class="menu-text">Create New Project</span></a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="menu-item  menu-item-submenu" data-menu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><span class="menu-text">Features</span><i class="menu-arrow"></i></a>
+						<div class="menu-submenu  menu-submenu-fixed menu-submenu-left" style="width:1000px">
+							<div class="menu-subnav">
+								<ul class="menu-content">
+									<li class="menu-item ">
+										<h3 class="menu-heading menu-toggle"><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Task Reports</span><i class="menu-arrow"></i></h3>
+										<ul class="menu-inner">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-home"></i><span class="menu-text">Latest Tasks</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-user"></i><span class="menu-text">Pending Tasks</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-clipboard"></i><span class="menu-text">Urgent Tasks</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-graphic-1"></i><span class="menu-text">Completed Tasks</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-graphic-2"></i><span class="menu-text">Failed Tasks</span></a></li>
+										</ul>
+									</li>
+									<li class="menu-item ">
+										<h3 class="menu-heading menu-toggle"><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Profit Margins</span><i class="menu-arrow"></i></h3>
+										<ul class="menu-inner">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Overall Profits</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Gross Profits</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Nett Profits</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Year to Date Reports</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Quarterly Profits</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Monthly Profits</span></a></li>
+										</ul>
+									</li>
+									<li class="menu-item ">
+										<h3 class="menu-heading menu-toggle"><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Staff Management</span><i class="menu-arrow"></i></h3>
+										<ul class="menu-inner">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Top Management</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Project Managers</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Development Staff</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Customer Service</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Sales and Marketing</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Executives</span></a></li>
+										</ul>
+									</li>
+									<li class="menu-item ">
+										<h3 class="menu-heading menu-toggle"><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Tools</span><i class="menu-arrow"></i></h3>
+										<ul class="menu-inner">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Analytical Reports</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Customer CRM</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Operational Growth</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Social Media Presence</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Files and Directories</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><span class="menu-text">Audit & Logs</span></a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><span class="menu-text">Apps</span><i class="menu-arrow"></i></a>
+						<div class="menu-submenu menu-submenu-classic menu-submenu-left">
+							<ul class="menu-subnav">
+								<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-business"></i><span class="menu-text">Reporting</span></a></li>
+								<li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-computer"></i><span class="menu-text">Social Presence</span><i class="menu-arrow"></i></a>
+									<div class="menu-submenu menu-submenu-classic menu-submenu-right">
+										<ul class="menu-subnav">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Reached Users</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">SEO Ranking</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">User Dropout Points</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Market Segments</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Opportunity Growth</span></a></li>
+										</ul>
+									</div>
+								</li>
+								<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-map"></i><span class="menu-text">Sales & Marketing</span></a></li>
+								<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-icon flaticon-graphic-2"></i><span class="menu-text">Campaigns</span><span class="menu-label"><span class="label label-success label-rounded">3</span></span></a></li>
+								<li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-infinity"></i><span class="menu-text">Deployment Center</span><i class="menu-arrow"></i></a>
+									<div class="menu-submenu menu-submenu-classic menu-submenu-right">
+										<ul class="menu-subnav">
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Merge Branch</span><span class="menu-label"><span class="label label-danger label-rounded">3</span></span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Version Controls</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">Database Manager</span></a></li>
+											<li class="menu-item " aria-haspopup="true"><a href="javascript:;" class="menu-link "><i class="menu-bullet menu-bullet-line"><span></span></i><span class="menu-text">System Settings</span></a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+
+				<!--end::Header Nav-->
+			</div>
+
+			<!--end::Header Menu-->
+		</div>
+
+		<!--end::Header Menu Wrapper-->
+
+		<!--begin::Topbar-->
+		<div class="topbar">
+
+			<!--begin::Search--><!--end::Search-->
+
+			<!--begin::Notifications--><!--end::Notifications-->
+
+			<!--begin::Quick Actions--><!--end::Quick Actions-->
+
+			<!--begin::Cart--><!--end::Cart-->
+
+			<!--begin::Quick panel--><!--end::Quick panel-->
+
+			<!--begin::Chat--><!--end::Chat-->
+
+			<!--begin::Languages-->
+			<div class="dropdown">
+
+				<!--begin::Toggle-->
+				<div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+					<div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
+						<img class="h-20px w-20px rounded-sm" th:src="@{/assets/media/svg/flags/226-united-states.svg}" alt="" />
+					</div>
+				</div>
+				<!--end::Toggle-->
+
+				<!--begin::Dropdown-->
+				<div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right">
+					<!--[html-partial:include:{"file":"partials/_extras/dropdown/languages.html"}]/-->
+					<div th:replace="layout/partials/_extras/dropdown/languages :: languages"></div>
+				</div>
+				<!--end::Dropdown-->
+			</div>
+
+			<!--end::Languages-->
+
+			<!--begin::User-->
+			<div class="dropdown">
+
+				<!--begin::Toggle-->
+				<div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
+					<div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2">
+						<span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+						<span sec:authentication="principal.username" class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Username</span>
+						<span class="symbol symbol-35 symbol-light-success">
+							<!--  <span class="symbol-label font-size-h5 font-weight-bold">S</span>-->
+							<img th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}"
+								 alt="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|" />
+						</span>
+					</div>
+				</div>
+
+				<!--end::Toggle-->
+
+				<!--begin::Dropdown-->
+				<div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg p-0">
+
+					<!--[html-partial:include:{"file":"partials/_extras/dropdown/user.html"}]/-->
+					<div th:replace="layout/partials/_extras/dropdown/user :: user"></div>
+				</div>
+
+				<!--end::Dropdown-->
+			</div>
+
+			<!--end::User-->
+		</div>
+
+		<!--end::Topbar-->
+	</div>
+
+	<!--end::Container-->
+</div>
+
+<!--end::Header-->
+
+</body>
+</html>

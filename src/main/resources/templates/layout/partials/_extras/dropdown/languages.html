@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!--begin::Nav-->
+<ul th:fragment="languages" class="navi navi-hover py-4">
+
+	<!--begin::Item-->
+	<li class="navi-item">
+		<a href="#" class="navi-link">
+			<span class="symbol symbol-20 mr-3">
+				<img th:src="@{/assets/media/svg/flags/226-united-states.svg}" alt="" />
+			</span>
+			<span class="navi-text">English</span>
+		</a>
+	</li>
+	<!--end::Item-->
+
+	<!--begin::Item-->
+	<li class="navi-item">
+		<a href="#" class="navi-link">
+			<span class="symbol symbol-20 mr-3">
+				<img th:src="@{/assets/media/svg/flags/013-italy.svg}" alt="" />
+			</span>
+			<span class="navi-text">Italian</span>
+		</a>
+	</li>
+	<!--end::Item-->
+</ul>
+
+<!--end::Nav-->
+
+</body>
+</html>
