@@ -134,7 +134,7 @@ public class AccountController {
 		 * for the User user parameter of the following @PostMapping profile method   
 		 */
 		model.addAttribute("user", persistentUser);
-		return "account/profile";
+		return "account/profile/personal-info";
 	}
 	
 	

@@ -23,6 +23,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">Examifire</title>
 		<meta name="description" content="Examifire" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!-- If you using JSON, then it is not possible to submit the CSRF token within an HTTP parameter.
+			 Instead you can submit the token within a HTTP header.
+			 A typical pattern would be to include the CSRF token within your meta tags  -->
+		<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+		<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
@@ -57,6 +62,7 @@ License: You must have a valid license purchased only from themeforest(the above
 			<th:block layout:fragment="styles"></th:block>
 		-->
 		
+	
 		<!--end::Layout Themes-->
 		<link rel="shortcut icon" th:href="@{/assets/media/logos/favicon.ico}" />
 	</head>
@@ -89,6 +95,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		
 						<!--[html-partial:include:{"file":"partials/_subheader/subheader-v1.html"}]/-->
 						<!-- <div th:replace="layout/partials/_header :: _header"></div> -->
+						<div layout:fragment="contentheader"></div>
 						
 						<!--[html-partial:include:{"file":"partials/_content.html"}]/-->
 						<div layout:fragment="content"></div>
