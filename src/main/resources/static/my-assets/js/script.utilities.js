@@ -15,13 +15,13 @@ var ExamifireMessageUtil = function() {
 	    	content.icon = 'icon ' + icon ;
 	    }
 	    
-	        if (false) {
+	    if (false) {
 	        content.url = 'www.examifire.com';
 	        content.target = '_blank';
 	    }
 
 	    var notify = $.notify(content, { 
-	        type: type,
+	    	type: type,
 	        allow_dismiss: true,
 	        newest_on_top: false,
 	        mouse_over:  false,

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<title>Profile</title>
+</head>
+
+<body>
+	<!--begin::Aside-->
+	<div th:fragment="subheader" class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+			<!--begin::Info-->
+			<div class="d-flex align-items-center flex-wrap mr-1">
+				<!--begin::Mobile Toggle-->
+				<button
+					class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none" id="kt_subheader_mobile_toggle">
+					<span></span>
+				</button>
+				<!--end::Mobile Toggle-->
+				<!--begin::Page Heading-->
+				<div class="d-flex align-items-baseline mr-5">
+					<!--begin::Page Title-->
+					<h5 class="text-dark font-weight-bold my-2 mr-5">Your Profile Settings</h5>
+					<!--end::Page Title-->
+				</div>
+				<!--end::Page Heading-->
+			</div>
+			<!--end::Info-->
+	</div>
+	<!--end::Aside-->
+</body>
+</html>

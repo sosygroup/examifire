@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 <title>Profile</title>
@@ -20,10 +21,12 @@
 							 th:style="${user.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpg;base64,' + ${new String(user.avatar)} + ');'"></div>
 						<i class="symbol-badge symbol-badge-bottom bg-success"></i>
 					</div>
-					<h4 class="font-weight-bold my-2" th:text="|${user.firstname} ${user.lastname}|">Firstname Lastname</h4>
-					<div class="text-muted mb-2" th:text="${user.email}">Email</div>
+					<h4 class="font-weight-bold my-2" th:text="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|">Firstname Lastname</h4>
+					<div class="text-muted mb-2" th:text="${#authentication.principal.email}">Email</div>
 					<span
-						class="label label-light-warning label-inline font-weight-bold label-lg">Active</span>
+						class="label label-light-warning label-inline font-weight-bold label-lg mr-1" 
+						th:each="authority : ${#authentication.principal.authorities}" th:text="${#strings.replace(authority,'ROLE_','')}"></span>
+						<!-- th:text="${#strings.replace(#strings.replace(#strings.replace(#authentication.principal.authorities,'[',''),'ROLE_',''),']','')}">Active</span> -->
 				</div>
 				<!--end::User-->
 				<!--begin::Contact-->
@@ -39,9 +42,11 @@
 				<!--end::Contact-->
 				<!--begin::Nav-->
 				<a th:href="@{/home/profile/account-info}"
+				   th:classappend="${aside_profile_menu_active_link == 'account-info'} ? 'active'" 
 				   class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Account
 					Info</a> 
 				<a th:href="@{/home/profile/change-password}"
+					th:classappend="${aside_profile_menu_active_link == 'change-password'} ? 'active'"
 					class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Change
 					Password</a>
 				<!--end::Nav-->

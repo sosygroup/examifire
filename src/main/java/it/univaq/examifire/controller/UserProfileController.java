@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,8 +25,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import it.univaq.examifire.model.user.Role;
-import it.univaq.examifire.model.user.Student;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.security.UserAuthenticationUpdater;
 import it.univaq.examifire.security.UserPrincipal;
@@ -79,6 +76,8 @@ public class UserProfileController {
 		}
 
 		userService.update(persistentUser);
+		
+		userAuthenticationUpdater.update(authentication);
 
 		return "/home/profile/account-info";
 	}
@@ -98,8 +97,6 @@ public class UserProfileController {
 
 		return "/home/profile/account-info";
 	}
-	
-	
 	
 	@GetMapping("/account-info")
 	public String showAccountInfo(Authentication authentication, Model model) {
@@ -134,6 +131,7 @@ public class UserProfileController {
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
 		
+		// we need to set the ID here since it is used by the validator
 		user.setId(authenticatedUserId);
 		userValidator.validateDuplicatedUsername(user, bindingResult);
 		userValidator.validateDuplicatedEmail(user, bindingResult);
@@ -153,25 +151,65 @@ public class UserProfileController {
 			return "account/profile/account-info";
 		}
 		
+		persistentUser.setUsername(user.getUsername());
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
-		persistentUser.setUsername(user.getUsername());
 		persistentUser.setEmail(user.getEmail());
 			
 		userService.update(persistentUser);
-		logger.debug("The user with id {} has been updated", persistentUser.getId());
+		logger.debug("The account info of the user with id {} has been updated", persistentUser.getId());
 	
 		userAuthenticationUpdater.update(authentication);
 		
-	//	if (saveAndContinue) {
-			model.addAttribute("user", userService.findById(persistentUser.getId()).get());
-			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
-			return "redirect:/home/profile/account-info";
-		/*} else {
-			redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
-			return "redirect:/home";
-		}*/
+		model.addAttribute("user", userService.findById(persistentUser.getId()).get());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+		return "redirect:/home/profile/account-info";
 	}
+	
+	@GetMapping("/change-password")
+	public String showChangePassword(Authentication authentication, Model model) {
+		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
+		logger.debug("HTTP GET request received at URL /home/profile/change-password by the user with id {}", authenticatedUserId);
 		
+		User persistentUser = userService.findById(authenticatedUserId)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		model.addAttribute("user", persistentUser);
+		return "account/profile/change-password";
+	}
+	
+	@Transactional
+	@PostMapping("/change-password")
+	public String changePassword(
+			Authentication authentication,
+			@RequestParam(name = "old_password") String oldPassword,
+			@RequestParam(name = "confirm_password") String confirmPassword,
+			@Validated(User.ChangePassword.class) User user, BindingResult bindingResult, 
+			Model model, RedirectAttributes redirectAttributes) {
+		
+		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
+		logger.debug(
+				"HTTP POST request received at URL /home/profile/change-password by the user with id {}", authenticatedUserId);
+		
+		User persistentUser = userService.findById(authenticatedUserId)
+				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
+		
+		userValidator.validatePassword(persistentUser.getPassword(), oldPassword, user.getPassword(), confirmPassword, bindingResult);
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach((error) -> {
+				logger.debug("Validation error: {}", error.getDefaultMessage());
+			});
+			model.addAttribute("confirm_crud_operation", "update_failed");
+			return "account/profile/change-password";
+		}
+		
+		persistentUser.setPassword(passwordEncoder.encode(user.getPassword()));	
+		userService.update(persistentUser);
+		logger.debug("The password of the user with id {} has been updated", persistentUser.getId());
+		
+		model.addAttribute("user", userService.findById(persistentUser.getId()).get());
+		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
+		return "redirect:/home/profile/change-password";
+		
+	}
 	
 }

@@ -51,11 +51,11 @@
 				<li class="menu-item  menu-item-active" aria-haspopup="true">
 						<a th:href="@{/home}" class="menu-link "><i class="menu-icon flaticon-app"></i><span class="menu-text">Dashboard</span></a>
 				</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class="menu-section ">
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="menu-section ">
 					<h4 class="menu-text">Administration</h4>
 					<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 				</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-user"></i><span class="menu-text">Teacher</span><i class="menu-arrow"></i></a>
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon flaticon-user"></i><span class="menu-text">Teacher</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Teacher</span></span></li>
@@ -64,7 +64,7 @@
 						</ul>
 					</div>
 				</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon  flaticon-user-add"></i><span class="menu-text">Student</span><i class="menu-arrow"></i></a>
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon  flaticon-user-add"></i><span class="menu-text">Student</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Student</span></span></li>
