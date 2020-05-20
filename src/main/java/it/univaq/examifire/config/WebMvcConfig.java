@@ -17,6 +17,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/index").setViewName("welcome");
 		registry.addViewController("/home").setViewName("home");
 		registry.addViewController("/signin").setViewName("account/signin");
+		
+		// Theme Features
+		registry.addViewController("/home/admin/theme-features/bootstrap/typography").setViewName("theme-features/bootstrap/typography");
+		registry.addViewController("/home/admin/theme-features/bootstrap/buttons").setViewName("theme-features/bootstrap/buttons");
+		registry.addViewController("/home/admin/theme-features/bootstrap/button-groups").setViewName("theme-features/bootstrap/button-groups");
 	}
 
 }

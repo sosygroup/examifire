@@ -25,7 +25,7 @@ var ConfirmDeleteEvent = function (){
 var KTDatatablesAdvancedColumnRendering = function() {
 
 	var initTable1 = function() {
-		var table = $('#kt_table_1');
+		var table = $('#kt_datatable');
 		
 		// begin first table
 		table.DataTable({
@@ -40,7 +40,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 		    }, 
 			columns: [
 				{data: 'id'},
-				{'Avatar': 'Avatar',
+				{data: 'avatar',
 				    className: "dt-center",
 					orderable: false,
 				    searchable: false,
@@ -74,7 +74,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					render: function(data, type, full, meta) {
 						var return_string="";
 						data.forEach(function(role) {
-							return_string=return_string+'<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--brand my-badge-color">' + role.name + '</span>';
+							return_string=return_string+'<span class="label label-light-warning label-inline font-weight-bold label-lg mr-1 mt-1">' + role.name + '</span>';
 						});
 					
 						return return_string;
@@ -82,33 +82,55 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				},
 				{data: 'accountEnabled',
 					render: function(data, type, full, meta) {
-						var color_span="kt-badge--success my-input-switch-color__on";
+						var color_span="text-success";
 						var text_span="Enabled";
 						if (!data){
-							color_span = "kt-badge--danger my-input-switch-color__off";
+							color_span = "text-danger";
 							text_span = "Disabled"
 						}
-						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
+						return '<span class="font-weight-bold ' + color_span + '">' + text_span + '</span>';
 					},
 				},
 				{data: 'passwordNonExpired',
 					render: function(data, type, full, meta) {
-						var color_span="kt-badge--success my-input-switch-color__on";
+						var color_span="text-success";
 						var text_span="Non Expired";
 						if (!data){
-							color_span = "kt-badge--danger my-input-switch-color__off";
+							color_span = "text-danger";
 							text_span = "Expired"
 						}
-						return '<span class="kt-badge kt-badge--inline kt-badge--pill ' + color_span + '">' + text_span + '</span>';
+						return '<span class="font-weight-bold ' + color_span + '">' + text_span + '</span>';
 					},
 				},
-				{'Actions': 'Actions',
-				    className: "dt-center",
+				{data: null,
+				    className: "text-nowrap",
 					responsivePriority: -1,
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						return'\
+						
+						return '\
+						<div class="dropdown dropdown-inline">\
+							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">\
+                                <i class="la la-cog"></i>\
+                            </a>\
+						  	<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">\
+								<ul class="nav nav-hoverable flex-column">\
+						    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-edit"></i><span class="nav-text">Edit Details</span></a></li>\
+						    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-leaf"></i><span class="nav-text">Update Status</span></a></li>\
+						    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-print"></i><span class="nav-text">Print</span></a></li>\
+								</ul>\
+						  	</div>\
+						</div>\
+						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+							<i class="la la-edit"></i>\
+						</a>\
+						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+							<i class="la la-trash"></i>\
+						</a>\
+					';
+						
+			/*			return'\
 						<div class="dropdown dropdown-inline">\
                         <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover  btn-circle btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
                             <i class="flaticon-more-1"></i>\
@@ -118,7 +140,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
                         <a class="dropdown-item confirm-delete" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'" href="/home/admin/users/delete/'+full['id']+'"><i class="la la-trash"></i> Delete User</a>\
                         </div>\
                     </div>';
-						
+				*/		
 						/*'\
 	                  <span class="dropdown">\
 	                      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
