@@ -18,6 +18,8 @@ var ConfirmDeleteEvent = function (){
 		//main function to initiate the module
 		init: function() {
 			confirmDelete();
+			
+			//$(".buttons-columnVisibility").detach().appendTo("#container_colvis");
 		}
 	};
 }();
@@ -25,10 +27,14 @@ var ConfirmDeleteEvent = function (){
 var KTDatatablesAdvancedColumnRendering = function() {
 
 	var initTable1 = function() {
-		var table = $('#kt_datatable');
-		
 		// begin first table
-		table.DataTable({
+		var table = $('#kt_datatable').DataTable({
+			// https://datatables.net/examples/basic_init/dom.html
+			// https://datatables.net/reference/option/dom
+			dom :"<'row mb-5'<'col-sm-12'B>>" + 
+			"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+			"<'row'<'col-sm-12'tr>>" +
+			"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
 			responsive: true,
 			searchDelay: 500,
 			processing: true,
@@ -37,8 +43,8 @@ var KTDatatablesAdvancedColumnRendering = function() {
 			ajax:{
 			    url: '/home/admin/users/datatable.jquery',
 			    type: 'GET'
-		    }, 
-			columns: [
+		    },
+		    columns: [
 				{data: 'id'},
 				{data: 'avatar',
 				    className: "dt-center",
@@ -155,8 +161,48 @@ var KTDatatablesAdvancedColumnRendering = function() {
 				}
 			],
 			fnDrawCallback: function( settings, json ) {
-	        	ConfirmDeleteEvent.init();
+				// leave here so that each time we redraw the table, e.g., after searching,
+				// we need to (re)initialize the ConfirmDeleteEvent for the delete button of the elements returned by the search
+				ConfirmDeleteEvent.init();
 	        },
+	        initComplete : function() {
+	       	},
+	        buttons: [
+	            {
+	            	extend: 'collection',
+	                buttons: [ 'columnsToggle' ]
+	            },
+		    	{
+	                extend: 'print',
+	                exportOptions: {
+	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+	                }
+	            },
+				{
+	                extend: 'copyHtml5',
+	                exportOptions: {
+	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+	                }
+	            },
+	            {
+	                extend: 'excelHtml5',
+	                exportOptions: {
+	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+	                }
+	            },
+	            {
+	                extend: 'csvHtml5',
+	                exportOptions: {
+	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+	                }
+	            },
+	            {
+	                extend: 'pdfHtml5',
+	                exportOptions: {
+	                    columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+	                }
+	            },
+			],
 		});
 	};
 
