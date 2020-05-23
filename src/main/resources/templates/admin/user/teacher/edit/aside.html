@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<title>Add Teacher</title>
+</head>
+
+<body>
+	<!--begin::Aside-->
+	<div th:fragment="aside" class="flex-row-auto offcanvas-mobile w-300px w-xl-350px"
+		id="kt_profile_aside">
+		<!--begin::Card-->
+		<div class="card card-custom">
+			<!--begin::Body-->
+			<div class="card-body pt-15">
+				<!--begin::User-->
+				<div class="text-center mb-10">
+					<div class="symbol symbol-60 symbol-circle symbol-xl-90">
+						<div id="avatar_aside" class="symbol-label"
+							 th:style="${persistentUser.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpg;base64,' + ${new String(persistentUser.avatar)} + ');'"></div>
+						<i class="symbol-badge symbol-badge-bottom bg-success"></i>
+					</div>
+					<h4 class="font-weight-bold my-2" th:text="|${persistentUser.firstname} ${persistentUser.lastname}|">Firstname Lastname</h4>
+					<div class="text-muted mb-2" th:text="${persistentUser.email}">Email</div>
+					<span
+						class="label label-light-warning label-inline font-weight-bold label-lg mr-1" 
+						th:each="role : ${persistentUser.roles}" th:text="${role.name}"></span>
+				</div>
+				<!--end::User-->
+				<!--begin::Contact-->
+				<div class="mb-10 text-center">
+					<a href="#" class="btn btn-icon btn-circle btn-light-facebook mr-2">
+						<i class="socicon-facebook"></i>
+					</a> <a href="#" class="btn btn-icon btn-circle btn-light-twitter mr-2">
+						<i class="socicon-twitter"></i>
+					</a> <a href="#" class="btn btn-icon btn-circle btn-light-google">
+						<i class="socicon-google"></i>
+					</a>
+				</div>
+				<!--end::Contact-->
+				<!--begin::Nav-->
+				<a th:href="@{/home/admin/teacher/edit/{id}/account-info(id=${persistentUser.id})}"
+				   th:classappend="${aside_profile_menu_active_link == 'account-info'} ? 'active'" 
+				   class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Account
+					Info</a> 
+				<a th:href="@{/home/admin/teacher/edit/{id}/change-password(id=${persistentUser.id})}"
+					th:classappend="${aside_profile_menu_active_link == 'change-password'} ? 'active'"
+					class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Change
+					Password</a>
+				<!--end::Nav-->
+			</div>
+			<!--end::Body-->
+		</div>
+		<!--end::Card-->
+	</div>
+	<!--end::Aside-->
+</body>
+</html>

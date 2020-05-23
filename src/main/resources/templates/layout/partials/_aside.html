@@ -55,13 +55,14 @@
 					<h4 class="menu-text">Administration</h4>
 					<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 				</li>
-				<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon las la-users-cog"></i><span class="menu-text">Users</span><i class="menu-arrow"></i></a>
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')" th:classappend="${aside_layout_menu_active_link == 'users'} ? 'menu-item-open menu-item-here'" 
+					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon las la-users-cog"></i><span class="menu-text">Users</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Users</span></span></li>
-							<li class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/users}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">List All</span></a></li>
-							<li class="menu-item " aria-haspopup="true"><a href="custom/apps/inbox.html" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Add Teacher</span></a></li>
-							<li class="menu-item " aria-haspopup="true"><a href="custom/apps/inbox.html" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Add Student</span></a></li>
+							<li th:classappend="${aside_layout_submenu_active_link == 'list-all'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/users}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">List All</span></a></li>
+							<li th:classappend="${aside_layout_submenu_active_link == 'add-teacher'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/teacher/add}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Add Teacher</span></a></li>
+							<li th:classappend="${aside_layout_submenu_active_link == 'add-student'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/student/add}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Add Student</span></a></li>
 						</ul>
 					</div>
 				</li>

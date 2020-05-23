@@ -70,19 +70,5 @@ public class UserValidator {
 
 		bindingResult.rejectValue("email", "DuplicatedEmail", "The email already exists");
 	}
-
-	public void validateDuplicatedUsername(User user, BindingResult bindingResult) {
-		User persistentUser = userService.findByUsername(user.getUsername()).orElse(null);
-
-		if (persistentUser == null) {
-			return;
-		}
-		if (user.getId() != null && user.getId().equals(persistentUser.getId())) {
-			return;
-		}
-
-		bindingResult.rejectValue("username", "DuplicatedUsername", "The username already exists");
-	}
-
 	
 }

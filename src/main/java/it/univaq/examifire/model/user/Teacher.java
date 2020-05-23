@@ -56,7 +56,16 @@ public class Teacher extends User {
 
 	@Override
 	public String toString() {
-		return "Teacher [teachingAppointments=" + teachingAppointments + "]";
+		return "Teacher [teachingAppointments=" + teachingAppointments + ", getId()=" + getId() + ", getFirstname()="
+				+ getFirstname() + ", getLastname()=" + getLastname() + ", getEmail()=" + getEmail()
+				+ ", isAccountEnabled()=" + isAccountEnabled() + ", isPasswordNonExpired()=" + isPasswordNonExpired()
+				+ ", getRoles()=" + getRoles() + ", getCreatedBy()=" + getCreatedBy() + ", getCreatedAt()="
+				+ getCreatedAt() + ", getLastUpdatedBy()=" + getLastUpdatedBy() + ", getLastUpdatedAt()="
+				+ getLastUpdatedAt() + "]";
 	}
+
+	
+
+	
 
 }

@@ -572,7 +572,3 @@
     .aside-minimize .aside-menu .menu-nav .menu-item:not([data-menu-submenu-mode=accordion]).menu-item-hover > .menu-submenu .menu-subnav .menu-separator,
     .aside-menu.aside-menu-dropdown .menu-nav .menu-item:not([data-menu-submenu-mode=accordion]).menu-item-hover > .menu-submenu .menu-subnav .menu-separator {
       border-bottom: 1px solid rgba(0, 0, 0, 0.07) ; } }
-
-.aside .aside-menu > .menu-nav .menu-item > .menu-link:not(.menu-link-active):not(.menu-link-here):not(.menu-link-hover) [class^="flaticon2-"],
-.aside .aside-menu > .menu-nav .menu-item > .menu-link:not(.menu-link-active):not(.menu-link-here):not(.menu-link-hover) [class*=" flaticon2-"] {
-  color: #434d6b; }

@@ -7,9 +7,9 @@ INSERT INTO `examifire`.`role` (`role_id`, `created_at`, `created_by`, `last_upd
 --
 -- Insert predefined users.
 --
-INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`, `username`) VALUES ('1', NOW(), '1', '1', NOW(), 1, 'admin.admin@examifire.it', 'Admin', 'Admin', '$2a$10$vxWwpAKkyRElI.dyUfNKvun844GWAm9b4WLEQZiXVb6FHwh.Uzj9i', 1, 'admin');
-INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`, `username`) VALUES ('2', NOW(), '1', '1', NOW(), 1, 'teacher.teacher@examifire.it', 'Teacher', 'Teacher', '$2a$10$PoeB41Kws14p1pIqpDNJw.z9lYS2a86v4zJugoaDC2bpXHvIQb9QW', 1, 'teacher');
-INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`, `username`) VALUES ('3', NOW(), '1', '1', NOW(), 1, 'student.student@examifire.it', 'Student', 'Student', '$2a$10$/RkFMD2qLZK3FN/31JN4XOgrMpNqYps0SJFYOGh5DZ7q9pT/MoO/K', 1, 'student');
+INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`) VALUES ('1', NOW(), '1', '1', NOW(), 1, 'admin.admin@examifire.it', 'Admin', 'Admin', '$2a$10$vxWwpAKkyRElI.dyUfNKvun844GWAm9b4WLEQZiXVb6FHwh.Uzj9i', 1);
+INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`) VALUES ('2', NOW(), '1', '1', NOW(), 1, 'teacher.teacher@examifire.it', 'Teacher', 'Teacher', '$2a$10$PoeB41Kws14p1pIqpDNJw.z9lYS2a86v4zJugoaDC2bpXHvIQb9QW', 1);
+INSERT INTO `examifire`.`user` (`user_id`, `created_at`, `created_by`, `last_updated_by`, `last_updated_at`, `account_enabled`, `email`, `first_name`, `last_name`, `password`, `password_non_expired`) VALUES ('3', NOW(), '1', '1', NOW(), 1, 'student.student@examifire.it', 'Student', 'Student', '$2a$10$/RkFMD2qLZK3FN/31JN4XOgrMpNqYps0SJFYOGh5DZ7q9pT/MoO/K', 1);
 
 INSERT INTO `examifire`.`teacher` (`user_id`) VALUES ('2');
 INSERT INTO `examifire`.`student` (`user_id`, `identification_number`) VALUES ('3', '123456');

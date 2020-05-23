@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -188,7 +187,7 @@
 				<div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
 					<div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2">
 						<span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-						<span sec:authentication="principal.username" class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Username</span>
+						<span th:text="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|" class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Email</span>
 						<span class="symbol symbol-35 symbol-light-success">
 							<!--  <span class="symbol-label font-size-h5 font-weight-bold">S</span>-->
 							<img th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}"

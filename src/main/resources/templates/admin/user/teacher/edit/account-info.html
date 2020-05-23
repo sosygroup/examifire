@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{layout/layout.html}"
+	th:with="aside_layout_menu_active_link='dashboard', aside_profile_menu_active_link='account-info'">
+<!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
+
+<head>
+<title>Edit Teacher</title>
+
+<!--
+	You don't need to put the layout:fragment attribute
+	into the <head> - the decoration process will automatically copy the 
+	<head> section of this content templates into the layout page.
+ 
+	<th:block layout:fragment="styles">
+		<link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+	</th:block>
+-->
+	<!--begin::Page Styles (used by this page) -->
+
+	<!--end::Page Styles -->
+</head>
+
+<body>
+
+
+	<!--begin::Subheader-->
+	<div layout:fragment="contentheader" class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
+		<div th:replace="admin/user/teacher/edit/subheader :: subheader" ></div>
+	</div>
+	<!--end::Subheader-->
+	
+	<!--begin::Entry-->
+	<div layout:fragment="content" class="d-flex flex-column-fluid">
+		<!--begin::Container-->
+		<div class="container">
+			<!--begin::Profile 2-->
+			<div class="d-flex flex-row">
+				<!--begin::Aside-->
+				<div th:replace="admin/user/teacher/edit/aside :: aside" ></div>
+				<!--end::Aside-->
+
+
+				<!--begin::Content-->
+				<div class="flex-row-fluid ml-lg-8">
+					<!--begin::Card-->
+					<div class="card card-custom card-stretch">
+						<!--begin::Header-->
+						<div class="card-header py-3">
+							<div class="card-title align-items-start flex-column">
+								<h3 class="card-label text-dark">Account Information</h3>
+								<span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
+							</div>
+							<div class="card-toolbar">
+								<button id="form_submit" type="submit" class="btn btn-success mr-2">Save Changes</button>
+								<button id="form_reset" type="reset" class="btn btn-secondary">Cancel</button>
+							</div>
+						</div>
+						<!--end::Header-->
+						<!--begin::Form-->
+						<form id="profile_form" class="form" th:action="@{/home/admin/teacher/edit/{id}/account-info(id=${user.id})}" th:object="${user}" method="post">
+							<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
+							<!--begin::Body-->
+							<div class="card-body">
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">Administrator</label>
+									<div class="col-lg-9 col-xl-6">
+										<span class="switch switch-outline switch-icon switch-warning">
+											<label>
+												<input type="checkbox" id="is_admin" name="is_admin" th:checked="${is_admin}"/>
+												<span></span>
+											</label>
+										</span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">First Name</label>
+									<div class="col-lg-9 col-xl-6">
+										<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{firstname}" />
+										<span class="form-text text-danger" th:each="error : ${#fields.errors('firstname')}" th:text="|- ${error}|"></span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">Last Name</label>
+									<div class="col-lg-9 col-xl-6">
+										<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{lastname}" />
+										<span class="form-text text-danger" th:each="error : ${#fields.errors('lastname')}" th:text="|- ${error}|"></span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
+									<div class="col-lg-9 col-xl-6">
+										<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{email}" />
+										<span class="form-text text-danger" th:each="error : ${#fields.errors('email')}" th:text="|- ${error}|"></span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">Account Enabled</label>
+									<div class="col-lg-3 col-xl-3">
+										<span class="switch switch-outline switch-icon switch-success">
+											<label>
+												<input type="checkbox" th:field="*{accountEnabled}"/>
+												<span></span>
+											</label>
+										</span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								<!--begin::Form group-->
+								<div class="form-group row">
+									<label class="col-xl-3 col-lg-3 col-form-label text-right">Password Non Expired</label>
+									<div class="col-lg-9 col-xl-6">
+										<span class="switch switch-outline switch-icon switch-success">
+											<label>
+												<input type="checkbox" th:field="*{passwordNonExpired}"/>
+												<span></span>
+											</label>
+										</span>
+									</div>
+								</div>
+								<!--end::Form group-->
+								
+							</div>
+							<!--end::Body-->
+						</form>
+						<!--end::Form-->
+					</div>
+				</div>
+				<!--end::Content-->
+
+
+			</div>
+			<!--end::Profile 2-->
+		</div>
+		<!--end::Container-->
+	</div>
+	<!--end::Entry-->
+
+
+	<!--begin::Page Scripts(used by this page) -->
+	<th:block layout:fragment="scripts">
+		<script th:src="@{/my-assets/js/admin/user/teacher/edit/aside.js}"></script>
+		<script th:src="@{/my-assets/js/admin/user/teacher/edit/account-info.js}"></script>
+
+	</th:block>
+	<!--end::Page Scripts -->
+	
+</body>
+</html>

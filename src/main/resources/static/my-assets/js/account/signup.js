@@ -18,22 +18,6 @@ var KTLoginGeneral = function() {
 			form,
 			{
 				fields: {
-					username: {
-						validators: {
-							notEmpty: {
-								message: 'Username is required'
-							},
-							stringLength: {
-	                            min: 5,
-	                            max: 32,
-	                            message: 'Minimum 5 characters and maximum 32 characters'
-	                        },
-                            regexp: {
-                                regexp: '^[a-zA-Z0-9]+[_\\.\\-]?[a-zA-Z0-9]+$',
-                                message: "Please use only alpha numeric characters, possibly with either '_', '-' or '.' in between"
-                            },
-						}
-					},
 					firstname: {
 						validators: {
 							notEmpty: {

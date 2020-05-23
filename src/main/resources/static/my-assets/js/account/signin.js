@@ -20,7 +20,7 @@ var KTLoginGeneral = function() {
 					username: {
 						validators: {
 							notEmpty: {
-								message: 'Username is required'
+								message: 'Email is required'
 							},
 						}
 					},

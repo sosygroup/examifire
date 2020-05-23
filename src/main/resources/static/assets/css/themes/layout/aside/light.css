@@ -567,6 +567,3 @@
     .aside-minimize .aside-menu .menu-nav .menu-item:not([data-menu-submenu-mode=accordion]).menu-item-hover > .menu-submenu .menu-subnav .menu-separator,
     .aside-menu.aside-menu-dropdown .menu-nav .menu-item:not([data-menu-submenu-mode=accordion]).menu-item-hover > .menu-submenu .menu-subnav .menu-separator {
       border-bottom: 1px solid #ECF0F3 ; } }
-
-.aside .aside-menu > .menu-nav .menu-item > .menu-link .link-text {
-  font-weight: 500; }

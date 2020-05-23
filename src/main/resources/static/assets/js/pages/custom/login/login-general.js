@@ -1,7 +1,7 @@
 "use strict";
 
 // Class Definition
-var KTLoginGeneral = function() {
+var KTLogin = function() {
     var _login;
 
     var _showForm = function(form) {
@@ -41,7 +41,9 @@ var KTLoginGeneral = function() {
 					}
 				},
 				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
+                    trigger: new FormValidation.plugins.Trigger(),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    //defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
 					bootstrap: new FormValidation.plugins.Bootstrap()
 				}
 			}
@@ -57,7 +59,9 @@ var KTLoginGeneral = function() {
 		                icon: "success",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light-primary"
+                        customClass: {
+    						confirmButton: "btn font-weight-bold btn-light-primary"
+    					}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
@@ -67,7 +71,9 @@ var KTLoginGeneral = function() {
 		                icon: "error",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
+                        customClass: {
+    						confirmButton: "btn font-weight-bold btn-light-primary"
+    					}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
@@ -159,7 +165,9 @@ var KTLoginGeneral = function() {
 		                icon: "success",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light-primary"
+                        customClass: {
+    						confirmButton: "btn font-weight-bold btn-light-primary"
+    					}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
@@ -169,7 +177,9 @@ var KTLoginGeneral = function() {
 		                icon: "error",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
+                        customClass: {
+    						confirmButton: "btn font-weight-bold btn-light-primary"
+    					}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
@@ -225,7 +235,9 @@ var KTLoginGeneral = function() {
 		                icon: "error",
 		                buttonsStyling: false,
 		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
+                        customClass: {
+    						confirmButton: "btn font-weight-bold btn-light-primary"
+    					}
 		            }).then(function() {
 						KTUtil.scrollTop();
 					});
@@ -256,5 +268,5 @@ var KTLoginGeneral = function() {
 
 // Class Initialization
 jQuery(document).ready(function() {
-    KTLoginGeneral.init();
+    KTLogin.init();
 });

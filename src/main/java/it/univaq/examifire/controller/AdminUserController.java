@@ -122,13 +122,12 @@ public class AdminUserController {
 			@RequestParam(name = "save_and_add_new") boolean saveAndAddNew, 
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
 			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
-			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			@Validated(User.CreateByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		logger.debug(
 				"HTTP POST request received at URL /home/admin/users/add with a request parameter save_and_add_new={}", saveAndAddNew);
 		
 		userValidator.validateDuplicatedEmail(user, bindingResult);
-		userValidator.validateDuplicatedUsername(user, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
@@ -180,13 +179,12 @@ public class AdminUserController {
 			@RequestParam(name = "save_and_continue") boolean saveAndContinue,
 			@RequestParam(name = "navigation_tab_active_link") String navigationTabActiveLink,
 			@RequestPart(name = "profile_avatar") MultipartFile profileAvatar,
-			@Validated(User.CreateEditByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			@Validated(User.CreateByAdmin.class) User user, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		logger.debug(
 				"HTTP POST request received at URL /home/admin/users/edit/{} with a request parameter save_and_continue={}",
 				id, saveAndContinue);
 		
 		userValidator.validateDuplicatedEmail(user, bindingResult);
-		userValidator.validateDuplicatedUsername(user, bindingResult);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.debug("Validation error: {}", error.getDefaultMessage());
@@ -218,7 +216,6 @@ public class AdminUserController {
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
 		persistentUser.setRoles(user.getRoles());
-		persistentUser.setUsername(user.getUsername());
 		persistentUser.setEmail(user.getEmail());
 		persistentUser.setAccountEnabled(user.isAccountEnabled());
 		persistentUser.setPasswordNonExpired(user.isPasswordNonExpired());

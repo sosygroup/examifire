@@ -87,40 +87,6 @@
           background-color: #3699FF; }
         .wizard.wizard-4 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-wrapper .wizard-label .wizard-title {
           color: #3699FF; }
-  .wizard.wizard-4 [data-wizard-type="step-info"] {
-    display: none; }
-    .wizard.wizard-4 [data-wizard-type="step-info"][data-wizard-state="current"] {
-      display: block; }
-  .wizard.wizard-4 [data-wizard-type="step-content"] {
-    display: none; }
-    .wizard.wizard-4 [data-wizard-type="step-content"][data-wizard-state="current"] {
-      display: block; }
-  .wizard.wizard-4 [data-wizard-type="action-prev"] {
-    display: none; }
-  .wizard.wizard-4 [data-wizard-type="action-next"] {
-    display: inline-block; }
-  .wizard.wizard-4 [data-wizard-type="action-submit"] {
-    display: none; }
-  .wizard.wizard-4[data-wizard-state="first"] [data-wizard-type="action-prev"] {
-    display: none; }
-  .wizard.wizard-4[data-wizard-state="first"] [data-wizard-type="action-next"] {
-    display: inline-block; }
-  .wizard.wizard-4[data-wizard-state="first"] [data-wizard-type="action-submit"] {
-    display: none; }
-  .wizard.wizard-4[data-wizard-state="between"] [data-wizard-type="action-prev"] {
-    display: inline-block; }
-  .wizard.wizard-4[data-wizard-state="between"] [data-wizard-type="action-next"] {
-    display: inline-block; }
-  .wizard.wizard-4[data-wizard-state="between"] [data-wizard-type="action-submit"] {
-    display: none; }
-  .wizard.wizard-4[data-wizard-state="last"] [data-wizard-type="action-prev"] {
-    display: inline-block; }
-  .wizard.wizard-4[data-wizard-state="last"] [data-wizard-type="action-next"] {
-    display: none; }
-  .wizard.wizard-4[data-wizard-state="last"] [data-wizard-type="action-submit"] {
-    display: inline-block; }
-  .wizard.wizard-4[data-wizard-clickable="true"] .wizard-step {
-    cursor: pointer; }
 
 @media (max-width: 1399.98px) {
   .wizard.wizard-4 .wizard-nav .wizard-steps .wizard-step {

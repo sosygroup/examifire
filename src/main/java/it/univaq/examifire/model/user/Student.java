@@ -117,8 +117,15 @@ public class Student extends User {
 	@Override
 	public String toString() {
 		return "Student [identificationNumber=" + identificationNumber + ", courseRegistrations=" + courseRegistrations
-				+ ", quizRegistrations=" + quizRegistrations + ", studentAnswers=" + studentAnswers + "]";
+				+ ", quizRegistrations=" + quizRegistrations + ", studentAnswers=" + studentAnswers + ", getId()="
+				+ getId() + ", getFirstname()=" + getFirstname() + ", getLastname()=" + getLastname() + ", getEmail()="
+				+ getEmail() + ", isAccountEnabled()=" + isAccountEnabled() + ", isPasswordNonExpired()="
+				+ isPasswordNonExpired() + ", getRoles()=" + getRoles() + ", getCreatedBy()=" + getCreatedBy()
+				+ ", getCreatedAt()=" + getCreatedAt() + ", getLastUpdatedBy()=" + getLastUpdatedBy()
+				+ ", getLastUpdatedAt()=" + getLastUpdatedAt() + "]";
 	}
+
+	
 
 	
 

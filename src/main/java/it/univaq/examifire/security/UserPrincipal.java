@@ -24,8 +24,6 @@ public class UserPrincipal implements UserDetails {
 
 	private String lastname;
 
-	private String username;
-
 	private boolean accountEnabled;
 
 	private boolean passwordNonExpired;
@@ -38,7 +36,7 @@ public class UserPrincipal implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(Long id, byte[] avatar, String firstname, String lastname, String username, String email,
+	public UserPrincipal(Long id, byte[] avatar, String firstname, String lastname, String email,
 			String password, boolean accountEnabled, boolean passwordNonExpired,
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
@@ -46,7 +44,6 @@ public class UserPrincipal implements UserDetails {
 		this.avatar = avatar;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.username = username;
 		this.accountEnabled = accountEnabled;
 		this.passwordNonExpired = passwordNonExpired;
 		this.password = password;
@@ -59,7 +56,7 @@ public class UserPrincipal implements UserDetails {
 				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName())).collect(Collectors.toList());
 
 		return new UserPrincipal(user.getId(), user.getAvatar(), user.getFirstname(), user.getLastname(),
-				user.getUsername(), user.getEmail(), user.getPassword(), user.isAccountEnabled(),
+				user.getEmail(), user.getPassword(), user.isAccountEnabled(),
 				user.isPasswordNonExpired(), authorities);
 	}
 
@@ -69,7 +66,6 @@ public class UserPrincipal implements UserDetails {
 		this.avatar = user.getAvatar();
 		this.firstname = user.getFirstname();
 		this.lastname = user.getLastname();
-		this.username = user.getUsername();
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.accountEnabled = user.isAccountEnabled();
@@ -99,6 +95,11 @@ public class UserPrincipal implements UserDetails {
 	public String getEmail() {
 		return email;
 	}
+	
+	@Override
+	public String getUsername() {
+		return email;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -108,11 +109,6 @@ public class UserPrincipal implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		return username;
 	}
 
 	@Override
@@ -148,7 +144,6 @@ public class UserPrincipal implements UserDetails {
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (passwordNonExpired ? 1231 : 1237);
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -197,18 +192,13 @@ public class UserPrincipal implements UserDetails {
 			return false;
 		if (passwordNonExpired != other.passwordNonExpired)
 			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "UserPrincipal [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username="
-				+ username + ", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired
+		return "UserPrincipal [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + 
+				", accountEnabled=" + accountEnabled + ", passwordNonExpired=" + passwordNonExpired
 				+ ", password=" + password + ", email=" + email + ", authorities=" + authorities + "]";
 	}
 

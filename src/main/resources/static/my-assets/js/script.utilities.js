@@ -39,8 +39,8 @@ var ExamifireMessageUtil = function() {
 	        delay: 1000,
 	        z_index: 10000,
 	        animate: {
-	            enter: 'animated bounce',
-	            exit: 'animated bounce'
+	            enter: 'animate__animated animate__bounce',
+	            exit: 'animate__animated animate__bounce'
 	        }
 	    });
 	}

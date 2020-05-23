@@ -1,7 +1,5 @@
-.login.login-1 .login-aside {
-  background: #F2C98A; }
-  .login.login-1 .login-aside h3 {
-    color: #986923; }
+.login.login-1 .login-aside .aside-img {
+  min-height: 450px; }
 
 .login.login-1 .login-signin,
 .login.login-1 .login-signup,
@@ -57,7 +55,8 @@
     max-width: 400px; } }
 
 @media (max-width: 575.98px) {
-  .login.login-1 .login-aside {
+  .login.login-1 .aside-img {
+    min-height: 300px !important;
     background-size: 400px; }
   .login.login-1 .login-content .login-form {
     width: 100%;

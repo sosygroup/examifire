@@ -6,14 +6,13 @@ var KTApp = function() {
     var settings = {};
 
     var initTooltip = function(el) {
-        var skin = el.data('skin') ? 'tooltip-' + el.data('skin') : '';
+        var theme = el.data('theme') ? 'tooltip-' + el.data('theme') : '';
         var width = el.data('width') == 'auto' ? 'tooltop-auto-width' : '';
-        var triggerValue = el.data('trigger') ? el.data('trigger') : 'hover';
-        var placement = el.data('placement') ? el.data('placement') : 'left';
+        var trigger = el.data('trigger') ? el.data('trigger') : 'hover';
 
         $(el).tooltip({
-            trigger: triggerValue,
-            template: '<div class="tooltip ' + skin + ' ' + width + '" role="tooltip">\
+            trigger: trigger,
+            template: '<div class="tooltip ' + theme + ' ' + width + '" role="tooltip">\
                 <div class="arrow"></div>\
                 <div class="tooltip-inner"></div>\
             </div>'
@@ -1662,8 +1661,16 @@ var KTMenu = function(elementId, options) {
             var submenus = KTUtil.findAll(element, '.menu-submenu');
             if ( submenus ) {
                 for (var i = 0, len = submenus.length; i < len; i++) {
-                    KTUtil.css(submenus[0], 'display', '');
-                    KTUtil.css(submenus[0], 'overflow', '');
+                    var submenu = submenus[0];
+
+                    KTUtil.css(submenu, 'display', '');
+                    KTUtil.css(submenu, 'overflow', '');
+
+                    if (submenu.hasAttribute('data-hor-direction')) {
+                        KTUtil.removeClass(submenu, 'menu-submenu-left');
+                        KTUtil.removeClass(submenu, 'menu-submenu-right');
+                        KTUtil.addClass(submenu, submenu.getAttribute('data-hor-direction'));
+                    }
                 }
             }
         },
@@ -1956,6 +1963,25 @@ var KTMenu = function(elementId, options) {
 
             // add submenu activation class
             KTUtil.addClass(item, 'menu-item-hover');
+
+            // Change the alignment of submenu is offscreen.
+            var submenu = KTUtil.find(item, '.menu-submenu');
+
+            if (submenu.hasAttribute('data-hor-direction') === false) {
+                if (KTUtil.hasClass(submenu, 'menu-submenu-left')) {
+                    submenu.setAttribute('data-hor-direction', 'menu-submenu-left');
+                } else if (KTUtil.hasClass(submenu, 'menu-submenu-right')) {
+                    submenu.setAttribute('data-hor-direction', 'menu-submenu-right');
+                }
+            }
+
+            if ( submenu && KTUtil.isOffscreen(submenu, 'left', 15) === true ) {
+                KTUtil.removeClass(submenu, 'menu-submenu-left');
+                KTUtil.addClass(submenu, 'menu-submenu-right');
+            } else if ( submenu && KTUtil.isOffscreen(submenu, 'right', 15) === true ) {
+                KTUtil.removeClass(submenu, 'menu-submenu-right');
+                KTUtil.addClass(submenu, 'menu-submenu-left');
+            }
 
             if ( item.getAttribute('data-menu-toggle-class') ) {
                 KTUtil.addClass(body, item.getAttribute('data-menu-toggle-class'));
@@ -3304,7 +3330,6 @@ var KTUtil = function() {
 			return (width < breakpoint);
         },
 
-
         /**
          * Generates unique ID for give prefix.
          * @param {string} prefix Prefix for generated ID
@@ -3854,6 +3879,20 @@ var KTUtil = function() {
 
         height: function(el) {
             return KTUtil.css(el, 'height');
+        },
+
+        outerHeight: function(el, withMargic = false) {
+            var height = el.offsetHeight;
+            var style;
+
+            if (withMargic) {
+                style = getComputedStyle(el);
+                height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+
+                return height;
+            } else {
+                return height;
+            }
         },
 
         visible: function(el) {
@@ -4409,11 +4448,43 @@ var KTUtil = function() {
 
         // Scroller
         scrollInit: function(element, options) {
-            if(!element) return;
+            if (!element) {
+                return;
+            }
+
+            // Learn more: https://github.com/mdbootstrap/perfect-scrollbar#options
+            var pluginDefOptions = {
+                wheelSpeed: 0.5,
+                swipeEasing: true,
+                wheelPropagation: false,
+                minScrollbarLength: 40,
+                maxScrollbarLength: 300,
+                suppressScrollX: true
+            };
+
+            options = KTUtil.deepExtend({}, pluginDefOptions, options);
+
             // Define init function
             function init() {
                 var ps;
                 var height;
+
+                // Get extra options via data attributes
+                var attrs = element.getAttributeNames();
+                if (attrs.length > 0) {
+                    attrs.forEach(function(attrName) {
+            			// more options; https://github.com/ganlanyuan/tiny-slider#options
+            			if ((/^data-.*/g).test(attrName)) {
+                            if (['scroll', 'height', 'mobile-height'].includes(optionName) == false) {
+                                var optionName = attrName.replace('data-', '').toLowerCase().replace(/(?:[\s-])\w/g, function(match) {
+                					return match.replace('-', '').toUpperCase();
+                				});
+
+                                options[optionName] = KTUtil.filterBoolean(element.getAttribute(attrName));
+                            }
+            			}
+            		});
+                }
 
                 if (options.height instanceof Function) {
                     height = options.height.call();
@@ -4475,14 +4546,7 @@ var KTUtil = function() {
                     KTUtil.css(element, 'overflow', 'hidden');
                     KTUtil.addClass(element, 'scroll');
 
-                    ps = new PerfectScrollbar(element, {
-                        wheelSpeed: 0.5,
-                        swipeEasing: true,
-                        wheelPropagation: (options.windowScroll === false ? false : true),
-                        minScrollbarLength: 40,
-                        maxScrollbarLength: 300,
-                        suppressScrollX: KTUtil.attr(element, 'data-scroll-x') != 'true' ? true : false
-                    });
+                    ps = new PerfectScrollbar(element, options);
 
                     KTUtil.data(element).set('ps', ps);
                 }
@@ -4542,6 +4606,19 @@ var KTUtil = function() {
                 element.style.setProperty('overflow', '');
                 element.style.setProperty('height', '');
             }
+        },
+
+        filterBoolean: function(val) {
+            // Convert string boolean
+			if (val === true || val === 'true') {
+				return true;
+			}
+
+			if (val === false || val === 'false') {
+				return false;
+			}
+
+            return val;
         },
 
         setHTML: function(el, html) {
@@ -4619,6 +4696,100 @@ var KTUtil = function() {
 
         	// Executes the func after delay time.
         	timer  =  setTimeout(func, delay);
+        },
+
+        btnWait: function(el, cls, message, disable = true) {
+            if (!el) {
+                return;
+            }
+
+            if (disable) {
+                KTUtil.attr(el, "disabled", true);
+            }
+
+            if (cls) {
+                KTUtil.addClass(el, cls);
+                KTUtil.attr(el, "wait-class", cls);
+            }
+
+            if (message) {
+                var caption = KTUtil.find(el, '.btn-caption');
+
+                if (caption) {
+                    KTUtil.data(caption).set('caption', KTUtil.getHTML(caption));
+                    KTUtil.setHTML(caption, message);
+                } else {
+                    KTUtil.data(el).set('caption', KTUtil.getHTML(el));
+                    KTUtil.setHTML(el, message);
+                }
+            }
+        },
+
+        btnRelease: function(el) {
+            if (!el) {
+                return;
+            }
+
+            /// Show loading state on button
+            KTUtil.removeAttr(el, "disabled");
+
+            if (KTUtil.hasAttr(el, "wait-class")) {
+                KTUtil.removeClass(el, KTUtil.attr(el, "wait-class"));
+            }
+
+            var caption = KTUtil.find(el, '.btn-caption');
+
+            if (caption && KTUtil.data(caption).has('caption')) {
+                KTUtil.setHTML(caption, KTUtil.data(caption).get('caption'));
+            } else if (KTUtil.data(el).has('caption')) {
+                KTUtil.setHTML(el, KTUtil.data(el).get('caption'));
+            }
+        },
+
+        isOffscreen: function(el, direction, offset = 0) {
+            var windowWidth = KTUtil.getViewPort().width;
+            var windowHeight = KTUtil.getViewPort().height;
+
+            var top = KTUtil.offset(el).top;
+            var height = KTUtil.outerHeight(el) + offset;
+            var left = KTUtil.offset(el).left;
+            var width = KTUtil.outerWidth(el) + offset;
+
+            if (direction == 'bottom') {
+                if (windowHeight < top + height) {
+                    return true;
+                } else if (windowHeight > top + height * 1.5) {
+                    return true;
+                }
+            }
+
+            if (direction == 'top') {
+                if (top < 0) {
+                    return true;
+                } else if (top > height) {
+                    return true;
+                }
+            }
+
+            if (direction == 'left') {
+                if (left < 0) {
+                    return true;
+                } else if (left * 2 > width) {
+                    //console.log('left 2');
+                    //return true;
+                }
+            }
+
+            if (direction == 'right') {
+                if (windowWidth < left + width) {
+                    return true;
+                } else {
+                    //console.log('right 2');
+                    //return true;
+                }
+            }
+
+            return false;
         }
     }
 }();
@@ -6481,7 +6652,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						// pager root element
 						pg.pager = $('<div/>').addClass(pfx + 'datatable-pager ' + pfx + 'datatable-paging-loaded');
 						// numbering links
-						var pagerNumber = $('<ul/>').addClass(pfx + 'datatable-pager-nav');
+						var pagerNumber = $('<ul/>').addClass(pfx + 'datatable-pager-nav mb-5 mb-sm-0');
 						pg.pagerLayout['pagination'] = pagerNumber;
 
 						// pager first/previous button
@@ -7503,7 +7674,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 
 						var column = Plugin.getColumnByField(meta.field);
 						// sort is disabled for this column
-						if (typeof column !== 'undefined' && typeof column.sortable !== 'undefined' && column.sortable === false) return;
+						if (typeof column === 'undefined') return;
+						if (typeof column.sortable !== 'undefined' && column.sortable === false) return;
+						if (typeof column.selector !== 'undefined' && column.selector === true) return;
 
 						// sort icon beside column header
 						var td = $(datatable.tableHead).find('.' + pfx + 'datatable-cell[data-field="' + meta.field + '"]').attr('data-sort', meta.sort);
@@ -7526,7 +7699,9 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 						var field = $(this).data('field');
 						var column = Plugin.getColumnByField(field);
 						// sort is disabled for this column
+						if (typeof column === 'undefined') return;
 						if (typeof column.sortable !== 'undefined' && column.sortable === false) return;
+						if (typeof column.selector !== 'undefined' && column.selector === true) return;
 
 						// set sorted class to header
 						$(datatable.tableHead).find('th').removeClass(pfx + 'datatable-cell-sorted');
@@ -9096,19 +9271,20 @@ var KTLayoutAsideToggle = function() {
 		});
 
 		_toggleObject.on('toggle', function(toggle) {
-			KTUtil.addClass(_body, 'aside-minimizing');
-            KTUtil.transitionEnd(_body, function() {
-                KTUtil.removeClass(_body, 'aside-minimizing');
-			});
-
             // Update sticky card
-            KTLayoutStickyCard.update();
+            if (typeof KTLayoutStickyCard !== 'undefined') {
+                KTLayoutStickyCard.update();
+            }
 
             // Pause header menu dropdowns
-            KTLayoutHeaderMenu.pauseDropdownHover(800);
+            if (typeof KTLayoutHeaderMenu !== 'undefined') {
+                KTLayoutHeaderMenu.pauseDropdownHover(800);
+            }
 
             // Pause aside menu dropdowns
-			KTLayoutAsideMenu.pauseDropdownHover(800);
+            if (typeof KTLayoutAsideMenu !== 'undefined') {
+                KTLayoutAsideMenu.pauseDropdownHover(800);
+            }
 
             // Remember state in cookie
 			KTCookie.setCookie('kt_aside_toggle_state', toggle.getState());

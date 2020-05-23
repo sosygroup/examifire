@@ -70,6 +70,8 @@ var KTTagifyDemos = function() {
         // Readonly Mode
         var input = document.getElementById('kt_tagify_1_1'),
         tagify = new Tagify(input);
+
+        tagify.addTags([{value:"laravel", color:"yellow", readonly: true}]);
     }
 
     var demo2 = function() {

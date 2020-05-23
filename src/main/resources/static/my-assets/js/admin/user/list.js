@@ -70,7 +70,6 @@ var KTDatatablesAdvancedColumnRendering = function() {
 						return return_string;
 					},
 				},
-				{data: 'username'},
 				{data: 'firstname'},
 				{data: 'lastname'},
 				{data: 'email'},

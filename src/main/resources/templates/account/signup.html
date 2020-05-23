@@ -76,17 +76,6 @@ License: You must have a valid license purchased only from themeforest(the above
 									<!--end::Title-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{username}"
-										 type="text" placeholder="Username*" autocomplete="off" />
-										 <div th:if="${#fields.hasErrors('username')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
-											<span class="form-text text-danger" th:errors="*{username}">Error message</span>
-											<!-- <span class="form-text text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedUsername'}" th:text="${e.message}">Username global errors</span>  -->
-										
-										</div>
-									</div>
-									<!--end::Form group-->
-									<!--begin::Form group-->
-									<div class="form-group">
 										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{firstname}"
 										 type="text" placeholder="Firstname*" autocomplete="off" />
 										 <div th:if="${#fields.hasErrors('firstname')}" class="error invalid-feedback" style="display: block;">
