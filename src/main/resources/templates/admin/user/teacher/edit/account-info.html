@@ -3,7 +3,9 @@
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	layout:decorate="~{layout/layout.html}"
-	th:with="aside_layout_menu_active_link='dashboard', aside_profile_menu_active_link='account-info'">
+	th:with="aside_layout_menu_active_link='teachers',
+			 aside_layout_submenu_active_link='list-all',
+			 aside_profile_menu_active_link='account-info'">
 <!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
 
 <head>
@@ -51,11 +53,11 @@
 						<div class="card-header py-3">
 							<div class="card-title align-items-start flex-column">
 								<h3 class="card-label text-dark">Account Information</h3>
-								<span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal information</span>
+								<span class="text-muted font-weight-bold font-size-sm mt-1">Edit user account</span>
 							</div>
 							<div class="card-toolbar">
-								<button id="form_submit" type="submit" class="btn btn-success mr-2">Save Changes</button>
-								<button id="form_reset" type="reset" class="btn btn-secondary">Cancel</button>
+								<a th:href="@{/home/admin/teacher/list}" class="btn btn-light mr-2">Back</a>
+								<button id="form_submit" type="submit" class="btn btn-light-primary">Save Changes</button>
 							</div>
 						</div>
 						<!--end::Header-->

@@ -32,10 +32,10 @@ jQuery(document).ready(function() {
 	
 	$('[data-switch=true]').bootstrapSwitch();
 	
-    if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"flaticon2-checkmark","Update successful")
+    if($("#confirm_crud_operation").val() == 'add_succeeded') {
+		MessageUtil.showMessage("success",false,"flaticon2-checkmark","Add successful")
 	}	
-	if($("#confirm_crud_operation").val() == 'update_failed') {
-		ExamifireMessageUtil.showMessage("danger",false,"flaticon-exclamation","Update failed")
+	if($("#confirm_crud_operation").val() == 'add_failed') {
+		MessageUtil.showMessage("danger",false,"flaticon-exclamation","Add failed")
 	}
 });

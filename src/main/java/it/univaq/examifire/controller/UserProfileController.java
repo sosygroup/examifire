@@ -60,7 +60,7 @@ public class UserProfileController {
 	public @ResponseBody String changeUserAvatar(Authentication authentication,
 		   @RequestPart("avatar") MultipartFile file) {
 
-		logger.info("HTTP POST request received at URL /home/profile/avatar/change by the user with email {}",
+		logger.info("HTTP Ajax POST request received at URL /home/profile/avatar/change by the user with email {}",
 				((UserPrincipal) authentication.getPrincipal()).getEmail());
 
 		Long authenticatedUserId = ((UserPrincipal) authentication.getPrincipal()).getId();
@@ -74,6 +74,7 @@ public class UserProfileController {
 
 		userService.update(persistentUser);
 		logger.info("The avatar of the user with email {} has been updated", persistentUser.getEmail());
+		
 		userAuthenticationUpdater.update(authentication);
 
 		return "/home/profile/account-info";
@@ -82,7 +83,7 @@ public class UserProfileController {
 	@RequestMapping(value = "/avatar/remove", method = RequestMethod.POST)
 	public @ResponseBody String removeUserAvatar(Authentication authentication) {
 		
-		logger.info("HTTP POST request received at URL /home/profile/avatar/remove by the user with email {}",
+		logger.info("HTTP Ajax POST request received at URL /home/profile/avatar/remove by the user with email {}",
 				((UserPrincipal) authentication.getPrincipal()).getEmail());
 
 		Long authenticatedUserId = ((UserPrincipal) authentication.getPrincipal()).getId();
@@ -91,6 +92,9 @@ public class UserProfileController {
 
 		userService.update(persistentUser);
 		logger.info("The avatar of the user with email {} has been removed", persistentUser.getEmail());
+
+		userAuthenticationUpdater.update(authentication);
+		
 		return "/home/profile/account-info";
 	}
 	
@@ -154,7 +158,6 @@ public class UserProfileController {
 	
 		userAuthenticationUpdater.update(authentication);
 		
-		model.addAttribute("user", persistentUser);
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/profile/account-info";
 	}
@@ -198,7 +201,9 @@ public class UserProfileController {
 		userService.update(persistentUser);
 		logger.debug("The password of the user with email {} has been updated", persistentUser.getEmail());
 		
-		model.addAttribute("user", persistentUser);
+		// After password updating there is no need to update the authentication of the logged user 
+		// userAuthenticationUpdater.update(authentication);
+		
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/profile/change-password";
 		

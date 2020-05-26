@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	layout:decorate="~{layout/layout.html}"
-	th:with="aside_layout_menu_active_link='users',
+	th:with="aside_layout_menu_active_link='teachers',
 			 aside_layout_submenu_active_link='add-teacher'">
 <!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
 
@@ -39,7 +39,6 @@
 				<!--begin::Separator-->
 				<div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
 				<!--end::Separator-->
-				
 			</div>
 			<!--end::Details-->
 		</div>
@@ -64,17 +63,14 @@
 								<span class="text-muted font-weight-bold font-size-sm mt-1">Enter account information</span>
 							</div>
 							<div class="card-toolbar">
-								<!--begin::Button-->
-								<a href="#" class="btn btn-default font-weight-bold">Cancel</a>
-								<!--end::Button-->
 								<!--begin::Dropdown-->
 								<div class="btn-group ml-2">
-									<button id="form-submit-and-edit" type="button" class="btn btn-primary font-weight-bold"><i class="flaticon2-writing"></i>Save &amp; Edit</button>
+									<button id="form-submit-and-edit" type="button" class="btn btn-light-primary"><i class="flaticon2-writing"></i>Save &amp; Edit</button>
 									<button type="button"
-										class="btn btn-primary font-weight-bold dropdown-toggle dropdown-toggle-split"
+										class="btn btn-light-primary dropdown-toggle dropdown-toggle-split"
 										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-									<div
-										class="dropdown-menu dropdown-menu-sm p-0 m-0 dropdown-menu-right">
+									
+									<div class="dropdown-menu dropdown-menu-sm p-0 m-0 dropdown-menu-right">
 										<ul class="navi py-5">
 											<li class="navi-item">
 												<a id="form-submit-and-add-new" href="javascript:void(0);" class="navi-link"> 
@@ -83,7 +79,7 @@
 												</a>
 											</li>
 											<li class="navi-item">
-												<a id="form-submit-and-list-all" href="javascript:void(0);" class="navi-link">
+												<a id="form-submit-and-list-all" href="javascript:void(0);" class="navi-link ">
 													<span class="navi-icon"> <i class="flaticon2-hourglass-1"></i></span>
 													<span class="navi-text">Save &amp; List All</span>
 												</a>

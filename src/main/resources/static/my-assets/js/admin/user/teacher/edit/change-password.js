@@ -1,6 +1,6 @@
 "use strict";
 
-var AccountInfo = function() {
+var ChangePassword = function() {
     // Private functions
     var _initForm = function() {
         $("#form_submit").click(function() {
@@ -17,7 +17,7 @@ var AccountInfo = function() {
 }();
 
 jQuery(document).ready(function() {
-	AccountInfo.init();
+	ChangePassword.init();
     
     if($("#confirm_crud_operation").val() == 'update_succeeded') {
 		MessageUtil.showMessage("success",false,"flaticon2-checkmark","Update successful")

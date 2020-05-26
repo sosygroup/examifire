@@ -131,9 +131,13 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--[html-partial:include:{"file":"partials/_extras/offcanvas/demo-panel.html"}]/-->
 		<div th:replace="layout/partials/_extras/offcanvas/demo-panel :: demo-panel"></div>
 		
-		<script>
-			var HOST_URL = "https://keenthemes.com/metronic/tools/preview";
-		</script>
+		<script th:inline="javascript">
+		      /*<![CDATA[*/
+			     var MY_HOST_URL = /*[[@{/}]]*/;
+		      	 // remove the last slash e.g., from /examifire/ to /examifire 
+			     MY_HOST_URL = MY_HOST_URL.replace(/\/$/, "");
+		      /*]]>*/
+		</script> 
 
 		<!--begin::Global Config(global config for global JS scripts)-->
 		<script>

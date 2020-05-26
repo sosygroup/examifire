@@ -61,7 +61,7 @@ var Avatar = function() {
         $("span[data-action='remove']").click(function() {
             addSpinnerAvatar();
             
-        	$.ajax('/home/profile/avatar/remove', {
+        	$.ajax(MY_HOST_URL+'/home/profile/avatar/remove', {
                 type: "POST",
                 processData: false,
                 contentType: false,
@@ -76,13 +76,13 @@ var Avatar = function() {
                 	// force the redirect to the URL contained in data in order to
                 	// refresh the page and get the new user image just saved in the DB.
                 	// A better solution would be to update the image directly via javascript
-                	window.location.href = data;
+                	window.location.href = MY_HOST_URL + data;
                 },
                 error: function(data) {
                     // in case of error the refresh of the page shouldn't be needed,
                 	// it should be enought remove the spinner.
                 	// However, at the moment we force it to be sure
-                    window.location.href = data;
+                    window.location.href = MY_HOST_URL + data;
                     //removeSpinnerAvatar();
                 }
             });
@@ -106,7 +106,7 @@ var Avatar = function() {
                     var formData = new FormData();
                     formData.append('avatar', blob);
 
-                    $.ajax('/home/profile/avatar/change', {
+                    $.ajax(MY_HOST_URL+'/home/profile/avatar/change', {
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -122,13 +122,13 @@ var Avatar = function() {
                         	// force the redirect to the URL contained in data in order to
                         	// refresh the page and get the new user image just saved in the DB.
                         	// A better solution would be to update the image directly via javascript
-                        	window.location.href = data;
+                        	window.location.href = MY_HOST_URL + data;
                         },
                         error: function(data) {
                             // in case of error the refresh of the page shouldn't be needed,
                         	// it should be enought remove the spinner.
                         	// However, at the moment we force it to be sure
-                        	window.location.href = data;
+                        	window.location.href = MY_HOST_URL + data;
                             // removeSpinnerAvatar();
                         }
                     });
@@ -154,10 +154,6 @@ var AccountInfo = function() {
         $("#form_submit").click(function() {
             $("#profile_form").submit();
         });
-
-        $("#form_reset").click(function() {
-            $("#profile_form")[0].reset();
-        });
     }
 
     return {
@@ -173,9 +169,9 @@ jQuery(document).ready(function() {
     Avatar.init();
     
     if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"flaticon2-checkmark","Update successful")
+		MessageUtil.showMessage("success",false,"flaticon2-checkmark","Update successful")
 	}	
 	if($("#confirm_crud_operation").val() == 'update_failed') {
-		ExamifireMessageUtil.showMessage("danger",false,"flaticon-exclamation","Update failed")
+		MessageUtil.showMessage("danger",false,"flaticon-exclamation","Update failed")
 	}
 });

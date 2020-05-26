@@ -8,9 +8,9 @@ var ConfirmDeleteEvent = function (){
 		$('a.confirm-delete').click(function (e) {
 			e.preventDefault();
 
-			ExamifireMessageUtil.showConfirmationMessage('warning', 'Are you sure?', 
+			MessageUtil.showConfirmationMessage('warning', 'Are you sure?', 
             		"You are going to delete <b>"+$(this).data("user-firstname-lastname")+"</b><br><br>You won't be able to revert this!", 
-            		'Delete', 'Auto close dialog', 'Deletion in progress...', $(this).attr('href'));               
+            		'No, cancel','Yes, delete it', 'Auto close dialog', 'Deletion in progress...', $(this).attr('href'));               
         });
 	}
 	
@@ -18,8 +18,6 @@ var ConfirmDeleteEvent = function (){
 		//main function to initiate the module
 		init: function() {
 			confirmDelete();
-			
-			//$(".buttons-columnVisibility").detach().appendTo("#container_colvis");
 		}
 	};
 }();
@@ -41,7 +39,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 			serverSide: true,
 			pagingType: 'full_numbers',
 			ajax:{
-			    url: '/home/admin/users/datatable.jquery',
+			    url: MY_HOST_URL+'/home/admin/teacher/list-datatable',
 			    type: 'GET'
 		    },
 		    columns: [
@@ -51,7 +49,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						var image_src = full['avatar'] == null ? '/my-assets/media/users/default.jpg' : 'data:image/jpg;base64,'+atob(full['avatar']);
+						var image_src = full['avatar'] == null ? MY_HOST_URL+'/my-assets/media/users/default.jpg' : 'data:image/jpg;base64,'+atob(full['avatar']);
 					/*  var return_string ='\
                         <div class="kt-user-card-v2">\
                             <div class="kt-user-card-v2__pic">\
@@ -77,12 +75,11 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						var return_string="";
-						data.forEach(function(role) {
-							return_string=return_string+'<span class="label label-light-warning label-inline font-weight-bold label-lg mr-1 mt-1">' + role.name + '</span>';
-						});
+						if (UserUtil.isAdmin(data)){
+							return '<span class="label label-light-warning label-inline font-weight-bold label-lg mr-1 mt-1">ADMIN</span>';
+						}
 					
-						return return_string;
+						return "";
 					},
 				},
 				{data: 'accountEnabled',
@@ -113,9 +110,8 @@ var KTDatatablesAdvancedColumnRendering = function() {
 					orderable: false,
 				    searchable: false,
 					render: function(data, type, full, meta) {
-						
 						return '\
-						<div class="dropdown dropdown-inline">\
+						<!--<div class="dropdown dropdown-inline">\
 							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">\
                                 <i class="la la-cog"></i>\
                             </a>\
@@ -126,16 +122,17 @@ var KTDatatablesAdvancedColumnRendering = function() {
 						    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-print"></i><span class="nav-text">Print</span></a></li>\
 								</ul>\
 						  	</div>\
-						</div>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+						</div>-->\
+						<a href="'+MY_HOST_URL+'/home/admin/teacher/edit/'+full["id"]+'/account-info'+'" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+						<a href="'+MY_HOST_URL+'/home/admin/teacher/delete/'+full["id"]+'" data-user-firstname-lastname="'+full['firstname']+' '+full['lastname']+'\
+						   "class="btn btn-sm btn-clean btn-icon confirm-delete" title="Delete">\
 							<i class="la la-trash"></i>\
 						</a>\
 					';
 						
-			/*			return'\
+						/*			return'\
 						<div class="dropdown dropdown-inline">\
                         <button type="button" class="btn btn-default btn-hover-brand btn-elevate-hover  btn-circle btn-icon btn-sm btn-icon-md my-btn-multiple-actions-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
                             <i class="flaticon-more-1"></i>\
@@ -166,40 +163,46 @@ var KTDatatablesAdvancedColumnRendering = function() {
 	        },
 	        initComplete : function() {
 	       	},
-	        buttons: [
+	       	buttons: [
 	            {
 	            	extend: 'collection',
-	                buttons: [ 'columnsToggle' ]
+	                buttons: [ 'columnsToggle' ],
+	                className: 'btn btn-outline-secondary'
 	            },
 		    	{
 	                extend: 'print',
 	                exportOptions: {
 	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
-	                }
+	                },
+	                className: 'btn btn-outline-secondary'
 	            },
 				{
 	                extend: 'copyHtml5',
 	                exportOptions: {
 	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
-	                }
+	                },
+	                className: 'btn btn-outline-secondary'
 	            },
 	            {
 	                extend: 'excelHtml5',
 	                exportOptions: {
 	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
-	                }
+	                },
+	                className: 'btn btn-outline-secondary'
 	            },
 	            {
 	                extend: 'csvHtml5',
 	                exportOptions: {
 	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
-	                }
+	                },
+	                className: 'btn btn-outline-secondary'
 	            },
 	            {
 	                extend: 'pdfHtml5',
 	                exportOptions: {
 	                    columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
-	                }
+	                },
+	                className: 'btn btn-outline-secondary'
 	            },
 			],
 		});
@@ -215,21 +218,18 @@ var KTDatatablesAdvancedColumnRendering = function() {
 
 jQuery(document).ready(function() {
 	KTDatatablesAdvancedColumnRendering.init();
-	
+
 	if($("#confirm_crud_operation").val() == 'add_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been added!")
-	}
+		MessageUtil.showMessage("success",false,"flaticon2-checkmark","Add successful")
+	}	
 	
-	if($("#confirm_crud_operation").val() == 'update_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been updated!")
-	}
 	
 	if($("#confirm_crud_operation").val() == 'delete_succeeded') {
-		ExamifireMessageUtil.showMessage("success",false,"fas fa-check","The user has been deleted!")
+		MessageUtil.showMessage("success",false,"fas fa-check","The user has been deleted!")
 	}
 	
 	if($("#confirm_crud_operation").val() == 'delete_failed') {
-		ExamifireMessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Deletion failed!")
+		MessageUtil.showMessage("danger",false,"fas fa-exclamation-triangle","Deletion failed!")
 	}
 	
 });
