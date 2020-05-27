@@ -21,63 +21,63 @@ var KTLoginGeneral = function() {
 					firstname: {
 						validators: {
 							notEmpty: {
-								message: 'Firstname is required'
+								message: '- Firstname is required'
 							},
 							stringLength: {
 		                        max: 45,
-		                        message: 'Maximum 45 characters'
+		                        message: '- Maximum 45 characters'
 		                    },
 						}
 					},
 					lastname: {
 						validators: {
 							notEmpty: {
-								message: 'Lastname is required'
+								message: '- Lastname is required'
 							},
 							stringLength: {
 		                        max: 45,
-		                        message: 'Maximum 45 characters'
+		                        message: '- Maximum 45 characters'
 		                    },
 						}
 					},
 					email: {
                         validators: {
 							notEmpty: {
-								message: 'Email address is required'
+								message: '- Email address is required'
 							},
 							emailAddress: {
-	                            message: 'Invalid email'
+	                            message: '- Invalid email'
 	                        },
 						}
 					},
                     password: {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
+                                message: '- The password is required'
                             },
                             regexp: {
                                 regexp: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{8,15}$',
-                                message: 'The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character'
+                                message: '- The password must have 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character'
                             },
                         }
                     },
                     confirm_password: {
                         validators: {
                             notEmpty: {
-                                message: 'The password confirmation is required'
+                                message: '- The password confirmation is required'
                             },
                             identical: {
                                 compare: function() {
                                     return form.querySelector('[name="password"]').value;
                                 },
-                                message: 'The password and its confirm are not the same'
+                                message: '- The password and its confirm are not the same'
                             }
                         }
                     },
                     agree: {
                         validators: {
                             notEmpty: {
-                                message: 'You must accept the terms and conditions'
+                                message: '- You must accept the terms and conditions'
                             }
                         }
                     },
@@ -93,19 +93,11 @@ var KTLoginGeneral = function() {
             e.preventDefault();
 
             validation.validate().then(function(status) {
-		        if (status == 'Valid') {
-		        	$('#kt_login_signup_form').submit();
-				} else {
-					swal.fire({
-		                text: "Sorry, looks like there are errors, please try again.",
-		                icon: "error",
-		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
-		            }).then(function() {
-						KTUtil.scrollTop();
-					});
-				}
+            	if (status == 'Valid') {
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
 		    });
         });
     }

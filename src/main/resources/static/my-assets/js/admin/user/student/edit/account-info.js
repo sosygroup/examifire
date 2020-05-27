@@ -1,7 +1,7 @@
 "use strict";
 
 var AccountInfo = function() {
-	// Private functions
+    // Private functions
     var _handleSubmitForm = function (){
     	var validation;
         var form = KTUtil.getById('profile_form');
@@ -51,6 +51,8 @@ var AccountInfo = function() {
 				}
 			}
 		);
+        
+       // validation.validate();
         
         $("#form_submit").click(function() {
             validation.validate().then(function(status) {

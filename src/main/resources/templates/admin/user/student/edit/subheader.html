@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<title>Sub Header</title>
+</head>
+
+<body>
+	<!--begin::Aside-->
+	<div th:fragment="subheader" class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+			<!--begin::Info-->
+			<div class="d-flex align-items-center flex-wrap mr-1">
+				<!--begin::Mobile Toggle-->
+				<button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none" id="kt_subheader_mobile_toggle">
+					<span></span>
+				</button>
+				<!--end::Mobile Toggle-->
+				<!--begin::Page Heading-->
+				<div class="d-flex align-items-center flex-wrap mr-2">
+					<!--begin::Page Title-->
+					<h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">User Account</h5>
+					<!--end::Page Title-->
+					<!--begin::Separator-->
+					<div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+					<!--end::Separator-->
+					<span class="text-muted font-weight-bold mr-4" th:text="|${persistentUser.firstname} ${persistentUser.lastname}|">Firstname Lastname</span>
+				</div>
+				<!--end::Page Heading-->
+			</div>
+			<!--end::Info-->
+	</div>
+	<!--end::Aside-->
+</body>
+</html>

@@ -11,10 +11,11 @@ var KTLoginGeneral = function() {
 
     var _handleSignInForm = function() {
         var validation;
+        var form = KTUtil.getById('kt_login_signin_form');
 
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validation = FormValidation.formValidation(
-        	KTUtil.getById('kt_login_signin_form'),
+        	form,
 			{
 				fields: {
 					username: {
@@ -41,21 +42,13 @@ var KTLoginGeneral = function() {
 
         $('#kt_login_signin_submit').on('click', function (e) {
             e.preventDefault();
-
+            
             validation.validate().then(function(status) {
-		        if (status == 'Valid') {
-		        	$('#kt_login_signin_form').submit();
-				} else {
-					swal.fire({
-		                text: "Sorry, looks like there are errors, please try again.",
-		                icon: "error",
-		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
-		                confirmButtonClass: "btn font-weight-bold btn-light"
-		            }).then(function() {
-						KTUtil.scrollTop();
-					});
-				}
+            	if (status == 'Valid') {
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
 		    });
         });
     }

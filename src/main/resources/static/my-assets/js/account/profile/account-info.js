@@ -7,7 +7,7 @@ var Avatar = function() {
     var cropper;
 
     var _initAvatar = function() {
-        image = $("#modal_image_avatar").get(0);
+        image = KTUtil.getById('modal_image_avatar');
         $modal = $('#modal');
         
         var addSpinnerAvatar = function(){
@@ -150,16 +150,71 @@ var Avatar = function() {
 
 var AccountInfo = function() {
     // Private functions
-    var _initForm = function() {
+    var _handleSubmitForm = function (){
+    	var validation;
+        var form = KTUtil.getById('profile_form');
+
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+        validation = FormValidation.formValidation(
+			form,
+			{
+				fields: {
+					firstname: {
+						validators: {
+							notEmpty: {
+								message: '- Firstname is required'
+							},
+							stringLength: {
+		                        max: 45,
+		                        message: '- Maximum 45 characters'
+		                    },
+						}
+					},
+					lastname: {
+						validators: {
+							notEmpty: {
+								message: '- Lastname is required'
+							},
+							stringLength: {
+		                        max: 45,
+		                        message: '- Maximum 45 characters'
+		                    },
+						}
+					},
+					email: {
+                        validators: {
+							notEmpty: {
+								message: '- Email address is required'
+							},
+							emailAddress: {
+	                            message: '- Invalid email'
+	                        },
+						}
+					},
+                    
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap()
+				}
+			}
+		);
+        
         $("#form_submit").click(function() {
-            $("#profile_form").submit();
-        });
+            validation.validate().then(function(status) {
+                if (status == 'Valid') {
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
+            });
+        });     
     }
 
     return {
         // public functions
         init: function() {
-            _initForm();
+            _handleSubmitForm();
         }
     };
 }();

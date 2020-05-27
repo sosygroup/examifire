@@ -115,21 +115,21 @@
 								<!--begin::Form group-->
 								<div class="form-group row">
 									<label>First Name</label>
-									<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{firstname}" />
+									<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('firstname')} ? is-invalid" type="text" autocomplete="off" th:field="*{firstname}" />
 									<span class="form-text text-danger" th:each="error : ${#fields.errors('firstname')}" th:text="|- ${error}|"></span>
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group row">
 									<label>Last Name</label>
-									<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{lastname}" />
+									<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('lastname')} ? is-invalid" type="text" autocomplete="off" th:field="*{lastname}" />
 									<span class="form-text text-danger" th:each="error : ${#fields.errors('lastname')}" th:text="|- ${error}|"></span>
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group row">
 									<label>Email</label>
-									<input class="form-control form-control-lg form-control-solid" type="text" autocomplete="off" th:field="*{email}" />
+									<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('email')} ? is-invalid" type="text" autocomplete="off" th:field="*{email}" />
 									<span class="form-text text-danger" th:each="error : ${#fields.errors('email')}" th:text="|- ${error}|"></span>
 								</div>
 								<!--end::Form group-->

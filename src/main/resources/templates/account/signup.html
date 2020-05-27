@@ -76,61 +76,44 @@ License: You must have a valid license purchased only from themeforest(the above
 									<!--end::Title-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{firstname}"
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${#fields.hasErrors('firstname')} ? is-invalid" th:field="*{firstname}"
 										 type="text" placeholder="Firstname*" autocomplete="off" />
-										 <div th:if="${#fields.hasErrors('firstname')}" class="error invalid-feedback" style="display: block;">
-											<span class="form-text text-danger" th:errors="*{firstname}">Error message</span>
-										</div>
+										 <span class="form-text text-danger" th:each="error : ${#fields.errors('firstname')}" th:text="|- ${error}|"></span>
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{lastname}"
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${#fields.hasErrors('lastname')} ? is-invalid" th:field="*{lastname}"
 										 type="text" placeholder="Lastname*" autocomplete="off" />
-										<div th:if="${#fields.hasErrors('lastname')}" class="error invalid-feedback" style="display: block;">
-											<span class="form-text text-danger" th:errors="*{lastname}">Error message</span>
-										</div>
+										 <span class="form-text text-danger" th:each="error : ${#fields.errors('lastname')}" th:text="|- ${error}|"></span>
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-										 type="text" placeholder="Student ID number" th:field="*{identificationNumber}" autocomplete="off" />
-										 <div th:if="${#fields.hasErrors('identificationNumber')}" class="error invalid-feedback" style="display: block;">											
-											<span class="form-text text-danger" th:errors="*{identificationNumber}">Error message</span>
-										</div>
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${#fields.hasErrors('identificationNumber')} ? is-invalid" th:field="*{identificationNumber}"
+										 type="text" placeholder="Student ID number" autocomplete="off" />
+										 <span class="form-text text-danger" th:each="error : ${#fields.errors('identificationNumber')}" th:text="|- ${error}|"></span>
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{email}"
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${#fields.hasErrors('email')} ? is-invalid" th:field="*{email}"
 										type="email" placeholder="Email*" autocomplete="off" />
-										<div th:if="${#fields.hasErrors('email')} OR ${#fields.globalDetailedErrors()}" class="error invalid-feedback" style="display: block;">
-											<span class="form-text text-danger" th:errors="*{email}">Error message</span>
-											<!-- <span class="form-text text-danger" th:each="e : ${#fields.globalDetailedErrors()}" th:if="${e.code == 'DuplicatedEmail'}" th:text="${e.message}">Email global errors</span> -->
-										
-										</div>
+										<span class="form-text text-danger" th:each="error : ${#fields.errors('email')}" th:text="|- ${error}|"></span>										
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:field="*{password}"
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${#fields.hasErrors('password')} ? is-invalid" th:field="*{password}"
 										type="password" placeholder="Password*" autocomplete="off" />
-										 <div th:if="${#fields.hasErrors('password')}" class="error invalid-feedback" style="display: block;">											
-											<span class="form-text text-danger" th:errors="*{password}">Error message</span>
-										</div>
+										<span class="form-text text-danger" th:each="error : ${#fields.errors('password')}" th:text="|- ${error}|"></span>
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->
 									<div class="form-group">
-										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" 
+										<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" th:classappend="${not #fields.detailedErrors().?[code == 'ConfirmPasswordError'].isEmpty()} ? is-invalid"
 										type="password" placeholder="Confirm password" name="confirm_password" autocomplete="off" />
-										<div class="error invalid-feedback" style="display: block;">
-											<span class="form-text text-danger"
-												  th:each="e : ${#fields.detailedErrors()}" 
-												  th:if="${e.code == 'ConfirmPasswordError'}"
-												  th:text="${e.message}">ConfirmPasswordError</span>
-										</div>
+										<span class="form-text text-danger" th:each="error : ${#fields.detailedErrors()}" th:if="${error.code == 'ConfirmPasswordError'}" th:text="|- ${error.message}|">ConfirmPasswordError</span>	
 									</div>
 									<!--end::Form group-->
 									<!--begin::Form group-->

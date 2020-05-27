@@ -1,34 +1,102 @@
 "use strict";
 
-var AccountInfo = function() {
+var TeacherAccount = function() {
     // Private functions
-    var _initForm = function() {
-    	$("#form-submit-and-add-new").click(function() {
-			$("#save_option").val("add_new");
-			$("#user-add-form").submit();
-		});
-    	
-    	$("#form-submit-and-edit").click(function() {
-			$("#save_option").val("edit");
-			$("#user-add-form").submit();
-		});
-    	
-    	$("#form-submit-and-list-all").click(function() {
-			$("#save_option").val("list_all");
-			$("#user-add-form").submit();
-		});
+    var _handleSubmitForm = function (){
+    	var validation;
+        var form =  KTUtil.getById('user-add-form');
+
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+        validation = FormValidation.formValidation(
+			form,
+			{
+				fields: {
+					firstname: {
+						validators: {
+							notEmpty: {
+								message: '- Firstname is required'
+							},
+							stringLength: {
+		                        max: 45,
+		                        message: '- Maximum 45 characters'
+		                    },
+						}
+					},
+					lastname: {
+						validators: {
+							notEmpty: {
+								message: '- Lastname is required'
+							},
+							stringLength: {
+		                        max: 45,
+		                        message: '- Maximum 45 characters'
+		                    },
+						}
+					},
+					email: {
+                        validators: {
+							notEmpty: {
+								message: '- Email address is required'
+							},
+							emailAddress: {
+	                            message: '- Invalid email'
+	                        },
+						}
+					},
+                    
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap()
+				}
+			}
+		);
+        
+        $("#form-submit-and-add-new").click(function() {
+            validation.validate().then(function(status) {
+                if (status == 'Valid') {
+                    $("#save_option").val("add_new");
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
+            });
+        });
+
+        $("#form-submit-and-edit").click(function() {
+            validation.validate().then(function(status) {
+                if (status == 'Valid') {
+                    $("#save_option").val("edit");
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
+            });
+        });
+
+        $("#form-submit-and-list-all").click(function() {
+            validation.validate().then(function(status) {
+                if (status == 'Valid') {
+                    $("#save_option").val("list_all");
+                    form.submit();
+                } else {
+                    MessageUtil.showValidationErrorMessage();
+                }
+            });
+        });
+      
     }
 
     return {
         // public functions
         init: function() {
-            _initForm();
+            _handleSubmitForm();
         }
     };
 }();
 
 jQuery(document).ready(function() {
-	AccountInfo.init();
+	TeacherAccount.init();
 	
 	$('[data-switch=true]').bootstrapSwitch();
 	

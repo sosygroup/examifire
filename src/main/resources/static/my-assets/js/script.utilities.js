@@ -70,6 +70,18 @@ var MessageUtil = function() {
 	    });
 	}
 	
+	var _showValidationErrorMessage = function(){
+		swal.fire({
+            text: "Sorry, looks like there are errors, please try again.",
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            confirmButtonClass: "btn font-weight-bold btn-light"
+        }).then(function() {
+			KTUtil.scrollTop();
+		});
+	}
+	
 	return {
 		// public functions
 		showMessage : function(type, title, icon, message){
@@ -93,6 +105,9 @@ var MessageUtil = function() {
 			data['after_confirm_dialog_message']= after_confirm_dialog_message;
 			data['request_url']= request_url;
 			_showConfirmationMessage(data);
+		},
+		showValidationErrorMessage : function(){
+			_showValidationErrorMessage();
 		}
 	};
 	
