@@ -49,14 +49,14 @@
 			<!--begin::Menu Nav-->
 			<ul class="menu-nav ">
 				<li th:classappend="${aside_layout_menu_active_link == 'dashboard'} ? 'menu-item-active'" class="menu-item" aria-haspopup="true">
-						<a th:href="@{/home}" class="menu-link "><i class="menu-icon flaticon-app"></i><span class="menu-text">Dashboard</span></a>
+						<a th:href="@{/home}" class="menu-link "><i class="menu-icon fas fa-th-large"></i><span class="menu-text">Dashboard</span></a>
 				</li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="menu-section ">
 					<h4 class="menu-text">Administration</h4>
 					<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 				</li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')" th:classappend="${aside_layout_menu_active_link == 'teachers'} ? 'menu-item-open menu-item-here'" 
-					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon las la-users-cog"></i><span class="menu-text">Teachers</span><i class="menu-arrow"></i></a>
+					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon fas fa-user-tie"></i><span class="menu-text">Teachers</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Teachers</span></span></li>
@@ -66,7 +66,7 @@
 					</div>
 				</li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')" th:classappend="${aside_layout_menu_active_link == 'students'} ? 'menu-item-open menu-item-here'" 
-					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon las la-users-cog"></i><span class="menu-text">Students</span><i class="menu-arrow"></i></a>
+					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon fas fa-user-graduate"></i><span class="menu-text">Students</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Students</span></span></li>
@@ -81,13 +81,23 @@
 					<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 				</li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')" th:classappend="${aside_layout_menu_active_link == 'bootstrap'} ? 'menu-item-open menu-item-here'" 
-					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon lab la-bootstrap"></i><span class="menu-text">Bootstrap</span><i class="menu-arrow"></i></a>
+					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon fab fa-bootstrap"></i><span class="menu-text">Bootstrap</span><i class="menu-arrow"></i></a>
 					<div class="menu-submenu "><i class="menu-arrow"></i>
 						<ul class="menu-subnav">
 							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Bootstrap</span></span></li>
 							<li th:classappend="${aside_layout_submenu_active_link == 'typography'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/theme-features/bootstrap/typography}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Typography</span></a></li>
 							<li th:classappend="${aside_layout_submenu_active_link == 'buttons'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/theme-features/bootstrap/buttons}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Buttons</span></a></li>
 							<li th:classappend="${aside_layout_submenu_active_link == 'button-groups'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/theme-features/bootstrap/button-groups}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Button Groups</span></a></li>
+						</ul>
+					</div>
+				</li>
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')" th:classappend="${aside_layout_menu_active_link == 'custom'} ? 'menu-item-open menu-item-here'" 
+					class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><i class="menu-icon fas fa-fill-drip"></i><span class="menu-text">Custom</span><i class="menu-arrow"></i></a>
+					<div class="menu-submenu "><i class="menu-arrow"></i>
+						<ul class="menu-subnav">
+							<li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Custom</span></span></li>
+							<li th:classappend="${aside_layout_submenu_active_link == 'utilities'} ? 'menu-item-active'" class="menu-item " aria-haspopup="true"><a th:href="@{/home/admin/theme-features/custom/utilities}" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">Utilities</span></a></li>
+							
 						</ul>
 					</div>
 				</li>

@@ -69,7 +69,7 @@ public class User extends EntityAudit<Long> {
 
    @NotBlank(message = "Please enter the email", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateByAdmin.class, User.EditByAdmin.class})
    @Size(max = 50, message = "Maximum 50 characters", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateByAdmin.class, User.EditByAdmin.class})
-   @Email(message = "Invalid email", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateByAdmin.class, User.EditByAdmin.class})
+   @Email(message = "Invalid email address", groups = {Default.class, User.Registration.class, User.Profile.class, User.CreateByAdmin.class, User.EditByAdmin.class})
    @Column(name = "email", unique = true, length = 50)
    private String email;
 

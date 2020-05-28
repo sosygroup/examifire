@@ -39,7 +39,7 @@ var TeacherAccount = function() {
 								message: '- Email address is required'
 							},
 							emailAddress: {
-	                            message: '- Invalid email'
+	                            message: '- Invalid email address'
 	                        },
 						}
 					},

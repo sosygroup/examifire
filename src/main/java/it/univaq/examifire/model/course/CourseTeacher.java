@@ -16,8 +16,8 @@ import it.univaq.examifire.model.audit.EntityAudit;
 import it.univaq.examifire.model.user.Teacher;
 
 @Entity
-@Table(name = "teaching_appointment")
-public class TeachingAppointment extends EntityAudit<Long> implements Serializable {
+@Table(name = "course_teacher")
+public class CourseTeacher extends EntityAudit<Long> implements Serializable {
 	private static final long serialVersionUID = 3368643330583206422L;
 
 	/*
@@ -100,7 +100,7 @@ public class TeachingAppointment extends EntityAudit<Long> implements Serializab
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TeachingAppointment other = (TeachingAppointment) obj;
+		CourseTeacher other = (CourseTeacher) obj;
 		if (course == null) {
 			if (other.course != null)
 				return false;
@@ -118,7 +118,7 @@ public class TeachingAppointment extends EntityAudit<Long> implements Serializab
 
 	@Override
 	public String toString() {
-		return "TeachingAppointment [teacher=" + teacher + ", course=" + course + ", leader=" + leader + "]";
+		return "CourseTeacher [teacher=" + teacher + ", course=" + course + ", leader=" + leader + "]";
 	}
 
 }

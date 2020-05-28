@@ -22,6 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/home/admin/theme-features/bootstrap/typography").setViewName("theme-features/bootstrap/typography");
 		registry.addViewController("/home/admin/theme-features/bootstrap/buttons").setViewName("theme-features/bootstrap/buttons");
 		registry.addViewController("/home/admin/theme-features/bootstrap/button-groups").setViewName("theme-features/bootstrap/button-groups");
+		registry.addViewController("/home/admin/theme-features/custom/utilities").setViewName("theme-features/custom/utilities");
 	}
 
 }

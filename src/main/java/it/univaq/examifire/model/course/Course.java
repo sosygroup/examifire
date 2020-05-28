@@ -64,7 +64,7 @@ public class Course extends EntityAudit<Long> {
 	// @OneToMany(mappedBy = "variableName") variableName is the name of the
 	// variable annotated with @ManyToOne
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private Set<TeachingAppointment> teachingAppointments = new HashSet<>();
+	private Set<CourseTeacher> teachers = new HashSet<>();
 
 	// @OneToMany(mappedBy = "variableName") variableName is the name of the
 	// variable annotated with @ManyToOne
@@ -127,12 +127,12 @@ public class Course extends EntityAudit<Long> {
 		this.studentRegistrations = studentRegistrations;
 	}
 
-	public Set<TeachingAppointment> getTeachingAppointments() {
-		return teachingAppointments;
+	public Set<CourseTeacher> getTeachers() {
+		return teachers;
 	}
 
-	public void setTeachingAppointments(Set<TeachingAppointment> teachingAppointments) {
-		this.teachingAppointments = teachingAppointments;
+	public void setTeachers(Set<CourseTeacher> teachers) {
+		this.teachers = teachers;
 	}
 
 	public Set<Quiz> getQuizzes() {
@@ -155,7 +155,7 @@ public class Course extends EntityAudit<Long> {
 		result = prime * result + ((parts == null) ? 0 : parts.hashCode());
 		result = prime * result + ((quizzes == null) ? 0 : quizzes.hashCode());
 		result = prime * result + ((studentRegistrations == null) ? 0 : studentRegistrations.hashCode());
-		result = prime * result + ((teachingAppointments == null) ? 0 : teachingAppointments.hashCode());
+		result = prime * result + ((teachers == null) ? 0 : teachers.hashCode());
 		return result;
 	}
 
@@ -205,10 +205,10 @@ public class Course extends EntityAudit<Long> {
 				return false;
 		} else if (!studentRegistrations.equals(other.studentRegistrations))
 			return false;
-		if (teachingAppointments == null) {
-			if (other.teachingAppointments != null)
+		if (teachers == null) {
+			if (other.teachers != null)
 				return false;
-		} else if (!teachingAppointments.equals(other.teachingAppointments))
+		} else if (!teachers.equals(other.teachers))
 			return false;
 		return true;
 	}
@@ -217,7 +217,7 @@ public class Course extends EntityAudit<Long> {
 	public String toString() {
 		return "Course [id=" + id + ", name=" + name + ", description=" + description + ", cfu_ects=" + cfu_ects
 				+ ", academicYear=" + academicYear + ", parts=" + parts + ", studentRegistrations="
-				+ studentRegistrations + ", teachingAppointments=" + teachingAppointments + ", quizzes=" + quizzes
+				+ studentRegistrations + ", teachers=" + teachers + ", quizzes=" + quizzes
 				+ "]";
 	}
 

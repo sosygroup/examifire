@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import it.univaq.examifire.model.course.TeachingAppointment;
+import it.univaq.examifire.model.course.CourseTeacher;
 
 @Entity
 @Table(name = "teacher")
@@ -19,21 +19,21 @@ public class Teacher extends User {
 	// @OneToMany(mappedBy = "variableName") variableName is the name of the
 	// variable annotated with @ManyToOne
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private Set<TeachingAppointment> teachingAppointments = new HashSet<>();
+	private Set<CourseTeacher> courses = new HashSet<>();
 
-	public Set<TeachingAppointment> getTeachingAppointments() {
-		return teachingAppointments;
+	public Set<CourseTeacher> getCourses() {
+		return courses;
 	}
 
-	public void setTeachingAppointments(Set<TeachingAppointment> teachingAppointments) {
-		this.teachingAppointments = teachingAppointments;
+	public void setCourses(Set<CourseTeacher> courses) {
+		this.courses = courses;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((teachingAppointments == null) ? 0 : teachingAppointments.hashCode());
+		int result = super.hashCode();
+		result = prime * result + ((courses == null) ? 0 : courses.hashCode());
 		return result;
 	}
 
@@ -41,22 +41,22 @@ public class Teacher extends User {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Teacher other = (Teacher) obj;
-		if (teachingAppointments == null) {
-			if (other.teachingAppointments != null)
+		if (courses == null) {
+			if (other.courses != null)
 				return false;
-		} else if (!teachingAppointments.equals(other.teachingAppointments))
+		} else if (!courses.equals(other.courses))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Teacher [teachingAppointments=" + teachingAppointments + ", getId()=" + getId() + ", getFirstname()="
+		return "Teacher [courses=" + courses + ", getId()=" + getId() + ", getFirstname()="
 				+ getFirstname() + ", getLastname()=" + getLastname() + ", getEmail()=" + getEmail()
 				+ ", isAccountEnabled()=" + isAccountEnabled() + ", isPasswordNonExpired()=" + isPasswordNonExpired()
 				+ ", getRoles()=" + getRoles() + ", getCreatedBy()=" + getCreatedBy() + ", getCreatedAt()="
