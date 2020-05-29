@@ -65,7 +65,7 @@
 						<form id="profile_form" class="form" th:action="@{/home/admin/teacher/edit/{id}/account-info(id=${user.id})}" th:object="${user}" method="post">
 							<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
 							<!--begin::Body-->
-							<div class="card-body">
+							<div class="card-body offset-sm-1 col-sm-10">
 								<!--begin::Form group-->
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Administrator</label>
