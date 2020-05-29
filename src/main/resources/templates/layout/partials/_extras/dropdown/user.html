@@ -14,7 +14,7 @@
 
 	<!--begin::Symbol-->
 	<div class="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
-		<img th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpg;base64,'+${new String(#authentication.principal.avatar)}}"
+		<img th:src="${#authentication.principal.avatar} == null ? @{/my-assets/media/users/default.jpg} : @{'data:image/jpeg;base64,'+${new String(#authentication.principal.avatar)}}"
 			 alt="|${#authentication.principal.firstname} ${#authentication.principal.lastname}|" />
 	</div>
 

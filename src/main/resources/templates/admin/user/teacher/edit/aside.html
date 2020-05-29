@@ -18,7 +18,7 @@
 				<div class="text-center mb-10">
 					<div class="symbol symbol-60 symbol-circle symbol-xl-90">
 						<div id="avatar_aside" class="symbol-label"
-							 th:style="${persistentUser.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpg;base64,' + ${new String(persistentUser.avatar)} + ');'"></div>
+							 th:style="${persistentUser.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpeg;base64,' + ${new String(persistentUser.avatar)} + ');'"></div>
 						<i class="symbol-badge symbol-badge-bottom bg-success"></i>
 					</div>
 					<h4 class="font-weight-bold my-2" th:text="|${persistentUser.firstname} ${persistentUser.lastname}|">Firstname Lastname</h4>

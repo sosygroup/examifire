@@ -74,27 +74,26 @@
 							<!--begin::Body-->
 							<div class="card-body">
 								<div class="form-group row">
-									<label class="col-xl-3 col-lg-3 col-form-label text-right">Avatar</label>
-									<div class="col-lg-9 col-xl-6">
+									<label class="col-sm-2 col-form-label">Avatar</label>
+									<div class="col-sm-10">
 										<div class="image-input image-input-outline">
 											<div id="avatar_account_info" class="image-input-wrapper"
-												th:style="${user.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpg;base64,' + ${new String(user.avatar)} + ');'"></div>
+												th:style="${user.avatar} == null ? 'background-image: url(' + @{/my-assets/media/users/default.jpg} + ');' : 'background-image: url(data:image/jpeg;base64,' + ${new String(user.avatar)} + ');'"></div>
 											<label
 												class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-												data-action="change" data-toggle="tooltip" title=""
-												data-original-title="Change avatar"> <i
-												class="fa fa-pen icon-sm text-muted"></i>
+												data-action="change" data-toggle="tooltip" title="Change avatar"> 
+												<i class="fa fa-pen icon-sm text-muted"></i>
 												<input type="file" class="sr-only" id="file_avatar" name="image" accept=".png, .jpg, .jpeg"> 
-											</label> <span
+											</label>
+											<span
 												class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-												data-action="remove" data-toggle="tooltip"
-												title="Remove avatar"> <i
-												class="ki ki-bold-close icon-xs text-muted"></i>
+												data-action="remove" data-toggle="tooltip" title="Remove avatar">
+												<i class="ki ki-bold-close icon-xs text-muted"></i>
 											</span>
 										</div>
 										<span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
 										
-										<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+										<div class="modal fade" id="modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 									      <div class="modal-dialog" role="document">
 									        <div class="modal-content">
 									          <div class="modal-header">
@@ -120,8 +119,8 @@
 								
 								<!--begin::Form group-->
 								<div class="form-group row">
-									<label class="col-xl-3 col-lg-3 col-form-label text-right">First Name</label>
-									<div class="col-lg-9 col-xl-6">
+									<label class="col-sm-2 col-form-label">First Name</label>
+									<div class="col-sm-10">
 										<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('firstname')} ? is-invalid" type="text" autocomplete="off" th:field="*{firstname}" />
 										<span class="form-text text-danger" th:each="error : ${#fields.errors('firstname')}" th:text="|- ${error}|"></span>
 									</div>
@@ -129,8 +128,8 @@
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group row">
-									<label class="col-xl-3 col-lg-3 col-form-label text-right">Last Name</label>
-									<div class="col-lg-9 col-xl-6">
+									<label class="col-sm-2 col-form-label">Last Name</label>
+									<div class="col-sm-10">
 										<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('lastname')} ? is-invalid" type="text" autocomplete="off" th:field="*{lastname}" />
 										<span class="form-text text-danger" th:each="error : ${#fields.errors('lastname')}" th:text="|- ${error}|"></span>
 									</div>
@@ -138,8 +137,8 @@
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group row" sec:authorize="hasAuthority('ROLE_STUDENT')">
-									<label class="col-xl-3 col-lg-3 col-form-label text-right">Student ID Number</label>
-									<div class="col-lg-9 col-xl-6">
+									<label class="col-sm-2 col-form-label">Student ID Number</label>
+									<div class="col-sm-10">
 										<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('identificationNumber')} ? is-invalid" type="text" autocomplete="off" th:field="*{identificationNumber}" />
 										<span class="form-text text-danger" th:each="error : ${#fields.errors('identificationNumber')}" th:text="|- ${error}|"></span>
 									</div>
@@ -147,8 +146,8 @@
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group row">
-									<label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
-									<div class="col-lg-9 col-xl-6">
+									<label class="col-sm-2 col-form-label">Email</label>
+									<div class="col-sm-10">
 										<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('email')} ? is-invalid" type="text" autocomplete="off" th:field="*{email}" />
 										<div class="form-text text-danger" th:each="error : ${#fields.errors('email')}" th:text="|- ${error}|"></div>
 									</div>

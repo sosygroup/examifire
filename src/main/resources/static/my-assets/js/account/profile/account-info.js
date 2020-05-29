@@ -26,6 +26,7 @@ var Avatar = function() {
                 $("#file_avatar").val('');
                 image.src = url;
                 $modal.modal('show');
+                
             };
             var reader;
             var file;
@@ -49,8 +50,9 @@ var Avatar = function() {
         $modal.on('shown.bs.modal', function() {
           cropper = new Cropper(image, {
         		dragMode: 'move',
+        		autoCropArea: 0.5,
         	    aspectRatio: 1,
-        	    viewMode: 3,
+        	    viewMode: 1,
             });
         }).on('hidden.bs.modal', function() {
         	cropper.destroy();
@@ -97,11 +99,19 @@ var Avatar = function() {
             
 
             if (cropper) {
-                canvas = cropper.getCroppedCanvas({
-                    width: 160,
+                
+            	canvas = cropper.getCroppedCanvas({
+            		//minWidth: 256, 
+            		//minHeight: 256,
+            		//maxWidth: 4096, 
+            		//maxHeight: 4096, 
+            		width: 160,
                     height: 160,
+            		fillColor: '#fff', 
+            		imageSmoothingEnabled: true, 
+            		imageSmoothingQuality: 'high',
                 });
-
+            	
                 canvas.toBlob(function(blob) {
                     var formData = new FormData();
                     formData.append('avatar', blob);
@@ -133,7 +143,7 @@ var Avatar = function() {
                         }
                     });
 
-                });
+                }, 'image/jpeg', 1);
             }
         });
     }

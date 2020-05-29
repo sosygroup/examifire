@@ -173,6 +173,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 		    	{
 	                extend: 'print',
 	                exportOptions: {
+	                	stripHtml : false,
 	                	columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
 	                },
 	                className: 'btn btn-outline-secondary'
@@ -201,6 +202,7 @@ var KTDatatablesAdvancedColumnRendering = function() {
 	            {
 	                extend: 'pdfHtml5',
 	                exportOptions: {
+	                	stripHtml : false,
 	                    columns: ':visible' // or [ 0, 2, 3, 4, 5, 6, 7, 8 ]
 	                },
 	                className: 'btn btn-outline-secondary'
