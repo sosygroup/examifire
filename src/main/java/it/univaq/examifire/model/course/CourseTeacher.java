@@ -82,39 +82,7 @@ public class CourseTeacher extends EntityAudit<Long> implements Serializable {
 		this.leader = leader;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((course == null) ? 0 : course.hashCode());
-		result = prime * result + (leader ? 1231 : 1237);
-		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CourseTeacher other = (CourseTeacher) obj;
-		if (course == null) {
-			if (other.course != null)
-				return false;
-		} else if (!course.equals(other.course))
-			return false;
-		if (leader != other.leader)
-			return false;
-		if (teacher == null) {
-			if (other.teacher != null)
-				return false;
-		} else if (!teacher.equals(other.teacher))
-			return false;
-		return true;
-	}
+	
 
 	@Override
 	public String toString() {

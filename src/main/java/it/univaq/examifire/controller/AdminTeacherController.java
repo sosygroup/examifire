@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.univaq.examifire.model.course.Course;
 import it.univaq.examifire.model.user.Role;
 import it.univaq.examifire.model.user.Teacher;
 import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.security.UserPrincipal;
+import it.univaq.examifire.service.CourseService;
 import it.univaq.examifire.service.RoleService;
 import it.univaq.examifire.service.TeacherService;
 import it.univaq.examifire.util.PasswordGeneratorUtils;
@@ -41,6 +43,9 @@ public class AdminTeacherController {
 
 	@Autowired
 	private TeacherService teacherService;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	@Autowired
 	private RoleService roleService;
@@ -58,7 +63,7 @@ public class AdminTeacherController {
 	}
 
 	@RequestMapping(value ="/list-datatable", method = RequestMethod.GET)
-	public @ResponseBody DataTablesOutput<Teacher> listAllPaginated (Authentication authentication, Model model, @Valid DataTablesInput input) {
+	public @ResponseBody DataTablesOutput<Teacher> listAllTeacherPaginated (Authentication authentication, Model model, @Valid DataTablesInput input) {
 		logger.info("Ajax request received at URL /home/admin/teacher/list-datatable by the admin with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
 		return teacherService.findAll(input);
 	}
@@ -220,6 +225,24 @@ public class AdminTeacherController {
 		
 	}
 	
+	@GetMapping("/edit/{teacherId}/courses")
+	public String showCourses(Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model) {
+		
+		logger.info("HTTP GET request received at URL /home/admin/teacher/edit/{}/courses by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
+		
+		Teacher persistentUser = teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId));
+		model.addAttribute("persistentUser", persistentUser);
+		model.addAttribute("user", persistentUser);
+		return "admin/user/teacher/edit/courses";
+	}
+	
+	@RequestMapping(value ="/edit/{teacherId}/courses-datatable", method = RequestMethod.GET)
+	public @ResponseBody DataTablesOutput<Course> listAllCoursesPaginated (Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model, @Valid DataTablesInput input) {
+		logger.info("Ajax request received at URL /home/admin/teacher/edit/{}/courses-datatable by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
+		 	
+		return courseService.findAllByTeacherId(input, teacherId);
+	}
+	
 	@GetMapping("/delete/{teacherId}")
 	public String delete(
 			Authentication authentication,
@@ -234,6 +257,8 @@ public class AdminTeacherController {
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
 		return "redirect:/home/admin/teacher/list";
 	}
+	
+	
 	
 	
 }

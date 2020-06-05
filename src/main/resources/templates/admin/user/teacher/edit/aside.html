@@ -48,6 +48,9 @@
 					th:classappend="${aside_profile_menu_active_link == 'change-password'} ? 'active'"
 					class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Change
 					Password</a>
+				<a th:href="@{/home/admin/teacher/edit/{id}/courses(id=${persistentUser.id})}"
+					th:classappend="${aside_profile_menu_active_link == 'courses'} ? 'active'"
+					class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block">Courses</a>
 				<!--end::Nav-->
 			</div>
 			<!--end::Body-->

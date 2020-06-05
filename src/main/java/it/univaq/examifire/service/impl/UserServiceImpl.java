@@ -16,4 +16,6 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements User
 		logger.debug("The method findByEmail has been invoked for the table {}, with parameter email={}", tableName, email);
 		return ((UserRepository) repository).findByEmail(email);
 	}
+	
+	
 }

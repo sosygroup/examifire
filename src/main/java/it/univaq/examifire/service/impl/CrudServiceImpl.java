@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.domain.Specification;
 
 import it.univaq.examifire.repository.CrudRepository;
 import it.univaq.examifire.service.CrudService;
@@ -43,6 +44,12 @@ public class CrudServiceImpl<MODEL, ID extends Serializable> implements CrudServ
 	public DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput) {
 		logger.debug("The method findAll has been invoked for the table {}, with parameter dataTablesInput={}", tableName, dataTablesInput.toString());
 		return repository.findAll(dataTablesInput);
+	}
+	
+	@Override
+	public DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput, Specification<MODEL> additionalSpecification) {
+		logger.debug("The method findAll has been invoked for the table {}, with parameter dataTablesInput={}", tableName, dataTablesInput.toString());
+		return repository.findAll(dataTablesInput, additionalSpecification);
 	}
 
 	@Override

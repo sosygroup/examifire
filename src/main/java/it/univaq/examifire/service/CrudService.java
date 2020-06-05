@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.domain.Specification;
 
 public interface CrudService<MODEL, ID> {
 	Iterable<MODEL> findAll();
 
 	DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput);
 
+	DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput, Specification<MODEL> additionalSpecification);
 	/*
 	 ***************************************************************************
 	 * Additional Data Tables methods are provided by the DataTablesRepository *

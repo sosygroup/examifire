@@ -4,7 +4,7 @@
 	layout:decorate="~{layout/layout.html}"
 	th:with="aside_layout_menu_active_link='teachers',
 			 aside_layout_submenu_active_link='list-all',
-			 aside_profile_menu_active_link='change-password'">
+			 aside_profile_menu_active_link='courses'">
 <!-- th:with="currentPage='user-edit'" it is used to pass parameters to layout in thymeleaf layout-dialect  -->
 
 <head>
@@ -20,6 +20,7 @@
 	</th:block>
 -->
 	<!--begin::Page Styles (used by this page) -->
+	<link th:href="@{/assets/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
 	<!--end::Page Styles -->
 </head>
 
@@ -49,8 +50,8 @@
 						<!--begin::Header-->
 						<div class="card-header py-3">
 							<div class="card-title align-items-start flex-column">
-								<h3 class="card-label text-dark">Password Information</h3>
-								<span class="text-muted font-weight-bold font-size-sm mt-1">Edit user password</span>
+								<h3 class="card-label text-dark">Courses Information</h3>
+								<span class="text-muted font-weight-bold font-size-sm mt-1">Edit user Courses</span>
 							</div>
 							<div class="card-toolbar">
 								<a th:href="@{/home/admin/teacher/list}" class="btn btn-light mr-2">Back</a>
@@ -58,33 +59,26 @@
 							</div>
 						</div>
 						<!--end::Header-->
-						<!--begin::Form-->
-						<form id="profile_form" class="form" th:action="@{/home/admin/teacher/edit/{id}/change-password(id=${user.id})}" th:object="${user}" method="post">
+						<div class="card-body">
 							<input type="hidden" id="confirm_crud_operation" th:value="${confirm_crud_operation}">
-							<!--begin::Body-->
-							<div class="card-body offset-sm-1 col-sm-10">
-								<!--begin::Form group-->
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label">New Password</label>
-									<div class="col-sm-10">
-										<input class="form-control form-control-lg form-control-solid" th:classappend="${#fields.hasErrors('password')} ? is-invalid" type="password" autocomplete="off" placeholder="New Password" th:field="*{password}" />
-	 									<span class="form-text text-danger" th:each="error : ${#fields.errors('password')}" th:text="|- ${error}|"></span>
-									</div>
-								</div>
-								<!--end::Form group-->
-								<!--begin::Form group-->
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label">Confirm Password</label>
-									<div class="col-sm-10">
-										<input class="form-control form-control-lg form-control-solid" th:classappend="${not #fields.detailedErrors().?[code == 'ConfirmPasswordError'].isEmpty()} ? is-invalid" type="password" autocomplete="off" placeholder="Confirm Password" id="confirm_password" name="confirm_password" />
-										<span class="form-text text-danger" th:each="error : ${#fields.detailedErrors()}" th:if="${error.code == 'ConfirmPasswordError'}" th:text="|- ${error.message}|">ConfirmPasswordError</span>		
-									</div>
-								</div>
-								<!--end::Form group-->
-							</div>
-							<!--end::Body-->
-						</form>
-						<!--end::Form-->
+							<input type="hidden" id="persistent_user_id" th:value="${persistentUser.id}">
+							<!--begin: Datatable-->
+							<table
+								class="table table-separate table-head-custom table-checkable"
+								id="kt_datatable" style="width:100%">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>CFU/ECTS</th>
+										<th>Academic Year</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+							</table>
+							<!--end: Datatable-->
+						</div>
 					</div>
 				</div>
 				<!--end::Content-->
@@ -100,8 +94,10 @@
 
 	<!--begin::Page Scripts(used by this page) -->
 	<th:block layout:fragment="scripts">
+	<script th:src="@{/assets/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+		<script th:src="@{/my-assets/js/jquery.spring-friendly.js}" type="text/javascript"></script>
 		<script th:src="@{/my-assets/js/admin/user/teacher/edit/aside.js}"></script>
-		<script th:src="@{/my-assets/js/admin/user/teacher/edit/change-password.js}"></script>
+		<script th:src="@{/my-assets/js/admin/user/teacher/edit/courses.js}"></script>
 	</th:block>
 	<!--end::Page Scripts -->
 	
