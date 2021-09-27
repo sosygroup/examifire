@@ -1,6 +1,5 @@
 package it.univaq.examifire.controller;
 
-
 import java.io.IOException;
 import java.util.Base64;
 
@@ -31,8 +30,6 @@ import it.univaq.examifire.security.UserPrincipal;
 import it.univaq.examifire.service.UserService;
 import it.univaq.examifire.validation.UserValidator;
 
-
-
 @Controller
 @SessionAttributes("user")
 @RequestMapping("/home/profile")
@@ -46,16 +43,16 @@ public class UserProfileController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserValidator userValidator;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private UserAuthenticationUpdater userAuthenticationUpdater;
-	
+
 	@RequestMapping(value = "/avatar/change", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public @ResponseBody String changeUserAvatar(Authentication authentication,
 		   @RequestPart("avatar") MultipartFile file) {
@@ -74,7 +71,7 @@ public class UserProfileController {
 
 		userService.update(persistentUser);
 		logger.info("The avatar of the user with email {} has been updated", persistentUser.getEmail());
-		
+
 		userAuthenticationUpdater.update(authentication);
 
 		return "/home/profile/account-info";
@@ -82,7 +79,7 @@ public class UserProfileController {
 
 	@RequestMapping(value = "/avatar/remove", method = RequestMethod.POST)
 	public @ResponseBody String removeUserAvatar(Authentication authentication) {
-		
+
 		logger.info("HTTP Ajax POST request received at URL /home/profile/avatar/remove by the user with email {}",
 				((UserPrincipal) authentication.getPrincipal()).getEmail());
 
@@ -94,15 +91,15 @@ public class UserProfileController {
 		logger.info("The avatar of the user with email {} has been removed", persistentUser.getEmail());
 
 		userAuthenticationUpdater.update(authentication);
-		
+
 		return "/home/profile/account-info";
 	}
-	
+
 	@GetMapping("/account-info")
 	public String showAccountInfo(Authentication authentication, Model model) {
-		
+
 		logger.info("HTTP GET request received at URL /home/profile/account-info by the user with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
@@ -115,8 +112,7 @@ public class UserProfileController {
 		model.addAttribute("user", persistentUser);
 		return "account/profile/account-info";
 	}
-	
-	
+
 	@Transactional
 	@PostMapping("/account-info")
 	public String accountInfo(Authentication authentication,
@@ -125,22 +121,22 @@ public class UserProfileController {
 		 * Here, the user type (e.g., Student or Teacher) depends on the corresponding type in this controller section, 
 		 * see comment in the @GetMapping profile method above. 
 		 */
-		
+
 		logger.info("HTTP POST request received at URL /home/profile/account-info by the user with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		
+
 		// we need to set the ID here since it is used by the validator
 		user.setId(persistentUser.getId());
 		userValidator.validateDuplicatedEmail(user, bindingResult);
-		
+
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.warn("Validation error: {}", error.getDefaultMessage());
 			});
-			
+
 			// restore the user avatar otherwise it is not retained in the model
 			user.setAvatar(persistentUser.getAvatar());
 
@@ -148,31 +144,31 @@ public class UserProfileController {
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "account/profile/account-info";
 		}
-		
+
 		persistentUser.setFirstname(user.getFirstname());
 		persistentUser.setLastname(user.getLastname());
 		persistentUser.setEmail(user.getEmail());
-			
+
 		userService.update(persistentUser);
 		logger.info("The {} has been updated", persistentUser.toString());
-	
+
 		userAuthenticationUpdater.update(authentication);
-		
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/profile/account-info";
 	}
-	
+
 	@GetMapping("/change-password")
 	public String showChangePassword(Authentication authentication, Model model) {
-		
+
 		logger.info("HTTP GET request received at URL /home/profile/change-password by the user with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		User persistentUser = userService.findById(authenticatedUserId).orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
 		model.addAttribute("user", persistentUser);
 		return "account/profile/change-password";
 	}
-	
+
 	@Transactional
 	@PostMapping("/change-password")
 	public String changePassword(
@@ -181,13 +177,13 @@ public class UserProfileController {
 			@RequestParam(name = "confirm_password") String confirmPassword,
 			@Validated(User.ChangePassword.class) User user, BindingResult bindingResult, 
 			Model model, RedirectAttributes redirectAttributes) {
-		
+
 		logger.info("HTTP POST request received at URL /home/profile/change-password by the user with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Long authenticatedUserId = ((UserPrincipal)authentication.getPrincipal()).getId();
 		User persistentUser = userService.findById(authenticatedUserId)
 				.orElseThrow(() -> new IllegalArgumentException("User Not Found with id:" + authenticatedUserId));
-		
+
 		userValidator.validatePassword(persistentUser.getPassword(), oldPassword, user.getPassword(), confirmPassword, bindingResult);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
@@ -196,17 +192,17 @@ public class UserProfileController {
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "account/profile/change-password";
 		}
-		
+
 		persistentUser.setPassword(passwordEncoder.encode(user.getPassword()));	
 		userService.update(persistentUser);
 		logger.debug("The password of the user with email {} has been updated", persistentUser.getEmail());
-		
+
 		// After password updating there is no need to update the authentication of the logged user 
 		// userAuthenticationUpdater.update(authentication);
-		
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/profile/change-password";
-		
+
 	}
 	
 }

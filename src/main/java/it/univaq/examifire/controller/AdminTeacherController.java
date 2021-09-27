@@ -36,26 +36,26 @@ import it.univaq.examifire.util.PasswordGeneratorUtils;
 import it.univaq.examifire.util.Utils;
 import it.univaq.examifire.validation.UserValidator;
 
-@Controller()
+@Controller
 @RequestMapping("/home/admin/teacher")
 public class AdminTeacherController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminTeacherController.class);
 
 	@Autowired
 	private TeacherService teacherService;
-	
+
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private UserValidator userValidator;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/list")
 	public String listAll(Authentication authentication, Model model) {
 		logger.info("HTTP GET request received at URL /home/admin/teacher/list by the admin with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
@@ -67,15 +67,14 @@ public class AdminTeacherController {
 		logger.info("Ajax request received at URL /home/admin/teacher/list-datatable by the admin with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
 		return teacherService.findAll(input);
 	}
-	
+
 	@GetMapping("/add")
 	public String showAdd(Authentication authentication, Model model) {
 		logger.info("HTTP GET request received at URL /home/admin/teacher/add by the admin with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
 		model.addAttribute("user", new Teacher());
 		return "admin/user/teacher/add";
 	}
-	
-	
+
 	@Transactional
 	@PostMapping("/add")
 	public String add(Authentication authentication,
@@ -83,33 +82,33 @@ public class AdminTeacherController {
 		@RequestParam(name = "is_admin", required = false) boolean isAdmin,
 		@Validated(User.CreateByAdmin.class) @ModelAttribute("user") Teacher teacher, 
 		BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		
+
 		logger.info(
 				"HTTP POST request received at URL /home/admin/teacher/add by the admin with email {}", ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		userValidator.validateDuplicatedEmail(teacher, bindingResult);
-		
+
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.warn("Validation error: {}", error.getDefaultMessage());
 			});
-			
+
 			model.addAttribute("is_admin", isAdmin);
 			model.addAttribute("confirm_crud_operation", "add_failed");
 			return "admin/user/teacher/add";
 		}
-		
+
 		teacher.getRoles().add(roleService.findByName(Role.TEACHER_ROLE_NAME).get());
-		
+
 		if (isAdmin) {
 			teacher.getRoles().add(roleService.findByName(Role.ADMIN_ROLE_NAME).get());
 		}
-		
+
 		// automatically generate the password for the user 
 		teacher.setPassword(passwordEncoder.encode(PasswordGeneratorUtils.generateCommonLangPassword()));
 		teacherService.update(teacher);
 		logger.info("The {} has been added by the admin with email {}", teacher.toString(), ((UserPrincipal)authentication.getPrincipal()).getEmail());
-			
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "add_succeeded");
 		switch (saveOption) {
          case "edit":
@@ -122,7 +121,7 @@ public class AdminTeacherController {
              throw new IllegalArgumentException("Invalid save option: " + saveOption) ;
 		 }
 	}
-		
+
 	@GetMapping("/edit/{teacherId}/account-info")
 	public String showEditAccountInfo(Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model) {
 		logger.info("HTTP GET request received at URL /home/admin/teacher/edit/{}/account-info by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
@@ -132,8 +131,7 @@ public class AdminTeacherController {
 		model.addAttribute("user", persistentUser);
 		return "admin/user/teacher/edit/account-info";
 	}
-	
-	
+
 	@Transactional
 	@PostMapping("/edit/{teacherId}/account-info")
 	public String editAccountInfo(Authentication authentication,
@@ -141,9 +139,9 @@ public class AdminTeacherController {
 		@RequestParam(name = "is_admin", required = false) boolean isAdmin,
 		@Validated(User.EditByAdmin.class) @ModelAttribute("user") Teacher teacher, BindingResult bindingResult,
 		Model model, RedirectAttributes redirectAttributes) {
-		
+
 		logger.info("HTTP POST request received at URL /home/admin/teacher/edit/{}/account-info by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		// we need to set the ID here since it is used by the validator
 		teacher.setId(teacherId);
 		userValidator.validateDuplicatedEmail(teacher, bindingResult);
@@ -151,46 +149,46 @@ public class AdminTeacherController {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.warn("Validation error: {}", error.getDefaultMessage());
 			});
-			
+
 			model.addAttribute("persistentUser", teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId)));
 			model.addAttribute("is_admin", isAdmin);
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "admin/user/teacher/edit/account-info";
 		}
-		
+
 		Teacher persistentUser = teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId));
-		
+
 		persistentUser.setFirstname(teacher.getFirstname());
 		persistentUser.setLastname(teacher.getLastname());
 		persistentUser.setEmail(teacher.getEmail());
-		
+
 		if (isAdmin && !Utils.hasAdminRole(persistentUser)) {
 			persistentUser.getRoles().add(roleService.findByName(Role.ADMIN_ROLE_NAME).get());
 		}else if (!isAdmin && Utils.hasAdminRole(persistentUser)) {
 			persistentUser.getRoles().remove(roleService.findByName(Role.ADMIN_ROLE_NAME).get());
 		}
-		
+
 		persistentUser.setAccountEnabled(teacher.isAccountEnabled());
 		persistentUser.setPasswordNonExpired(teacher.isPasswordNonExpired());
-		
+
 		teacherService.update(persistentUser);
 		logger.info("The {} has been edited by the admin with email {}", persistentUser.toString(), ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/admin/teacher/edit/" + persistentUser.getId() + "/account-info";
 	}
-	
+
 	@GetMapping("/edit/{teacherId}/change-password")
 	public String showChangePassword(Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model) {
-		
+
 		logger.info("HTTP GET request received at URL /home/admin/teacher/edit/{}/change-password by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Teacher persistentUser = teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId));
 		model.addAttribute("persistentUser", persistentUser);
 		model.addAttribute("user", persistentUser);
 		return "admin/user/teacher/edit/change-password";
 	}
-	
+
 	@Transactional
 	@PostMapping("/edit/{teacherId}/change-password")
 	public String changePassword(
@@ -199,50 +197,50 @@ public class AdminTeacherController {
 			@RequestParam(name = "confirm_password") String confirmPassword,
 			@Validated(User.ChangePassword.class) @ModelAttribute("user") Teacher teacher, BindingResult bindingResult, 
 			Model model, RedirectAttributes redirectAttributes) {
-		
+
 		logger.info("HTTP POST request received at URL /home/admin/teacher/edit/{}/change-password by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Teacher persistentUser = teacherService.findById(teacherId)
 				.orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId));
-		
+
 		userValidator.validateConfirmPassword(teacher.getPassword(), confirmPassword, bindingResult);
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach((error) -> {
 				logger.warn("Validation error: {}", error.getDefaultMessage());
 			});
-			
+
 			model.addAttribute("persistentUser", teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId)));
 			model.addAttribute("confirm_crud_operation", "update_failed");
 			return "admin/user/teacher/edit/change-password";
 		}
-		
+
 		persistentUser.setPassword(passwordEncoder.encode(teacher.getPassword()));	
 		teacherService.update(persistentUser);
 		logger.debug("The password of the teacher with email {} has been updated by the admin with email {}", persistentUser.getEmail(), ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "update_succeeded");
 		return "redirect:/home/admin/teacher/edit/" + persistentUser.getId() + "/change-password";
-		
+
 	}
-	
+
 	@GetMapping("/edit/{teacherId}/courses")
 	public String showCourses(Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model) {
-		
+
 		logger.info("HTTP GET request received at URL /home/admin/teacher/edit/{}/courses by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		Teacher persistentUser = teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id: " + teacherId));
 		model.addAttribute("persistentUser", persistentUser);
 		model.addAttribute("user", persistentUser);
 		return "admin/user/teacher/edit/courses";
 	}
-	
+
 	@RequestMapping(value ="/edit/{teacherId}/courses-datatable", method = RequestMethod.GET)
 	public @ResponseBody DataTablesOutput<Course> listAllCoursesPaginated (Authentication authentication, @PathVariable("teacherId") Long teacherId, Model model, @Valid DataTablesInput input) {
 		logger.info("Ajax request received at URL /home/admin/teacher/edit/{}/courses-datatable by the admin with email {}", teacherId, ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		 	
+
 		return courseService.findAllByTeacherId(input, teacherId);
 	}
-	
+
 	@GetMapping("/delete/{teacherId}")
 	public String delete(
 			Authentication authentication,
@@ -253,12 +251,9 @@ public class AdminTeacherController {
 		Teacher persistentUser = teacherService.findById(teacherId).orElseThrow(() -> new IllegalArgumentException("Teacher Not Found with id:" + teacherId));
 		teacherService.delete(persistentUser);
 		logger.info("The {} has been deleted by the admin with email {}", persistentUser.toString(), ((UserPrincipal)authentication.getPrincipal()).getEmail());
-		
+
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "delete_succeeded");
 		return "redirect:/home/admin/teacher/list";
 	}
-	
-	
-	
-	
+
 }

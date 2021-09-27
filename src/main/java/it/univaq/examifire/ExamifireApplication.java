@@ -12,6 +12,5 @@ public class ExamifireApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ExamifireApplication.class, args);
 	}
-	
-	
+
 }

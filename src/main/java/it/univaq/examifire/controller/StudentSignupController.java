@@ -1,6 +1,5 @@
 package it.univaq.examifire.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ import it.univaq.examifire.model.user.User;
 import it.univaq.examifire.service.StudentService;
 import it.univaq.examifire.validation.UserValidator;
 
-
-
 @Controller
 public class StudentSignupController {
 	/*
@@ -35,20 +32,19 @@ public class StudentSignupController {
 
 	@Autowired
 	private StudentService studentService;
-	
+
 	@Autowired
 	private UserValidator userValidator;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/signup")
 	public String showSignup(Model model) {
 		logger.info("HTTP GET request received at URL /signup");
 		model.addAttribute("user", new Student());
 		return "account/signup";
 	}
-	
 
 	@Transactional
 	@PostMapping("/signup")
@@ -56,27 +52,27 @@ public class StudentSignupController {
 			@RequestParam(name = "confirm_password") String confirmPassword,
 			@ModelAttribute (name = "user") @Validated(User.Registration.class) Student student,
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		
+
 		logger.info("HTTP POST request received at URL /signup");
 
 		Role role = new Role();
 		role.setId(Role.STUDENT_ROLE_ID);
 		student.getRoles().add(role);
-		
+
 		userValidator.validateDuplicatedEmail(student, bindingResult);
 		userValidator.validateConfirmPassword(student.getPassword(), confirmPassword, bindingResult);
-		
+
 		if (bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().forEach((error) -> {
-				logger.warn("Validation error: {}", error.getDefaultMessage());
-			});
+			bindingResult.getAllErrors().forEach(error ->
+				logger.warn("Validation error: {}", error.getDefaultMessage())
+			);
 
 			model.addAttribute("confirm_crud_operation", "add_failed");
 			return "account/signup";
 		}
-		
+
 		student.setPassword(passwordEncoder.encode(student.getPassword()));
-		
+
 		studentService.create(student);
 		logger.info("The {} has been added", student.toString());
 
@@ -84,7 +80,7 @@ public class StudentSignupController {
 		student.setCreatedBy(student.getId());
 		student.setLastUpdatedBy(student.getId());
 		studentService.update(student);
-		
+
 		logger.info("The created_by and the last_updated_by info of the student with email {} has been updated", student.getEmail());
 
 		redirectAttributes.addFlashAttribute("confirm_crud_operation", "add_succeeded");
@@ -104,5 +100,5 @@ public class StudentSignupController {
 		// https://www.baeldung.com/spring-security-registration-i-forgot-my-password
 		return "redirect:/signin";
 	}
-	
+
 }
