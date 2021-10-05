@@ -24,7 +24,7 @@ import it.univaq.examifire.model.audit.EntityAudit;
 @Entity
 @Table(name = "course")
 public class Course extends EntityAudit<Long> {
-	public interface Registration {}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "course_id")
@@ -161,55 +161,46 @@ public class Course extends EntityAudit<Long> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+
 		Course other = (Course) obj;
+
 		if (academicYear == null) {
 			if (other.academicYear != null)
 				return false;
-		} else if (!academicYear.equals(other.academicYear))
-			return false;
-		if (cfu_ects != other.cfu_ects)
-			return false;
+		} else if (!academicYear.equals(other.academicYear)) return false;
+
+		if (cfu_ects != other.cfu_ects) return false;
 		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
+
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
+
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+
 		if (parts == null) {
-			if (other.parts != null)
-				return false;
-		} else if (!parts.equals(other.parts))
-			return false;
+			if (other.parts != null) return false;
+		} else if (!parts.equals(other.parts)) return false;
+
 		if (quizzes == null) {
-			if (other.quizzes != null)
-				return false;
-		} else if (!quizzes.equals(other.quizzes))
-			return false;
+			if (other.quizzes != null) return false;
+		} else if (!quizzes.equals(other.quizzes)) return false;
+
 		if (studentRegistrations == null) {
-			if (other.studentRegistrations != null)
-				return false;
-		} else if (!studentRegistrations.equals(other.studentRegistrations))
-			return false;
+			if (other.studentRegistrations != null) return false;
+		} else if (!studentRegistrations.equals(other.studentRegistrations)) return false;
+
 		if (teachers == null) {
-			if (other.teachers != null)
-				return false;
-		} else if (!teachers.equals(other.teachers))
-			return false;
+			if (other.teachers != null) return false;
+		} else if (!teachers.equals(other.teachers)) return false;
+
 		return true;
 	}
 

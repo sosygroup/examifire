@@ -82,8 +82,6 @@ public class CourseTeacher extends EntityAudit<Long> implements Serializable {
 		this.leader = leader;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return "CourseTeacher [teacher=" + teacher + ", course=" + course + ", leader=" + leader + "]";

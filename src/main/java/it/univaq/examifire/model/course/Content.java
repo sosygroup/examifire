@@ -106,38 +106,32 @@ public class Content extends EntityAudit<Long> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+
 		Content other = (Content) obj;
+
 		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
+
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
+
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+
 		if (part == null) {
-			if (other.part != null)
-				return false;
-		} else if (!part.equals(other.part))
-			return false;
+			if (other.part != null) return false;
+		} else if (!part.equals(other.part)) return false;
+
 		if (questions == null) {
-			if (other.questions != null)
-				return false;
-		} else if (!questions.equals(other.questions))
-			return false;
+			if (other.questions != null) return false;
+		} else if (!questions.equals(other.questions)) return false;
+
 		return true;
 	}
 

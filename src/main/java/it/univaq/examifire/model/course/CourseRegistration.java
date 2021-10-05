@@ -100,25 +100,22 @@ public class CourseRegistration extends EntityAudit<Long> implements Serializabl
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+
 		CourseRegistration other = (CourseRegistration) obj;
-		if (cfu_ects != other.cfu_ects)
-			return false;
+
+		if (cfu_ects != other.cfu_ects) return false;
+
 		if (course == null) {
-			if (other.course != null)
-				return false;
-		} else if (!course.equals(other.course))
-			return false;
+			if (other.course != null) return false;
+		} else if (!course.equals(other.course)) return false;
+
 		if (student == null) {
-			if (other.student != null)
-				return false;
-		} else if (!student.equals(other.student))
-			return false;
+			if (other.student != null) return false;
+		} else if (!student.equals(other.student)) return false;
+
 		return true;
 	}
 
