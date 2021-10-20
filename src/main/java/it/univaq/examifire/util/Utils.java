@@ -9,9 +9,6 @@ public class Utils {
 		return user.getRoles().stream().filter(role -> role.getName().equals(Role.ADMIN_ROLE_NAME)).findFirst().isPresent();
 	}
 
-	
-
-	// -----------------------------------------------------------------------
 	/**
 	 * <p>
 	 * {@code Utils} instances should NOT be constructed in

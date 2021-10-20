@@ -18,10 +18,10 @@ import it.univaq.examifire.service.CrudService;
 
 public class CrudServiceImpl<MODEL, ID extends Serializable> implements CrudService<MODEL, ID> {
 	protected static final Logger logger = LoggerFactory.getLogger(CrudServiceImpl.class);
-	
+
 	@Autowired
 	protected CrudRepository<MODEL, ID> repository;
-	
+
 	protected String tableName;
 
 	public CrudServiceImpl(){
@@ -39,13 +39,13 @@ public class CrudServiceImpl<MODEL, ID extends Serializable> implements CrudServ
 		logger.debug("The method findAll has been invoked for the table {}", tableName);
 		return repository.findAll();
 	}
-	
+
 	@Override
 	public DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput) {
 		logger.debug("The method findAll has been invoked for the table {}, with parameter dataTablesInput={}", tableName, dataTablesInput.toString());
 		return repository.findAll(dataTablesInput);
 	}
-	
+
 	@Override
 	public DataTablesOutput<MODEL> findAll(DataTablesInput dataTablesInput, Specification<MODEL> additionalSpecification) {
 		logger.debug("The method findAll has been invoked for the table {}, with parameter dataTablesInput={}", tableName, dataTablesInput.toString());

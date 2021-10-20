@@ -14,7 +14,7 @@ import it.univaq.examifire.service.UserService;
 public class UserValidator {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -27,10 +27,10 @@ public class UserValidator {
 
 		validateConfirmPassword(newPassword, confirmPassword, bindingResult);
 	}
-	
+
 	public void validateConfirmPassword(String newPassword,
 			String confirmPassword, BindingResult bindingResult) {
-		
+
 		if (!confirmPassword.equals(newPassword)) {
 			bindingResult.rejectValue("", "ConfirmPasswordError",
 					"Please, retype the new password and confirm it correctly");
@@ -70,5 +70,5 @@ public class UserValidator {
 
 		bindingResult.rejectValue("email", "DuplicatedEmail", "The email already exists");
 	}
-	
+
 }
