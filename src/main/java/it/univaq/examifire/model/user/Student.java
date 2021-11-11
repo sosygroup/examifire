@@ -29,13 +29,9 @@ public class Student extends User {
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<CourseRegistration> courseRegistrations = new HashSet<>();
 
-	// @OneToMany(mappedBy = "variableName") variableName is the name of the
-	// variable annotated with @ManyToOne
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<QuizRegistration> quizRegistrations = new HashSet<>();
 
-	// @OneToMany(mappedBy = "variableName") variableName is the name of the
-	// variable annotated with @ManyToOne
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<StudentAnswer> studentAnswers = new HashSet<>();
 
@@ -84,33 +80,36 @@ public class Student extends User {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (getClass() != obj.getClass()) return false;
+
 		Student other = (Student) obj;
+
 		if (courseRegistrations == null) {
 			if (other.courseRegistrations != null)
 				return false;
 		} else if (!courseRegistrations.equals(other.courseRegistrations))
 			return false;
+
 		if (identificationNumber == null) {
 			if (other.identificationNumber != null)
 				return false;
 		} else if (!identificationNumber.equals(other.identificationNumber))
 			return false;
+
 		if (quizRegistrations == null) {
 			if (other.quizRegistrations != null)
 				return false;
 		} else if (!quizRegistrations.equals(other.quizRegistrations))
 			return false;
+
 		if (studentAnswers == null) {
 			if (other.studentAnswers != null)
 				return false;
 		} else if (!studentAnswers.equals(other.studentAnswers))
 			return false;
+
 		return true;
 	}
 

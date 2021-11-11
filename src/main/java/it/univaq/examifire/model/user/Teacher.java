@@ -39,18 +39,18 @@ public class Teacher extends User {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (!super.equals(obj)) return false;
+		if (getClass() != obj.getClass()) return false;
+
 		Teacher other = (Teacher) obj;
+
 		if (courses == null) {
 			if (other.courses != null)
 				return false;
 		} else if (!courses.equals(other.courses))
 			return false;
+
 		return true;
 	}
 
